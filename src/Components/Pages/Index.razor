@@ -1,0 +1,26 @@
+﻿@page "/"
+
+<div class="flex flex-col space-y-4">
+  <div class="flex justify-end">
+    <button class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700" @onclick="Convert">
+      Convert
+    </button>
+  </div>
+  <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+    <div class="flex-1">
+      <label for="json-editor" class="block text-sm font-medium text-white mb-2">
+        JSON Editor
+      </label>
+      <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor" ConstructionOptions="JsonEditorConstructionOptions"
+        CssClass="editor" />
+    </div>
+
+    <div class="flex-1">
+      <label for="csharp-editor" class="block text-sm font-medium text-white mb-2">
+        C# Editor
+      </label>
+      <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"
+        ConstructionOptions="CsharpEditorConstructionOptions" CssClass="editor" />
+    </div>
+  </div>
+</div>
