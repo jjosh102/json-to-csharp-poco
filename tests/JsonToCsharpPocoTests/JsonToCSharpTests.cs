@@ -101,10 +101,10 @@ public class JsonToCSharpTests
 
         // Act
         var result = _converter.ConvertJsonToClass(json, expectedClassName);
-
+        Console.WriteLine(result);
         // Assert
         Assert.Contains("public IReadOnlyList<Items> Items", result);
-        Assert.Contains("public class Item", result);
+        Assert.Contains("public class Items", result);
         Assert.Contains("public int Id", result);
         Assert.Contains("public string Value", result);
     }
@@ -120,9 +120,30 @@ public class JsonToCSharpTests
 
         // Act
         var result = _converter.ConvertJsonToClass(json, expectedClassName);
-            Console.WriteLine(result);
 
         // Assert
         Assert.Contains("public IReadOnlyList<object> Data", result);
     }
+
+    [Fact]
+public void ConvertJsonToClass_NumericPropertyName_ConvertsToValidStringPropertyName()
+{
+    // Arrange
+    string json = @"{
+        ""123"": ""value"",
+        ""456"": 100
+    }";
+    string expectedClassName = "Root";
+
+    // Act
+    var result = _converter.ConvertJsonToClass(json, expectedClassName);
+
+    // Assert
+    Assert.Contains("public class Root", result);
+    Assert.Contains("public string _123", result);  
+    Assert.Contains("public int _456", result);
+}
+
+
+    
 }
