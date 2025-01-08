@@ -5,6 +5,7 @@ using BlazorMonaco.Editor;
 using BlazorMonaco.Languages;
 using JsonToCsharpPoco.Converter;
 using Microsoft.JSInterop;
+using JsonToCsharpPoco.Components.AppState;
 using JsonToCsharpPoco.Components.Toast;
 namespace JsonToCsharpPoco.Components.Pages;
 
@@ -22,7 +23,7 @@ public partial class Index : ComponentBase
   private StandaloneCodeEditor _csharpEditor;
 
   [CascadingParameter]
-  ToastComponent? ToastComponentService { get; set; }
+  public required CascadingAppState AppState { get; set; }
 
   public Index(JsonToCSharp jsonToCSharp, IJSRuntime jsRuntime)
   {
@@ -60,7 +61,7 @@ public partial class Index : ComponentBase
         return;
 
       await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharp);
-      await ToastComponentService!.ShowToastAsync(
+      await AppState.ToastComponentService!.ShowToastAsync(
             message: "C# code copied to clipboard",
             type: ToastType.Success,
             title: "",
@@ -76,7 +77,7 @@ public partial class Index : ComponentBase
 
     if (string.IsNullOrWhiteSpace(jsonToConvert))
     {
-      await ToastComponentService!.ShowToastAsync(
+      await AppState.ToastComponentService!.ShowToastAsync(
             message: "Please enter JSON to convert",
             type: ToastType.Error,
             title: "Error",
@@ -87,7 +88,7 @@ public partial class Index : ComponentBase
 
     var csharp = _jsonToCSharp.ConvertJsonToClass(jsonToConvert, "Root");
     await _csharpEditor.SetValue(csharp);
-    await ToastComponentService!.ShowToastAsync(
+    await AppState.ToastComponentService!.ShowToastAsync(
             message: "JSON converted to C# POCO",
             type: ToastType.Success,
             title: "Conversion Successful",

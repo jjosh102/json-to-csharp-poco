@@ -1,0 +1,46 @@
+<div class="fixed top-4 right-4 z-50">
+  <button @onclick="TogglePanel" class="p-2 bg-blue-700 rounded-full hover:bg-green-700 transition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  </button>
+</div>
+<div class="@GetPanelClasses()">
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50 transition-opacity @(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")"
+    @onclick="TogglePanel">
+  </div>
+
+  <div class="fixed top-0 right-0 h-full w-96 transform transition-transform duration-300 ease-in-out @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
+    <div class="h-full p-6 bg-[#1E1E1E] text-white shadow-xl overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-xl font-bold">Settings</div>
+        <button @onclick="TogglePanel" class="text-gray-400 hover:text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <hr class="my-4 border-gray-600" />
+
+      //todo:Theme switcher and additional settings
+    </div>
+  </div>
+</div>
+
+@code {
+  private bool _isPanelOpen;
+
+  private void TogglePanel()
+  {
+    _isPanelOpen = !_isPanelOpen;
+  }
+
+  private string GetPanelClasses()
+  {
+    return $"fixed inset-0 z-50 overflow-hidden {(_isPanelOpen ? "pointer-events-auto" : "pointer-events-none")}";
+  }
+}

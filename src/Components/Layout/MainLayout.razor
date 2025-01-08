@@ -1,9 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
-<ToastComponent @ref="_toastComponentService" />
+<ToastComponent @ref="AppState.ToastComponentService" />
 <div class="min-h-screen flex flex-col">
-    <header class="bg-gradient-to-r from-[#1E1E1E] to-[#181818] py-4">
-        <div class="max-w-screen-2xl mx-auto px-2 flex items-center justify-start">
+    <header class="bg-gradient-to-r from-[#1E1E1E] to-[#181818] py-4 px-4 justify-between">
+        <div class="mx-auto px-2 flex items-center justify-start">
             <div class="flex items-center gap-2">
                 <div class="bg-blue-700 text-white text-sm font-mono font-semibold py-2 px-4 rounded-md">
                     {JSON}
@@ -14,13 +14,14 @@
                 </div>
             </div>
         </div>
+        <Settings />
     </header>
 
     <main class="flex-grow bg-[#121212]">
         <div class="max-w-screen-2xl mx-auto p-4">
             <ErrorBoundary>
                 <ChildContent>
-                    <CascadingValue Value="_toastComponentService">@Body</CascadingValue>
+                    @Body
                 </ChildContent>
                 <ErrorContent Context="Exception">
                     <div class="bg-[#161b22] border border-[#f85149] text-[#f85149] px-4 py-3 rounded">
@@ -39,7 +40,9 @@
 
 @code
 {
-    private ToastComponent? _toastComponentService;
+    [CascadingParameter]
+    public required CascadingAppState AppState { get; set; }
+
     protected override void OnInitialized()
     {
         BlazorMonaco.Editor.Global.SetTheme(JSRuntime, "vs-dark");
