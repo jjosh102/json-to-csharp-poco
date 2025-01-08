@@ -1,15 +1,27 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
+<ToastComponent @ref="_toastComponentService" />
 <div class="min-h-screen flex flex-col">
-    <header class="bg-[#0d1117] py-4">
-        <div class="max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
-            <div class="text-gray-100 font-semibold">Json to Csharp POCO</div>
+    <header class="bg-gradient-to-r from-[#1E1E1E] to-[#181818] py-4">
+        <div class="max-w-screen-2xl mx-auto px-2 flex items-center justify-start">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-700 text-white text-sm font-mono font-semibold py-2 px-4 rounded-md">
+                    {JSON}
+                </div>
+                <div class="text-gray-100 text-xl font-bold">→</div>
+                <div class="bg-green-700 text-white text-sm font-mono font-semibold py-2 px-4 rounded-md">
+                    &lt;C#&gt;
+                </div>
+            </div>
         </div>
     </header>
-    <main class="flex-grow bg-[#0d1117]">
+
+    <main class="flex-grow bg-[#121212]">
         <div class="max-w-screen-2xl mx-auto p-4">
             <ErrorBoundary>
-                <ChildContent> @Body </ChildContent>
+                <ChildContent>
+                    <CascadingValue Value="_toastComponentService">@Body</CascadingValue>
+                </ChildContent>
                 <ErrorContent Context="Exception">
                     <div class="bg-[#161b22] border border-[#f85149] text-[#f85149] px-4 py-3 rounded">
                         <span class="font-bold">Error Type:</span> @Exception.GetType() <br />
@@ -21,12 +33,13 @@
         </div>
     </main>
 
-    <footer class="bg-[#0d1117]">
+    <footer class="bg-[#121212]">
     </footer>
 </div>
 
 @code
 {
+    private ToastComponent? _toastComponentService;
     protected override void OnInitialized()
     {
         BlazorMonaco.Editor.Global.SetTheme(JSRuntime, "vs-dark");
