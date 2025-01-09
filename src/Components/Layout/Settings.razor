@@ -1,5 +1,7 @@
-<div class="fixed top-4 right-4 z-50">
-  <button @onclick="TogglePanel" class="p-2 bg-blue-700 rounded-full hover:bg-green-700 transition-colors">
+@inject IJSRuntime JSRuntime
+<div class="right-4 z-40">
+  <button @onclick="TogglePanel"
+    class="p-2 bg-[#007ACC] rounded-full hover:bg-[#388A34]  transition-colors duration-200">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
       stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -8,39 +10,62 @@
     </svg>
   </button>
 </div>
-<div class="@GetPanelClasses()">
-  <div
-    class="fixed inset-0 bg-black bg-opacity-50 transition-opacity @(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")"
-    @onclick="TogglePanel">
+
+<div class="fixed inset-0 z-50 overflow-hidden @(_isPanelOpen ? "pointer-events-auto" : "pointer-events-none")">
+  <div class="fixed inset-0 bg-black/50 dark:bg-black/70 transition-opacity duration-300 ease-in-out 
+                @(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")" @onclick="TogglePanel">
   </div>
 
-  <div class="fixed top-0 right-0 h-full w-96 transform transition-transform duration-300 ease-in-out @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
-    <div class="h-full p-6 bg-[#1E1E1E] text-white shadow-xl overflow-y-auto">
+  <div class="fixed top-0 right-0 h-full w-96 transform transition-transform duration-300 ease-in-out 
+                @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
+    <div class="h-full p-6 bg-[#F3F3F3] dark:bg-[#1E1E1E] text-gray-800 dark:text-gray-100 
+                    shadow-xl overflow-y-auto border-l border-[#E7E7E7] dark:border-[#2D2D2D]">
       <div class="flex justify-between items-center mb-4">
-        <div class="text-xl font-bold">Settings</div>
-        <button @onclick="TogglePanel" class="text-gray-400 hover:text-white">
+        <div class="text-xl font-semibold">Settings</div>
+        <button @onclick="TogglePanel" class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100 
+                               transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
-      <hr class="my-4 border-gray-600" />
+      <hr class="my-4 border-[#E7E7E7] dark:border-[#2D2D2D]" />
 
-      //todo:Theme switcher and additional settings
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium">Theme</span>
+          <button @onclick="ToggleTheme" class="flex items-center px-4 py-2 rounded transition-colors duration-300 
+       bg-gray-200 text-black hover:bg-gray-300 dark:bg-gray-800 dark:text-white hover:dark:bg-gray-700">
+            @if (!AppState.IsDarkTheme)
+            {
+              <span>Light Mode</span>
+            }
+            else
+            {
+              <span>Dark Mode</span>
+            }
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 @code {
-  private bool _isPanelOpen;
+private bool _isPanelOpen;
+
+  [CascadingParameter]
+  public required CascadingAppState AppState { get; set; }
 
   private void TogglePanel()
   {
     _isPanelOpen = !_isPanelOpen;
   }
 
-  private string GetPanelClasses()
+  private async Task ToggleTheme()
   {
-    return $"fixed inset-0 z-50 overflow-hidden {(_isPanelOpen ? "pointer-events-auto" : "pointer-events-none")}";
+    AppState.ToggleTheme();
+    await BlazorMonaco.Editor.Global.SetTheme(JSRuntime, AppState.IsDarkTheme ? "vs-dark" : "vs-light");
+
   }
 }

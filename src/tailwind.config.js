@@ -3,5 +3,6 @@
     theme: {
         extend: {},
     },
+    darkMode: 'class',
     plugins: [],
 }
