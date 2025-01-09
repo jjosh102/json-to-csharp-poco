@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
 
-<ToastComponent @ref="AppState.ToastComponentService" />
+<ToastComponent @ref="AppState.ToastService" />
 
 <div class="min-h-screen flex flex-col bg-white dark:bg-[#1E1E1E]">
     <header
@@ -47,3 +47,8 @@
     </footer>
 </div>
 
+@code
+{
+ [CascadingParameter]
+  public required CascadingAppState AppState { get; set; }
+}

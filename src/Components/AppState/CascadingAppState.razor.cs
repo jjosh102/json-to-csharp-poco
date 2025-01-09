@@ -12,7 +12,7 @@ public partial class CascadingAppState : ComponentBase
 
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
-  public ToastComponent? ToastComponentService;
+  public ToastComponent? ToastService;
   private string _currentTheme = "light";
   protected override async Task OnInitializedAsync()
   {

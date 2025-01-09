@@ -61,7 +61,7 @@ public partial class Index : ComponentBase
         return;
 
       await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharp);
-      await AppState.ToastComponentService!.ShowToastAsync(
+      await AppState.ToastService!.ShowToastAsync(
             message: "C# code copied to clipboard",
             type: ToastType.Success,
             title: "",
@@ -77,7 +77,7 @@ public partial class Index : ComponentBase
 
     if (string.IsNullOrWhiteSpace(jsonToConvert))
     {
-      await AppState.ToastComponentService!.ShowToastAsync(
+      await AppState.ToastService!.ShowToastAsync(
             message: "Please enter JSON to convert",
             type: ToastType.Error,
             title: "Error",
@@ -88,7 +88,7 @@ public partial class Index : ComponentBase
 
     var csharp = _jsonToCSharp.ConvertJsonToClass(jsonToConvert, "Root");
     await _csharpEditor.SetValue(csharp);
-    await AppState.ToastComponentService!.ShowToastAsync(
+    await AppState.ToastService!.ShowToastAsync(
             message: "JSON converted to C# POCO",
             type: ToastType.Success,
             title: "Conversion Successful",
