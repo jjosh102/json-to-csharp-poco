@@ -13,11 +13,28 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+            <div class="flex items-center gap-2">
+                <div class="bg-[#007ACC] text-white text-sm font-mono font-semibold py-2 px-4 rounded animate-bounce-fade-in"
+                    style="animation-delay: 0s;">
+                    {JSON}
+                </div>
+
+                <div class="text-gray-800 dark:text-gray-100 text-xl font-bold animate-bounce-fade-in"
+                    style="animation-delay: 0.5s;">
+                    →
+                </div>
+
+                <div class="bg-[#388A34] text-white text-sm font-mono font-semibold py-2 px-4 rounded animate-bounce-fade-in"
+                    style="animation-delay: 1s;">
+                    &lt;C#&gt;
+                </div>
+            </div>
+
+            <div class="text-gray-700 dark:text-gray-300 text-lg font-semibold mt-4 animate-fade-in">
+                Loading...
+            </div>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
