@@ -47,12 +47,3 @@
     </footer>
 </div>
 
-@code {
-    [CascadingParameter]
-    public required CascadingAppState AppState { get; set; }
-
-    protected override void OnInitialized()
-    {
-        BlazorMonaco.Editor.Global.SetTheme(JSRuntime, AppState.IsDarkTheme ? "vs-dark" : "vs-light");
-    }
-}

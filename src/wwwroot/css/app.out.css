@@ -1214,11 +1214,6 @@ h1:focus {
   border-color: rgb(248 81 73 / var(--tw-border-opacity));
 }
 
-:is(.dark .dark\:bg-\[\#0E639C\]) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(14 99 156 / var(--tw-bg-opacity));
-}
-
 :is(.dark .dark\:bg-\[\#121212\]) {
   --tw-bg-opacity: 1;
   background-color: rgb(18 18 18 / var(--tw-bg-opacity));
