@@ -1,4 +1,5 @@
 @inject IJSRuntime JSRuntime
+@inject ILocalStorageService LocalStorage 
 <div class="right-4 z-40">
   <button @onclick="TogglePanel"
     class="p-2 bg-[#007ACC] rounded-full hover:bg-[#388A34]  transition-colors duration-200">
@@ -66,6 +67,6 @@ private bool _isPanelOpen;
   {
     AppState.ToggleTheme();
     await BlazorMonaco.Editor.Global.SetTheme(JSRuntime, AppState.IsDarkTheme ? "vs-dark" : "vs-light");
-
+    await LocalStorage.SetItemAsync(Constants.ThemeKey, AppState.IsDarkTheme ? "dark" : "light");
   }
 }
