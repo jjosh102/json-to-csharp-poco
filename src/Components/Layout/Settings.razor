@@ -1,5 +1,5 @@
 @inject IJSRuntime JSRuntime
-@inject ILocalStorageService LocalStorage 
+@inject ILocalStorageService LocalStorage
 <div class="right-4 z-40">
   <button @onclick="TogglePanel"
     class="p-2 bg-[#007ACC] rounded-full hover:bg-[#388A34]  transition-colors duration-200">
@@ -35,16 +35,34 @@
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <span class="text-sm font-medium">Theme</span>
-          <button @onclick="ToggleTheme" class="flex items-center px-4 py-2 rounded transition-colors duration-300 
-       bg-gray-200 text-black hover:bg-gray-300 dark:bg-gray-800 dark:text-white hover:dark:bg-gray-700">
-            @if (!AppState.IsDarkTheme)
-            {
-              <span>Light Mode</span>
-            }
-            else
-            {
-              <span>Dark Mode</span>
-            }
+          <button @onclick="ToggleTheme"
+            class="flex items-center px-4 py-2 rounded-full transition-all duration-300 border 
+             @(AppState.IsDarkTheme ? "bg-[#1e1e1e] text-white border-gray-500 hover:bg-[#2d2d2d]" : "bg-[#d7d7d7] text-black border-gray-300 hover:bg-[#e7e7e7]")">
+            <div class="flex items-center gap-2">
+              @if (!AppState.IsDarkTheme)
+              {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-5 h-5" stroke="currentColor" stroke-width="2"
+                  viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                <span>Light Mode</span>
+              }
+              else
+              {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
+                </svg>
+                <span>Dark Mode</span>
+              }
+            </div>
           </button>
         </div>
       </div>
@@ -53,7 +71,7 @@
 </div>
 
 @code {
-private bool _isPanelOpen;
+  private bool _isPanelOpen;
 
   [CascadingParameter]
   public required CascadingAppState AppState { get; set; }
