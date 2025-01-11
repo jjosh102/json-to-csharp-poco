@@ -14,7 +14,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
  <ItemGroup>
-        <ProjectReference Include="..\..\src\JsonToCsharpPoco.csproj"/>
+        <ProjectReference Include="..\..\src\JsonToCsharpPoco.csproj" />
     </ItemGroup>
   <ItemGroup>
     <Using Include="Xunit" />

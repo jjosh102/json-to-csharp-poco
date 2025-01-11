@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -163,10 +164,7 @@ internal class CSharpPocoBuilder
 
   private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType)
   {
-    if (int.TryParse(propertyName, out _))
-    {
-      propertyName = $"_{propertyName}";
-    }
+    propertyName = ProcessPropertyName(propertyName);
 
     var propertyDeclaration = SyntaxFactory.PropertyDeclaration(
             SyntaxFactory.ParseTypeName(propertyType),
@@ -190,21 +188,20 @@ internal class CSharpPocoBuilder
 
   private ParameterSyntax GenerateRecordProperty(string propertyName, string propertyType)
   {
-    if (int.TryParse(propertyName, out _))
-    {
-      propertyName = $"_{propertyName}";
-    }
+    propertyName = ProcessPropertyName(propertyName);
 
     var propertyDeclaration = SyntaxFactory.Parameter(
               SyntaxFactory.Identifier(ToPascalCase(propertyName)))
              .WithType(SyntaxFactory.ParseTypeName(propertyType));
+
     var jsonPropertyNameAttribute = SyntaxFactory.Attribute(
-            SyntaxFactory.ParseName("property:JsonPropertyName"))
+              //todo: remove spaces in the attribute
+              SyntaxFactory.ParseName("property:JsonPropertyName"))
             .AddArgumentListArguments(SyntaxFactory.AttributeArgument(SyntaxFactory.ParseExpression($"\"{propertyName}\"")));
 
     var attributeList = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(jsonPropertyNameAttribute));
 
-    return propertyDeclaration.AddAttributeLists(attributeList);
+    return propertyDeclaration.AddAttributeLists(attributeList.NormalizeWhitespace(string.Empty));
   }
 
   private string ToPascalCase(string input)
@@ -215,4 +212,19 @@ internal class CSharpPocoBuilder
     buffer[0] = char.ToUpperInvariant(buffer[0]);
     return new string(buffer);
   }
+
+  private string ProcessPropertyName(string propertyName)
+  {
+
+    if (int.TryParse(propertyName, out _))
+    {
+      propertyName = $"_{propertyName}";
+    }
+
+    return RemoveSpecialCharacters(propertyName);
+  }
+
+  public static string RemoveSpecialCharacters(string input) =>
+    Regex.Replace(input, "[^a-zA-Z0-9_]", string.Empty);
+
 }

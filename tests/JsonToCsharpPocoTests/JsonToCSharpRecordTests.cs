@@ -30,7 +30,7 @@ public class JsonToCSharpRecordTests
         Assert.Contains("string Name", result);
         Assert.Contains("int Age", result);
         Assert.Contains("bool IsEmployee", result);
-        Assert.DoesNotContain("{ get; set; }", result); // Records should use positional parameters
+        Assert.DoesNotContain("{ get; set; }", result); 
     }
 
     [Fact]
@@ -159,11 +159,11 @@ public class JsonToCSharpRecordTests
 
         // Act
         var result = _converter.ConvertJsonToRecord(json, "NumericPropsRecord");
-
+   
         // Assert
         Assert.Contains("public record NumericPropsRecord", result);
-        Assert.Contains("[property :  JsonPropertyName(\"123\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"456\")]", result);
+        Assert.Contains("[property :  JsonPropertyName(\"_123\")]", result);
+        Assert.Contains("[property :  JsonPropertyName(\"_456\")]", result);
         Assert.Contains("string _123", result);
         Assert.Contains("int _456", result);
     }
@@ -200,10 +200,9 @@ public class JsonToCSharpRecordTests
         // Assert
         //todo: remove spaces in the attribute
         Assert.Contains("public record SpecialPropsRecord", result);
-        Assert.Contains("[property :  JsonPropertyName(\"@type\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"#id\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"$price\")]", result);
-        // todo: check if the special characters are handled correctly in the generated code
+        Assert.Contains("[property :  JsonPropertyName(\"type\")]", result);
+        Assert.Contains("[property :  JsonPropertyName(\"id\")]", result);
+        Assert.Contains("[property :  JsonPropertyName(\"price\")]", result);
         Assert.Contains("string Type", result);
         Assert.Contains("int Id", result);
         Assert.Contains("double Price", result);
