@@ -17,8 +17,28 @@ public class JsonToCSharp
       if (rootElement.ValueKind != JsonValueKind.Object)
         throw new InvalidOperationException("JSON root must be an object.");
 
-      var builder = new CSharpClassBuilder("JsonConverter");
+      var builder = new CSharpPocoBuilder("JsonConverter");
       builder.AddClassFromJson(rootElement, className);
+
+      return builder.Build();
+    }
+    catch (Exception ex)
+    {
+      return $"Error converting JSON: {ex.Message}";
+    }
+  }
+  public string ConvertJsonToRecord(string json, string recordName)
+  {
+    try
+    {
+      using var document = JsonDocument.Parse(json);
+      var rootElement = document.RootElement;
+
+      if (rootElement.ValueKind != JsonValueKind.Object)
+        throw new InvalidOperationException("JSON root must be an object.");
+
+      var builder = new CSharpPocoBuilder("JsonConverter");
+      builder.AddRecordFromJson(rootElement, recordName);
 
       return builder.Build();
     }
@@ -29,19 +49,18 @@ public class JsonToCSharp
   }
 }
 
-internal class CSharpClassBuilder
+internal class CSharpPocoBuilder
 {
   private readonly string _namespaceName;
-  private readonly List<ClassDeclarationSyntax> _classDeclarations = new();
+  private readonly List<MemberDeclarationSyntax> _declarations = [];
 
-  internal CSharpClassBuilder(string namespaceName)
+  internal CSharpPocoBuilder(string namespaceName)
   {
     _namespaceName = namespaceName;
   }
 
   internal void AddClassFromJson(JsonElement jsonObject, string className)
   {
-
     var classDeclaration = SyntaxFactory.ClassDeclaration(className)
          .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
@@ -49,35 +68,62 @@ internal class CSharpClassBuilder
 
     foreach (var property in jsonObject.EnumerateObject())
     {
-      var propertyType = DeterminePropertyType(property.Value, property.Name);
-
-      // Handle nested objects and arrays
-      if (property.Value.ValueKind == JsonValueKind.Object)
-      {
-        var nestedClassName = ToPascalCase(property.Name);
-        AddClassFromJson(property.Value, nestedClassName);
-        propertyType = nestedClassName;
-      }
-      else if (property.Value.ValueKind == JsonValueKind.Array && property.Value.EnumerateArray().Any() && property.Value[0].ValueKind == JsonValueKind.Object)
-      {
-        var nestedClassName = ToPascalCase(property.Name);
-        AddClassFromJson(property.Value[0], nestedClassName);
-        propertyType = $"IReadOnlyList<{nestedClassName}>";
-      }
-
-      var propertyDeclaration = GenerateProperty(property.Name, propertyType);
+      var propertyType = HandlePropertyType(property.Value, property.Name, AddClassFromJson);
+      var propertyDeclaration = GenerateClassProperty(property.Name, propertyType);
       properties.Add(propertyDeclaration);
     }
 
     classDeclaration = classDeclaration.AddMembers(properties.ToArray());
-    _classDeclarations.Add(classDeclaration);
+    _declarations.Add(classDeclaration);
+  }
 
+  internal void AddRecordFromJson(JsonElement jsonObject, string recordName)
+  {
+    var properties = new List<ParameterSyntax>();
+
+    foreach (var property in jsonObject.EnumerateObject())
+    {
+      var propertyType = HandlePropertyType(property.Value, property.Name, AddRecordFromJson);
+
+      var parameter = GenerateRecordProperty(property.Name, propertyType);
+      properties.Add(parameter);
+    }
+
+    var recordDeclaration = SyntaxFactory.RecordDeclaration(SyntaxFactory.Token(SyntaxKind.RecordKeyword), recordName)
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+            .AddParameterListParameters(properties.ToArray())
+            .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+
+    _declarations.Add(recordDeclaration);
+  }
+
+  private string HandlePropertyType(JsonElement propertyValue, string propertyName, Action<JsonElement, string> addNestedTypeAction)
+  {
+    string propertyType = DeterminePropertyType(propertyValue, propertyName);
+
+    if (propertyValue.ValueKind == JsonValueKind.Object)
+    {
+      var nestedTypeName = ToPascalCase(propertyName);
+      addNestedTypeAction(propertyValue, nestedTypeName);
+      return nestedTypeName;
+    }
+
+    if (propertyValue.ValueKind == JsonValueKind.Array &&
+        propertyValue.EnumerateArray().Any() &&
+        propertyValue[0].ValueKind == JsonValueKind.Object)
+    {
+      var nestedTypeName = ToPascalCase(propertyName);
+      addNestedTypeAction(propertyValue[0], nestedTypeName);
+      return $"IReadOnlyList<{nestedTypeName}>";
+    }
+
+    return propertyType;
   }
 
   internal string Build()
   {
     var namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(_namespaceName))
-        .AddMembers(_classDeclarations.ToArray());
+        .AddMembers(_declarations.ToArray());
 
     var compilationUnit = SyntaxFactory.CompilationUnit()
         .AddUsings(
@@ -115,7 +161,7 @@ internal class CSharpClassBuilder
     return elementTypes.Count == 1 ? elementTypes.First() : "object";
   }
 
-  public PropertyDeclarationSyntax GenerateProperty(string propertyName, string propertyType)
+  private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType)
   {
     if (int.TryParse(propertyName, out _))
     {
@@ -133,10 +179,31 @@ internal class CSharpClassBuilder
                 .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
         );
 
-    var jsonPropertyNameAttribute = SyntaxFactory.Attribute(SyntaxFactory.ParseName("JsonPropertyName"))
+    var jsonPropertyNameAttribute = SyntaxFactory.Attribute(
+        SyntaxFactory.ParseName("JsonPropertyName"))
         .AddArgumentListArguments(SyntaxFactory.AttributeArgument(SyntaxFactory.ParseExpression($"\"{propertyName}\"")));
 
     var attributeList = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(jsonPropertyNameAttribute));
+
+    return propertyDeclaration.AddAttributeLists(attributeList);
+  }
+
+  private ParameterSyntax GenerateRecordProperty(string propertyName, string propertyType)
+  {
+    if (int.TryParse(propertyName, out _))
+    {
+      propertyName = $"_{propertyName}";
+    }
+
+    var propertyDeclaration = SyntaxFactory.Parameter(
+              SyntaxFactory.Identifier(ToPascalCase(propertyName)))
+             .WithType(SyntaxFactory.ParseTypeName(propertyType));
+    var jsonPropertyNameAttribute = SyntaxFactory.Attribute(
+            SyntaxFactory.ParseName("property:JsonPropertyName"))
+            .AddArgumentListArguments(SyntaxFactory.AttributeArgument(SyntaxFactory.ParseExpression($"\"{propertyName}\"")));
+
+    var attributeList = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(jsonPropertyNameAttribute));
+
     return propertyDeclaration.AddAttributeLists(attributeList);
   }
 
@@ -147,12 +214,5 @@ internal class CSharpClassBuilder
     input.AsSpan().CopyTo(buffer);
     buffer[0] = char.ToUpperInvariant(buffer[0]);
     return new string(buffer);
-  }
-
-  private string RemoveTrailingS(string input)
-  {
-    //todo: handle cases like "status" -> "Status" and "items" -> "Item"
-    if (string.IsNullOrEmpty(input)) return input;
-    return input.EndsWith("s", StringComparison.InvariantCultureIgnoreCase) ? input[..^1] : input;
   }
 }

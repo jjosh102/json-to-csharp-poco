@@ -3,11 +3,11 @@
 using global::JsonToCsharpPoco.Converter;
 using Xunit;
 
-public class JsonToCSharpTests
+public class JsonToCSsharpClassTests
 {
     private readonly JsonToCSharp _converter;
 
-    public JsonToCSharpTests()
+    public JsonToCSsharpClassTests()
     {
         _converter = new JsonToCSharp();
     }
@@ -101,7 +101,6 @@ public class JsonToCSharpTests
 
         // Act
         var result = _converter.ConvertJsonToClass(json, expectedClassName);
-        Console.WriteLine(result);
         // Assert
         Assert.Contains("public IReadOnlyList<Items> Items", result);
         Assert.Contains("public class Items", result);
