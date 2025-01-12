@@ -1,15 +1,23 @@
 ﻿namespace JsonToCsharpPocoTests;
 
-using global::JsonToCsharpPoco.Converter;
+using JsonToCsharpPoco.Converter;
+using JsonToCsharp.Models;
 using Xunit;
 
 public class JsonToCSsharpClassTests
 {
     private readonly JsonToCSharp _converter;
+    private readonly ConversionOptions _defaultOptions;
 
     public JsonToCSsharpClassTests()
     {
         _converter = new JsonToCSharp();
+        _defaultOptions = new ConversionOptions
+        {
+            Namespace = "GeneratedModels",
+            GenerateRecords = false,
+            RootTypeName = "RootClass"
+        };
     }
 
     [Fact]
@@ -21,13 +29,12 @@ public class JsonToCSsharpClassTests
             ""age"": 30,
             ""isEmployee"": true
         }";
-        string expectedClassName = "Person";
 
         // Act
-        var result = _converter.ConvertJsonToClass(json, expectedClassName);
+        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
 
         // Assert
-        Assert.Contains("public class Person", result);
+        Assert.Contains("public class RootClass", result);
         Assert.Contains("public string Name", result);
         Assert.Contains("public int Age", result);
         Assert.Contains("public bool IsEmployee", result);
@@ -37,10 +44,10 @@ public class JsonToCSsharpClassTests
     public void ConvertJsonToClass_InvalidJson_ThrowsError()
     {
         // Arrange
-        string invalidJson = @"{ name: John }"; 
+        string invalidJson = @"{ name: John }";
 
         // Act
-        var result = _converter.ConvertJsonToClass(invalidJson, "Person");
+        var result = _converter.ConvertJsonToPoco(invalidJson, _defaultOptions);
 
         // Assert
         Assert.StartsWith("Error converting JSON", result);
@@ -51,14 +58,13 @@ public class JsonToCSsharpClassTests
     {
         // Arrange
         string emptyJson = "{}";
-        string expectedClassName = "Empty";
 
         // Act
-        var result = _converter.ConvertJsonToClass(emptyJson, expectedClassName);
+        var result = _converter.ConvertJsonToPoco(emptyJson, _defaultOptions);
 
         // Assert
-        Assert.Contains("public class Empty", result);
-        Assert.DoesNotContain("public", result.Replace("public class Empty", ""));
+        Assert.Contains("public class RootClass", result);
+        Assert.DoesNotContain("public", result.Replace("public class RootClass", ""));
     }
 
     [Fact]
@@ -74,13 +80,12 @@ public class JsonToCSsharpClassTests
                 }
             }
         }";
-        string expectedClassName = "Root";
 
         // Act
-        var result = _converter.ConvertJsonToClass(json, expectedClassName);
+        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
 
         // Assert
-        Assert.Contains("public class Root", result);
+        Assert.Contains("public class RootClass", result);
         Assert.Contains("public Person Person", result);
         Assert.Contains("public class Person", result);
         Assert.Contains("public Address Address", result);
@@ -97,10 +102,10 @@ public class JsonToCSsharpClassTests
                 { ""id"": 2, ""value"": ""B"" }
             ]
         }";
-        string expectedClassName = "Root";
 
         // Act
-        var result = _converter.ConvertJsonToClass(json, expectedClassName);
+        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+
         // Assert
         Assert.Contains("public IReadOnlyList<Items> Items", result);
         Assert.Contains("public class Items", result);
@@ -115,34 +120,36 @@ public class JsonToCSsharpClassTests
         string json = @"{
             ""data"": [""text"", true, 1]
         }";
-        string expectedClassName = "Root";
 
         // Act
-        var result = _converter.ConvertJsonToClass(json, expectedClassName);
+        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
 
         // Assert
         Assert.Contains("public IReadOnlyList<object> Data", result);
     }
 
     [Fact]
-public void ConvertJsonToClass_NumericPropertyName_ConvertsToValidStringPropertyName()
-{
-    // Arrange
-    string json = @"{
-        ""123"": ""value"",
-        ""456"": 100
-    }";
-    string expectedClassName = "_123";
+    public void ConvertJsonToClass_NumericPropertyName_ConvertsToValidStringPropertyName()
+    {
+        // Arrange
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
 
-    // Act
-    var result = _converter.ConvertJsonToClass(json, expectedClassName);
+        var options  = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            RootTypeName = "123"
+        };
 
-    // Assert
-    Assert.Contains("public class _123", result);
-    Assert.Contains("public string _123", result);  
-    Assert.Contains("public int _456", result);
-}
+        // Act
+        var result = _converter.ConvertJsonToPoco(json, options);
 
-
-    
+        // Assert
+        Assert.Contains("public class _123", result);
+        Assert.Contains("public string _123", result);
+        Assert.Contains("public int _456", result);
+    }
 }

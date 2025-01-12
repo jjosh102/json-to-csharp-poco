@@ -7,12 +7,13 @@ using JsonToCsharpPoco.Converter;
 using Microsoft.JSInterop;
 using JsonToCsharpPoco.Components.AppState;
 using JsonToCsharpPoco.Components.Toast;
+using JsonToCsharp.Models;
 namespace JsonToCsharpPoco.Components.Pages;
 
 public partial class Index : ComponentBase
 {
-
   private readonly JsonToCSharp _jsonToCSharp;
+  private ConversionOptions _options = new();
 
   private readonly IJSRuntime _jsRuntime;
 
@@ -85,13 +86,24 @@ public partial class Index : ComponentBase
       return;
     }
 
-    var csharp = _jsonToCSharp.ConvertJsonToRecord(jsonToConvert, "Root");
-    await _csharpEditor.SetValue(csharp);
-    await AppState.ToastService!.ShowToastAsync(
-            message: "JSON converted to C# POCO",
-            type: ToastType.Success,
-            title: "Conversion Successful",
-            durationMs: 3000
-        );
+    if (_jsonToCSharp.TryConvertJsonToPoco(jsonToConvert, _options, out var syntax))
+    {
+      await _csharpEditor.SetValue(syntax);
+      await AppState.ToastService!.ShowToastAsync(
+        message: "JSON converted to C# POCO",
+        type: ToastType.Success,
+        title: "Conversion Successful",
+        durationMs: 3000
+      );
+    }
+    else
+    {
+      await AppState.ToastService!.ShowToastAsync(
+        message: "Error converting JSON to C# POCO",
+        type: ToastType.Error,
+        title: "Conversion Failed",
+        durationMs: 3000
+      );
+    }
   }
 }

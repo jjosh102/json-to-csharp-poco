@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using JsonToCsharp.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -8,7 +9,7 @@ namespace JsonToCsharpPoco.Converter;
 
 public class JsonToCSharp
 {
-  public string ConvertJsonToClass(string json, string className)
+  public bool TryConvertJsonToPoco(string json, ConversionOptions options, out string syntax)
   {
     try
     {
@@ -18,50 +19,57 @@ public class JsonToCSharp
       if (rootElement.ValueKind != JsonValueKind.Object)
         throw new InvalidOperationException("JSON root must be an object.");
 
-      var builder = new CSharpPocoBuilder("JsonConverter");
-      builder.AddClassFromJson(rootElement, className);
-
-      return builder.Build();
+      var builder = new CSharpPocoBuilder(rootElement, options);
+      syntax = builder.Build();
+      return true;
     }
     catch (Exception ex)
     {
-      return $"Error converting JSON: {ex.Message}";
+      syntax = $"Error converting JSON: {ex.Message}";
+      return false;
     }
   }
 
-  public string ConvertJsonToRecord(string json, string recordName)
+  public string ConvertJsonToPoco(string json, ConversionOptions options)
   {
-    try
-    {
-      using var document = JsonDocument.Parse(json);
-      var rootElement = document.RootElement;
-
-      if (rootElement.ValueKind != JsonValueKind.Object)
-        throw new InvalidOperationException("JSON root must be an object.");
-
-      var builder = new CSharpPocoBuilder("JsonConverter");
-      builder.AddRecordFromJson(rootElement, recordName);
-
-      return builder.Build();
-    }
-    catch (Exception ex)
-    {
-      return $"Error converting JSON: {ex.Message}";
-    }
+    TryConvertJsonToPoco(json, options, out var syntax);
+    return syntax;
   }
 }
 
-internal class CSharpPocoBuilder
+internal partial class CSharpPocoBuilder
 {
-  private readonly string _namespaceName;
-  private readonly List<MemberDeclarationSyntax> _declarations = new();
-
-  internal CSharpPocoBuilder(string namespaceName)
+  private readonly ConversionOptions _conversionOptions;
+  private readonly JsonElement _rootElement;
+  private readonly List<MemberDeclarationSyntax> _declarations = [];
+  internal CSharpPocoBuilder(JsonElement rootElement, ConversionOptions conversionOptions)
   {
-    _namespaceName = namespaceName;
+    _conversionOptions = conversionOptions;
+    _rootElement = rootElement;
   }
 
-  internal void AddClassFromJson(JsonElement jsonObject, string className)
+  internal string Build()
+  {
+    return _conversionOptions.GenerateRecords
+        ? Build(AddRecordFromJson)
+        : Build(AddClassFromJson);
+  }
+
+  private string Build(Action<JsonElement, string> buildSyntax)
+  {
+    buildSyntax(_rootElement, _conversionOptions.RootTypeName);
+
+    var namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(_conversionOptions.Namespace))
+        .AddMembers(_declarations.ToArray());
+
+    var compilationUnit = SyntaxFactory.CompilationUnit()
+        .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Text.Json.Serialization")))
+        .AddMembers(namespaceDeclaration);
+
+    return compilationUnit.NormalizeWhitespace().ToFullString();
+  }
+
+  private void AddClassFromJson(JsonElement jsonObject, string className)
   {
     className = SanitizePropertyName(className);
     var classDeclaration = SyntaxFactory.ClassDeclaration(className)
@@ -79,7 +87,8 @@ internal class CSharpPocoBuilder
     classDeclaration = classDeclaration.AddMembers(properties.ToArray());
     _declarations.Add(classDeclaration);
   }
-  internal void AddRecordFromJson(JsonElement jsonObject, string recordName)
+
+  private void AddRecordFromJson(JsonElement jsonObject, string recordName)
   {
     recordName = SanitizePropertyName(recordName);
     var properties = new List<ParameterSyntax>();
@@ -121,20 +130,6 @@ internal class CSharpPocoBuilder
     }
 
     return propertyType;
-  }
-
-  internal string Build()
-  {
-    var namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(_namespaceName))
-        .AddMembers(_declarations.ToArray());
-
-    var compilationUnit = SyntaxFactory.CompilationUnit()
-        .AddUsings(
-            SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Text.Json.Serialization"))
-        )
-        .AddMembers(namespaceDeclaration);
-
-    return compilationUnit.NormalizeWhitespace().ToFullString();
   }
 
   private string DeterminePropertyType(JsonElement value, string propertyName)
@@ -203,7 +198,7 @@ internal class CSharpPocoBuilder
             SyntaxFactory.AttributeArgument(
                 SyntaxFactory.LiteralExpression(
                     SyntaxKind.StringLiteralExpression,
-                    SyntaxFactory.Literal(propertyName))));
+                    SyntaxFactory.Literal(RemoveSpecialCharacters(propertyName)))));
 
     var attributeList = SyntaxFactory.AttributeList(
         SyntaxFactory.SingletonSeparatedList(jsonPropertyNameAttribute));
@@ -231,6 +226,8 @@ internal class CSharpPocoBuilder
     return RemoveSpecialCharacters(propertyName);
   }
 
-  public static string RemoveSpecialCharacters(string input) =>
-      Regex.Replace(input, "[^a-zA-Z0-9_]", string.Empty);
+  [GeneratedRegex("[^a-zA-Z0-9_]", RegexOptions.Compiled)]
+  private static partial Regex MyRegex();
+  private static string RemoveSpecialCharacters(string input) =>
+      MyRegex().Replace(input, string.Empty);
 }
