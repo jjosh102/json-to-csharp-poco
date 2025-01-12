@@ -158,12 +158,12 @@ public class JsonToCSharpRecordTests
         }";
 
         // Act
-        var result = _converter.ConvertJsonToRecord(json, "NumericPropsRecord");
+        var result = _converter.ConvertJsonToRecord(json, "_123");
    
         // Assert
-        Assert.Contains("public record NumericPropsRecord", result);
-        Assert.Contains("[property :  JsonPropertyName(\"_123\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"_456\")]", result);
+        Assert.Contains("public record _123", result);
+        Assert.Contains("[property:JsonPropertyName(\"_123\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"_456\")]", result);
         Assert.Contains("string _123", result);
         Assert.Contains("int _456", result);
     }
@@ -196,13 +196,12 @@ public class JsonToCSharpRecordTests
 
         // Act
         var result = _converter.ConvertJsonToRecord(json, "SpecialPropsRecord");
-       
+    
         // Assert
-        //todo: remove spaces in the attribute
         Assert.Contains("public record SpecialPropsRecord", result);
-        Assert.Contains("[property :  JsonPropertyName(\"type\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"id\")]", result);
-        Assert.Contains("[property :  JsonPropertyName(\"price\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"type\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"id\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"price\")]", result);
         Assert.Contains("string Type", result);
         Assert.Contains("int Id", result);
         Assert.Contains("double Price", result);

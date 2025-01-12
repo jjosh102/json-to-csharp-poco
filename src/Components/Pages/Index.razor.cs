@@ -68,7 +68,6 @@ public partial class Index : ComponentBase
             durationMs: 3000
         );
     });
-
   }
 
   public async Task Convert()
@@ -86,7 +85,7 @@ public partial class Index : ComponentBase
       return;
     }
 
-    var csharp = _jsonToCSharp.ConvertJsonToClass(jsonToConvert, "Root");
+    var csharp = _jsonToCSharp.ConvertJsonToRecord(jsonToConvert, "Root");
     await _csharpEditor.SetValue(csharp);
     await AppState.ToastService!.ShowToastAsync(
             message: "JSON converted to C# POCO",

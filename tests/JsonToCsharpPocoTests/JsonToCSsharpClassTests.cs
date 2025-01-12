@@ -132,13 +132,13 @@ public void ConvertJsonToClass_NumericPropertyName_ConvertsToValidStringProperty
         ""123"": ""value"",
         ""456"": 100
     }";
-    string expectedClassName = "Root";
+    string expectedClassName = "_123";
 
     // Act
     var result = _converter.ConvertJsonToClass(json, expectedClassName);
 
     // Assert
-    Assert.Contains("public class Root", result);
+    Assert.Contains("public class _123", result);
     Assert.Contains("public string _123", result);  
     Assert.Contains("public int _456", result);
 }
