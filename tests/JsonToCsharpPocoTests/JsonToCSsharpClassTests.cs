@@ -1,7 +1,9 @@
-﻿namespace JsonToCsharpPocoTests;
+﻿using JsonToCsharpPoco.Models;
+using JsonToCsharpPoco.Models.Enums;
+
+namespace JsonToCsharpPocoTests;
 
 using JsonToCsharpPoco.Converter;
-using JsonToCsharp.Models;
 using Xunit;
 
 public class JsonToCSsharpClassTests
@@ -14,7 +16,7 @@ public class JsonToCSsharpClassTests
        _converter = new JsonToCSharp(new CSharpPocoBuilder());
         _defaultOptions = new ConversionOptions
         {
-            Namespace = "GeneratedModels",
+            Namespace = "TestNamespace",
             GenerateRecords = false,
             RootTypeName = "RootClass"
         };
@@ -151,5 +153,51 @@ public class JsonToCSsharpClassTests
         Assert.Contains("public class _123", result);
         Assert.Contains("public string _123", result);
         Assert.Contains("public int _456", result);
+    }
+    [Fact]
+    public void ConvertJsonToClass_PropertyAccessMutable_GeneratesGettersAndSetters()
+    {
+        // Arrange
+        string json = @"{
+            ""name"": ""John"",
+            ""age"": 30
+        }";
+        
+        var options  = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            PropertyAccess = PropertyAccess.Mutable
+        };
+        
+        // Act
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        // Assert
+        Assert.Contains("public string Name { get; set; }", result);
+        Assert.Contains("public int Age { get; set; }", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PropertyAccessImmutable_GeneratesGettersAndInitOnlySetters()
+    {
+        // Arrange
+        string json = @"{
+            ""name"": ""John"",
+            ""age"": 30
+        }";
+        var options  = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            PropertyAccess = PropertyAccess.Immutable
+        };
+
+        // Act
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        // Assert
+        Assert.Contains("public string Name { get; init; }", result);
+        Assert.Contains("public int Age { get; init; }", result);
     }
 }

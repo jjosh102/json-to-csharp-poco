@@ -6,43 +6,60 @@
         <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
             <div class="flex items-center">
                 <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="generate-records">
+                       for="generate-records">
                     Generate Records
                 </label>
                 <input type="checkbox" id="generate-records" @bind="_options.GenerateRecords"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                       class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
             </div>
-
-            @* <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="make-properties-immutable">
-                    Make Properties Immutable
-                </label>
-                <input type="checkbox" id="make-properties-immutable" @bind="_options.MakePropertiesImmutable"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
-            </div> *@
+            @if (_options.GenerateRecords)
+            {
+                <div class="flex items-center">
+                    <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
+                           for="use-primary-constructor">
+                        Use Primary Constructor
+                    </label>
+                    <input type="checkbox" id="use-primary-constructor" @bind="_options.UsePrimaryConstructor"
+                           class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                </div>
+            }
+            @if (!_options.UsePrimaryConstructor)
+            {
+                <div class="flex items-center">
+                    <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
+                           for="property-access">
+                        Property Access
+                    </label>
+                    <select id="property-access" @bind="_options.PropertyAccess"
+                            class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                        <option value="@PropertyAccess.Immutable">Immutable</option>
+                        <option value="@PropertyAccess.Mutable">Mutable</option>
+                    </select>
+                </div>
+            }
 
             <div class="flex items-center w-full sm:w-auto">
                 <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="namespace">
                     Namespace
                 </label>
                 <input type="text" id="namespace" @bind="_options.Namespace"
-                    class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                       class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
             </div>
 
             <div class="flex items-center w-full sm:w-auto">
                 <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="root-type-name">
-                    Root Type Name
+                       for="root-type-name">
+                    Root Name
                 </label>
-                <input type="text" id="root-type-name" @bind="_options.RootTypeName"
-                    class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                <input type="text" id="root-name" @bind="_options.RootTypeName"
+                       class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
             </div>
         </div>
     </div>
 
     <div class="flex justify-end">
-        <button class="px-4 py-2 bg-[#007ACC] rounded-full text-white hover:bg-[#388A34] transition-colors duration-200"
+        <button
+            class="px-4 py-2 font-mono font-semibold bg-[#007ACC] rounded-full text-white hover:bg-[#388A34] transition-colors duration-200"
             @onclick="Convert">
             Convert
         </button>
@@ -52,22 +69,22 @@
     <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
         <div class="flex-1">
             <label for="json-editor"
-                class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                   class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
                 JSON Editor
             </label>
             <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor"
-                ConstructionOptions="JsonEditorConstructionOptions"
-                CssClass="h-[calc(100vh-12rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
+                                  ConstructionOptions="JsonEditorConstructionOptions"
+                                  CssClass="h-[calc(100vh-12rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]"/>
         </div>
 
         <div class="flex-1">
             <label for="csharp-editor"
-                class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                   class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
                 C# Editor
             </label>
             <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"
-                ConstructionOptions="CsharpEditorConstructionOptions"
-                CssClass="h-[calc(100vh-12rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
+                                  ConstructionOptions="CsharpEditorConstructionOptions"
+                                  CssClass="h-[calc(100vh-12rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]"/>
         </div>
     </div>
 </div>

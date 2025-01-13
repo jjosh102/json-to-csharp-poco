@@ -1,5 +1,5 @@
 using System.Text.Json;
-using JsonToCsharp.Models;
+using JsonToCsharpPoco.Models;
 
 namespace JsonToCsharpPoco.Converter;
 

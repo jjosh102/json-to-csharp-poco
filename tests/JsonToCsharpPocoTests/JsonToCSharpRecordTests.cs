@@ -1,6 +1,8 @@
+using JsonToCsharpPoco.Models;
+using JsonToCsharpPoco.Models.Enums;
+
 namespace JsonToCsharpPocoTests;
 
-using JsonToCsharp.Models;
 using JsonToCsharpPoco.Converter;
 using Xunit;
 
@@ -16,6 +18,7 @@ public class JsonToCSharpRecordTests
         {
             Namespace = "TestNamespace",
             GenerateRecords = true,
+            UsePrimaryConstructor = true,
             RootTypeName = "RootRecord"
         };
     }
@@ -151,10 +154,11 @@ public class JsonToCSharpRecordTests
         {
             Namespace = "TestNamespace",
             GenerateRecords = true,
+            UsePrimaryConstructor = true,
             RootTypeName = "123"
         };
         var result = _converter.ConvertJsonToPoco(json, options);
-
+        Console.WriteLine(result);
         Assert.Contains("public record _123", result);
         Assert.Contains("[property:JsonPropertyName(\"123\")]", result);
         Assert.Contains("[property:JsonPropertyName(\"456\")]", result);
@@ -193,5 +197,52 @@ public class JsonToCSharpRecordTests
         Assert.Contains("string Type", result);
         Assert.Contains("int Id", result);
         Assert.Contains("double Price", result);
+    }
+    
+    [Fact]
+    public void ConvertJsonToRecord_PropertyAccessMutable_GeneratesGettersAndSetters()
+    {
+        // Arrange
+        string json = @"{
+            ""name"": ""John"",
+            ""age"": 30
+        }";
+        
+        var options  = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            PropertyAccess = PropertyAccess.Mutable
+        };
+        
+        // Act
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        // Assert
+        Assert.Contains("public string Name { get; set; }", result);
+        Assert.Contains("public int Age { get; set; }", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_PropertyAccessImmutable_GeneratesGettersAndInitOnlySetters()
+    {
+        // Arrange
+        string json = @"{
+            ""name"": ""John"",
+            ""age"": 30
+        }";
+        var options  = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            PropertyAccess = PropertyAccess.Immutable
+        };
+
+        // Act
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        // Assert
+        Assert.Contains("public string Name { get; init; }", result);
+        Assert.Contains("public int Age { get; init; }", result);
     }
 }

@@ -658,6 +658,10 @@ video {
   min-height: 100vh;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .w-4 {
   width: 1rem;
 }

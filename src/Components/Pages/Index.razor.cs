@@ -7,7 +7,8 @@ using JsonToCsharpPoco.Converter;
 using Microsoft.JSInterop;
 using JsonToCsharpPoco.Components.AppState;
 using JsonToCsharpPoco.Components.Toast;
-using JsonToCsharp.Models;
+using JsonToCsharpPoco.Models;
+
 namespace JsonToCsharpPoco.Components.Pages;
 
 public partial class Index : ComponentBase
