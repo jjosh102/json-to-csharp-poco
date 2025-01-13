@@ -157,6 +157,7 @@ public class JsonToCSharpRecordTests
             UsePrimaryConstructor = true,
             RootTypeName = "123"
         };
+
         var result = _converter.ConvertJsonToPoco(json, options);
         Console.WriteLine(result);
         Assert.Contains("public record _123", result);
