@@ -6,7 +6,7 @@ using BenchmarkDotNet.Running;
 
 namespace JsonToCsharpPoco.Benchmarks;
 
-public class StringUtilityBenchmark
+public partial class StringUtilityBenchmark
 {
 
     [Benchmark]
@@ -24,10 +24,13 @@ public class StringUtilityBenchmark
     }
 
     [Benchmark]
-    public string RemoveSpecialCharactersWithRegex()
+    public  string RemoveSpecialCharactersWithRegex()
     {
         string input = "123!@#abcABC_@#$defGHI1234*()xyz!@#";
-        return Regex.Replace(input, "[^a-zA-Z0-9_]", string.Empty);
+        return SpecialCharactersRegex().Replace(input, string.Empty);
     }
+
+    [GeneratedRegex("[^a-zA-Z0-9_]", RegexOptions.Compiled)]
+    private static partial Regex SpecialCharactersRegex();
 }
 

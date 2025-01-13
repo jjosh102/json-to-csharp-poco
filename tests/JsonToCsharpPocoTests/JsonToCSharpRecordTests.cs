@@ -11,7 +11,7 @@ public class JsonToCSharpRecordTests
 
     public JsonToCSharpRecordTests()
     {
-        _converter = new JsonToCSharp();
+        _converter = new JsonToCSharp(new CSharpPocoBuilder());
         _defaultOptions = new ConversionOptions
         {
             Namespace = "TestNamespace",

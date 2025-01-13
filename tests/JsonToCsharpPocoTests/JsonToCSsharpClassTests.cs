@@ -11,7 +11,7 @@ public class JsonToCSsharpClassTests
 
     public JsonToCSsharpClassTests()
     {
-        _converter = new JsonToCSharp();
+       _converter = new JsonToCSharp(new CSharpPocoBuilder());
         _defaultOptions = new ConversionOptions
         {
             Namespace = "GeneratedModels",
