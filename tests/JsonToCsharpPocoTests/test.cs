@@ -5,357 +5,357 @@ namespace JsonToCsharp
     public record Subsidiaries
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [JsonPropertyName("location")]
-        public string Location { get; init; }
+        public string Location { get; set; }
 
         [JsonPropertyName("employeeCount")]
-        public int EmployeeCount { get; init; }
+        public int EmployeeCount { get; set; }
 
         [JsonPropertyName("revenue")]
-        public int Revenue { get; init; }
+        public int Revenue { get; set; }
     }
 
     public record Company
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [JsonPropertyName("founded")]
-        public DateTime Founded { get; init; }
+        public DateTime Founded { get; set; }
 
         [JsonPropertyName("isPublic")]
-        public bool IsPublic { get; init; }
+        public bool IsPublic { get; set; }
 
         [JsonPropertyName("stockPrice")]
-        public double StockPrice { get; init; }
+        public double StockPrice { get; set; }
 
         [JsonPropertyName("marketCap")]
-        public int MarketCap { get; init; }
+        public int MarketCap { get; set; }
 
         [JsonPropertyName("activeMarkets")]
-        public IReadOnlyList<string> ActiveMarkets { get; init; }
+        public IReadOnlyList<string> ActiveMarkets { get; set; }
 
         [JsonPropertyName("subsidiaries")]
-        public IReadOnlyList<Subsidiaries> Subsidiaries { get; init; }
+        public IReadOnlyList<Subsidiaries> Subsidiaries { get; set; }
     }
 
     public record Deadlines
     {
         [JsonPropertyName("start")]
-        public DateTime Start { get; init; }
+        public DateTime Start { get; set; }
 
         [JsonPropertyName("end")]
-        public DateTime End { get; init; }
+        public DateTime End { get; set; }
     }
 
     public record Projects
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; init; }
+        public string Status { get; set; }
 
         [JsonPropertyName("completionRate")]
-        public int CompletionRate { get; init; }
+        public int CompletionRate { get; set; }
 
         [JsonPropertyName("hoursLogged")]
-        public double HoursLogged { get; init; }
+        public double HoursLogged { get; set; }
 
         [JsonPropertyName("deadlines")]
-        public Deadlines Deadlines { get; init; }
+        public Deadlines Deadlines { get; set; }
     }
 
     public record _2023
     {
         [JsonPropertyName("q1")]
-        public double Q1 { get; init; }
+        public double Q1 { get; set; }
 
         [JsonPropertyName("q2")]
-        public double Q2 { get; init; }
+        public double Q2 { get; set; }
 
         [JsonPropertyName("q3")]
-        public double Q3 { get; init; }
+        public double Q3 { get; set; }
 
         [JsonPropertyName("q4")]
-        public double Q4 { get; init; }
+        public double Q4 { get; set; }
     }
 
     public record Performance
     {
-        [JsonPropertyName("_2023")]
-        public _2023 _2023 { get; init; }
+        [JsonPropertyName("2023")]
+        public _2023 _2023 { get; set; }
     }
 
     public record Employees
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("firstName")]
-        public string FirstName { get; init; }
+        public string FirstName { get; set; }
 
         [JsonPropertyName("lastName")]
-        public string LastName { get; init; }
+        public string LastName { get; set; }
 
         [JsonPropertyName("email")]
-        public string Email { get; init; }
+        public string Email { get; set; }
 
         [JsonPropertyName("role")]
-        public string Role { get; init; }
+        public string Role { get; set; }
 
         [JsonPropertyName("department")]
-        public string Department { get; init; }
+        public string Department { get; set; }
 
         [JsonPropertyName("startDate")]
-        public DateTime StartDate { get; init; }
+        public DateTime StartDate { get; set; }
 
         [JsonPropertyName("salary")]
-        public int Salary { get; init; }
+        public int Salary { get; set; }
 
         [JsonPropertyName("active")]
-        public bool Active { get; init; }
+        public bool Active { get; set; }
 
         [JsonPropertyName("badges")]
-        public IReadOnlyList<string> Badges { get; init; }
+        public IReadOnlyList<string> Badges { get; set; }
 
         [JsonPropertyName("skills")]
-        public IReadOnlyList<string> Skills { get; init; }
+        public IReadOnlyList<string> Skills { get; set; }
 
         [JsonPropertyName("projects")]
-        public IReadOnlyList<Projects> Projects { get; init; }
+        public IReadOnlyList<Projects> Projects { get; set; }
 
         [JsonPropertyName("performance")]
-        public Performance Performance { get; init; }
+        public Performance Performance { get; set; }
     }
 
     public record UsageStats
     {
         [JsonPropertyName("activeUsers")]
-        public int ActiveUsers { get; init; }
+        public int ActiveUsers { get; set; }
 
         [JsonPropertyName("averageDailyRequests")]
-        public int AverageDailyRequests { get; init; }
+        public int AverageDailyRequests { get; set; }
 
         [JsonPropertyName("storageUsed")]
-        public string StorageUsed { get; init; }
+        public string StorageUsed { get; set; }
     }
 
     public record Limitations
     {
         [JsonPropertyName("maxUsers")]
-        public int MaxUsers { get; init; }
+        public int MaxUsers { get; set; }
 
         [JsonPropertyName("maxStorage")]
-        public string MaxStorage { get; init; }
+        public string MaxStorage { get; set; }
 
         [JsonPropertyName("maxRequests")]
-        public int MaxRequests { get; init; }
+        public int MaxRequests { get; set; }
     }
 
     public record Features
     {
         [JsonPropertyName("name")]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [JsonPropertyName("isEnabled")]
-        public bool IsEnabled { get; init; }
+        public bool IsEnabled { get; set; }
 
         [JsonPropertyName("usageStats")]
-        public UsageStats UsageStats { get; init; }
+        public UsageStats UsageStats { get; set; }
 
         [JsonPropertyName("limitations")]
-        public Limitations Limitations { get; init; }
+        public Limitations Limitations { get; set; }
     }
 
     public record Products
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; init; }
+        public string Name { get; set; }
 
         [JsonPropertyName("version")]
-        public DateTime Version { get; init; }
+        public DateTime Version { get; set; }
 
         [JsonPropertyName("price")]
-        public double Price { get; init; }
+        public double Price { get; set; }
 
         [JsonPropertyName("currency")]
-        public string Currency { get; init; }
+        public string Currency { get; set; }
 
         [JsonPropertyName("isSubscription")]
-        public bool IsSubscription { get; init; }
+        public bool IsSubscription { get; set; }
 
         [JsonPropertyName("activeSubscribers")]
-        public int ActiveSubscribers { get; init; }
+        public int ActiveSubscribers { get; set; }
 
         [JsonPropertyName("features")]
-        public IReadOnlyList<Features> Features { get; init; }
+        public IReadOnlyList<Features> Features { get; set; }
     }
 
     public record Support_tickets
     {
         [JsonPropertyName("id")]
-        public string Id { get; init; }
+        public string Id { get; set; }
 
         [JsonPropertyName("customer")]
-        public string Customer { get; init; }
+        public string Customer { get; set; }
 
         [JsonPropertyName("priority")]
-        public string Priority { get; init; }
+        public string Priority { get; set; }
 
         [JsonPropertyName("status")]
-        public string Status { get; init; }
+        public string Status { get; set; }
 
         [JsonPropertyName("created")]
-        public DateTime Created { get; init; }
+        public DateTime Created { get; set; }
 
         [JsonPropertyName("updated")]
-        public DateTime Updated { get; init; }
+        public DateTime Updated { get; set; }
 
         [JsonPropertyName("subject")]
-        public string Subject { get; init; }
+        public string Subject { get; set; }
 
         [JsonPropertyName("assignee")]
-        public string Assignee { get; init; }
+        public string Assignee { get; set; }
 
         [JsonPropertyName("responseTime")]
-        public double ResponseTime { get; init; }
+        public double ResponseTime { get; set; }
 
         [JsonPropertyName("tags")]
-        public IReadOnlyList<string> Tags { get; init; }
+        public IReadOnlyList<string> Tags { get; set; }
     }
 
     public record Last_24h
     {
         [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; init; }
+        public DateTime Timestamp { get; set; }
 
         [JsonPropertyName("cpu_usage")]
-        public double Cpu_usage { get; init; }
+        public double Cpu_usage { get; set; }
 
         [JsonPropertyName("memory_usage")]
-        public double Memory_usage { get; init; }
+        public double Memory_usage { get; set; }
 
         [JsonPropertyName("active_users")]
-        public int Active_users { get; init; }
+        public int Active_users { get; set; }
 
         [JsonPropertyName("response_time")]
-        public double Response_time { get; init; }
+        public double Response_time { get; set; }
     }
 
     public record Daily_average
     {
         [JsonPropertyName("cpu_usage")]
-        public double Cpu_usage { get; init; }
+        public double Cpu_usage { get; set; }
 
         [JsonPropertyName("memory_usage")]
-        public double Memory_usage { get; init; }
+        public double Memory_usage { get; set; }
 
         [JsonPropertyName("active_users")]
-        public int Active_users { get; init; }
+        public int Active_users { get; set; }
 
         [JsonPropertyName("response_time")]
-        public double Response_time { get; init; }
+        public double Response_time { get; set; }
     }
 
     public record Peak_values
     {
         [JsonPropertyName("cpu_usage")]
-        public double Cpu_usage { get; init; }
+        public double Cpu_usage { get; set; }
 
         [JsonPropertyName("memory_usage")]
-        public double Memory_usage { get; init; }
+        public double Memory_usage { get; set; }
 
         [JsonPropertyName("active_users")]
-        public int Active_users { get; init; }
+        public int Active_users { get; set; }
 
         [JsonPropertyName("response_time")]
-        public double Response_time { get; init; }
+        public double Response_time { get; set; }
     }
 
     public record Aggregates
     {
         [JsonPropertyName("daily_average")]
-        public Daily_average Daily_average { get; init; }
+        public Daily_average Daily_average { get; set; }
 
         [JsonPropertyName("peak_values")]
-        public Peak_values Peak_values { get; init; }
+        public Peak_values Peak_values { get; set; }
     }
 
     public record System_metrics
     {
         [JsonPropertyName("last_24h")]
-        public IReadOnlyList<Last_24h> Last_24h { get; init; }
+        public IReadOnlyList<Last_24h> Last_24h { get; set; }
 
         [JsonPropertyName("aggregates")]
-        public Aggregates Aggregates { get; init; }
+        public Aggregates Aggregates { get; set; }
     }
 
     public record Debug
     {
         [JsonPropertyName("enabled")]
-        public bool Enabled { get; init; }
+        public bool Enabled { get; set; }
 
         [JsonPropertyName("level")]
-        public string Level { get; init; }
+        public string Level { get; set; }
 
         [JsonPropertyName("retentionDays")]
-        public int RetentionDays { get; init; }
+        public int RetentionDays { get; set; }
     }
 
     public record Metadata
     {
         [JsonPropertyName("lastUpdated")]
-        public DateTime LastUpdated { get; init; }
+        public DateTime LastUpdated { get; set; }
 
         [JsonPropertyName("version")]
-        public string Version { get; init; }
+        public string Version { get; set; }
 
         [JsonPropertyName("environment")]
-        public string Environment { get; init; }
+        public string Environment { get; set; }
 
         [JsonPropertyName("dataCenter")]
-        public string DataCenter { get; init; }
+        public string DataCenter { get; set; }
 
         [JsonPropertyName("tags")]
-        public IReadOnlyList<string> Tags { get; init; }
+        public IReadOnlyList<string> Tags { get; set; }
 
         [JsonPropertyName("debug")]
-        public Debug Debug { get; init; }
+        public Debug Debug { get; set; }
     }
 
     public record Root
     {
         [JsonPropertyName("company")]
-        public Company Company { get; init; }
+        public Company Company { get; set; }
 
         [JsonPropertyName("employees")]
-        public IReadOnlyList<Employees> Employees { get; init; }
+        public IReadOnlyList<Employees> Employees { get; set; }
 
         [JsonPropertyName("products")]
-        public IReadOnlyList<Products> Products { get; init; }
+        public IReadOnlyList<Products> Products { get; set; }
 
         [JsonPropertyName("support_tickets")]
-        public IReadOnlyList<Support_tickets> Support_tickets { get; init; }
+        public IReadOnlyList<Support_tickets> Support_tickets { get; set; }
 
         [JsonPropertyName("system_metrics")]
-        public System_metrics System_metrics { get; init; }
+        public System_metrics System_metrics { get; set; }
 
         [JsonPropertyName("metadata")]
-        public Metadata Metadata { get; init; }
+        public Metadata Metadata { get; set; }
     }
 }

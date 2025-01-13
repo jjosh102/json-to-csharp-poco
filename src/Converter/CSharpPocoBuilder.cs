@@ -27,10 +27,16 @@ public partial class CSharpPocoBuilder
             .AddMembers(declarations.ToArray());
 
         var compilationUnit = SyntaxFactory.CompilationUnit()
-            .AddUsings(SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Text.Json.Serialization")))
-            .AddMembers(namespaceDeclaration);
+        .AddMembers(namespaceDeclaration);
+
+        if (options.AddAttribute)
+        {
+            compilationUnit = compilationUnit.AddUsings(
+                SyntaxFactory.UsingDirective(SyntaxFactory.ParseName("System.Text.Json.Serialization")));
+        }
 
         return compilationUnit.NormalizeWhitespace().ToFullString();
+
     }
 
     private void AddClassFromJson(JsonElement jsonObject,
@@ -56,16 +62,16 @@ public partial class CSharpPocoBuilder
     {
         if (options.UsePrimaryConstructor)
         {
-            GenerateRecordFromJsonUsingPrimaryConstructor(jsonObject, recordName, declarations, options);
+            GeneratePrimaryConstructorRecordFromJson(jsonObject, recordName, declarations, options);
         }
         else
         {
-            GenerateRecordFromJson(jsonObject, recordName, declarations, options);
+            GenerateStandardRecordFromJson(jsonObject, recordName, declarations, options);
         }
     }
 
-    //todo:refactor
-    private void GenerateRecordFromJsonUsingPrimaryConstructor(JsonElement jsonObject,
+
+    private void GeneratePrimaryConstructorRecordFromJson(JsonElement jsonObject,
         string recordName,
         List<MemberDeclarationSyntax> declarations,
         ConversionOptions options)
@@ -84,8 +90,8 @@ public partial class CSharpPocoBuilder
         declarations.Add(recordDeclaration);
     }
 
-    //todo:refactor
-    private void GenerateRecordFromJson(JsonElement jsonObject,
+
+    private void GenerateStandardRecordFromJson(JsonElement jsonObject,
         string recordName,
         List<MemberDeclarationSyntax> declarations,
         ConversionOptions options)
@@ -157,27 +163,26 @@ public partial class CSharpPocoBuilder
         return elementTypes.Count == 1 ? elementTypes.First() : "object";
     }
 
-    private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType,
-        ConversionOptions options)
+    private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType, ConversionOptions options)
     {
         string sanitizedPropertyName = SanitizePropertyName(propertyName);
 
         var accessors = options.PropertyAccess switch
         {
-            PropertyAccess.Mutable => new[]
-            {
+            PropertyAccess.Mutable =>
+            [
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
                     .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
                     .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
-            },
-            PropertyAccess.Immutable => new[]
-            {
+            ],
+            PropertyAccess.Immutable =>
+            [
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
                     .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.InitAccessorDeclaration)
                     .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
-            },
+            ],
             _ => Array.Empty<AccessorDeclarationSyntax>()
         };
 
@@ -187,15 +192,24 @@ public partial class CSharpPocoBuilder
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
             .AddAccessorListAccessors(accessors);
 
-        var attribute = SyntaxFactory.Attribute(SyntaxFactory.ParseName("JsonPropertyName"))
-            .AddArgumentListArguments(
-                SyntaxFactory.AttributeArgument(SyntaxFactory.ParseExpression($"\"{propertyName}\"")));
+        if (options.AddAttribute)
+        {
+            var attribute = SyntaxFactory.Attribute(SyntaxFactory.ParseName("JsonPropertyName"))
+                .AddArgumentListArguments(
+                    SyntaxFactory.AttributeArgument(
+                        SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(propertyName))));
 
-        return propertyDeclaration.AddAttributeLists(
-            SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
+            return propertyDeclaration.AddAttributeLists(
+                SyntaxFactory.AttributeList(
+                    SyntaxFactory.SingletonSeparatedList(attribute)));
+        }
+
+        return propertyDeclaration;
     }
 
-    private ParameterSyntax GenerateRecordParameter(string propertyName, string propertyType)
+    private ParameterSyntax GenerateRecordParameter(string propertyName, string propertyType, ConversionOptions options)
     {
         string sanitizedPropertyName = SanitizePropertyName(propertyName);
 
@@ -203,18 +217,24 @@ public partial class CSharpPocoBuilder
                 SyntaxFactory.Identifier(ToPascalCase(sanitizedPropertyName)))
             .WithType(SyntaxFactory.ParseTypeName(propertyType));
 
-        var attribute = SyntaxFactory.Attribute(
-                SyntaxFactory.IdentifierName("property:JsonPropertyName"))
-            .AddArgumentListArguments(
-                SyntaxFactory.AttributeArgument(
-                    SyntaxFactory.LiteralExpression(
-                        SyntaxKind.StringLiteralExpression,
-                        SyntaxFactory.Literal(RemoveSpecialCharacters(propertyName)))));
+        if (options.AddAttribute)
+        {
+            var attribute = SyntaxFactory.Attribute(
+                    SyntaxFactory.IdentifierName("property:JsonPropertyName"))
+                .AddArgumentListArguments(
+                    SyntaxFactory.AttributeArgument(
+                        SyntaxFactory.LiteralExpression(
+                            SyntaxKind.StringLiteralExpression,
+                            SyntaxFactory.Literal(RemoveSpecialCharacters(propertyName)))));
 
-        var attributeList = SyntaxFactory.AttributeList(
-            SyntaxFactory.SingletonSeparatedList(attribute));
+            var attributeList = SyntaxFactory.AttributeList(
+                SyntaxFactory.SingletonSeparatedList(attribute));
 
-        return propertyDeclaration.AddAttributeLists(attributeList);
+            return propertyDeclaration.AddAttributeLists(attributeList);
+        }
+
+        return propertyDeclaration;
+
     }
 
     private List<ParameterSyntax> CreateParametersFromJson(JsonElement jsonObject,
@@ -224,10 +244,8 @@ public partial class CSharpPocoBuilder
 
         foreach (var property in jsonObject.EnumerateObject())
         {
-            var propertyType =
-                HandlePropertyType(property.Value, property.Name, declarations, AddRecordFromJson, options);
-
-            var parameter = GenerateRecordParameter(property.Name, propertyType);
+            var propertyType = HandlePropertyType(property.Value, property.Name, declarations, AddRecordFromJson, options);
+            var parameter = GenerateRecordParameter(property.Name, propertyType, options);
             parameters.Add(parameter);
         }
 
@@ -241,8 +259,7 @@ public partial class CSharpPocoBuilder
 
         foreach (var property in jsonObject.EnumerateObject())
         {
-            var propertyType =
-                HandlePropertyType(property.Value, property.Name, declarations,
+            var propertyType = HandlePropertyType(property.Value, property.Name, declarations,
                     options.GenerateRecords ? AddRecordFromJson : AddClassFromJson, options);
             var propertyDeclaration = GenerateClassProperty(property.Name, propertyType, options);
             properties.Add(propertyDeclaration);
@@ -268,12 +285,25 @@ public partial class CSharpPocoBuilder
     private string ToPascalCase(string input)
     {
         if (string.IsNullOrEmpty(input)) return input;
+
         input = SanitizePropertyName(input);
-        Span<char> buffer = stackalloc char[input.Length];
-        input.AsSpan().CopyTo(buffer);
-        buffer[0] = char.ToUpperInvariant(buffer[0]);
-        return new string(buffer);
+
+        string[] parts = input.Split('_', StringSplitOptions.RemoveEmptyEntries);
+        int maxLength = parts.Max(p => p.Length);
+        Span<char> buffer = stackalloc char[maxLength];
+        for (int i = 0; i < parts.Length; i++)
+        {
+            if (parts[i].Length > 0)
+            {
+                parts[i].AsSpan().CopyTo(buffer);
+                buffer[0] = char.ToUpperInvariant(buffer[0]);
+                parts[i] = new string(buffer.Slice(0, parts[i].Length));
+            }
+        }
+
+        return string.Concat(parts); 
     }
+
 
     private string SanitizePropertyName(string propertyName)
     {

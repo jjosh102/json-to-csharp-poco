@@ -43,7 +43,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_NestedRecord_ReturnsNestedRecordStructure()
+    public void ConvertJsonToRecord_NestedRecord_ReturnsNestedRecordStructure()
     {
         string json = @"{
             ""person"": {
@@ -66,7 +66,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_ArrayProperty_ReturnsListTypeInRecord()
+    public void ConvertJsonToRecord_ArrayProperty_ReturnsListTypeInRecord()
     {
         string json = @"{
             ""items"": [
@@ -85,7 +85,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_DateTimeProperty_ReturnsDateTimeTypeInRecord()
+    public void ConvertJsonToRecord_DateTimeProperty_ReturnsDateTimeTypeInRecord()
     {
         string json = @"{
             ""createdAt"": ""2024-01-11T10:00:00Z"",
@@ -100,7 +100,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_ComplexNestedStructure_GeneratesCorrectRecordHierarchy()
+    public void ConvertJsonToRecord_ComplexNestedStructure_GeneratesCorrectRecordHierarchy()
     {
         string json = @"{
             ""company"": {
@@ -132,7 +132,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_EmptyObject_ReturnsEmptyRecord()
+    public void ConvertJsonToRecord_EmptyObject_ReturnsEmptyRecord()
     {
         string json = "{}";
 
@@ -143,7 +143,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_NumericPropertyNames_ConvertsToValidParameterNames()
+    public void ConvertJsonToRecord_NumericPropertyNames_ConvertsToValidParameterNames()
     {
         string json = @"{
             ""123"": ""value"",
@@ -167,7 +167,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_MixedArray_ReturnsObjectListTypeInRecord()
+    public void ConvertJsonToRecord_MixedArray_ReturnsObjectListTypeInRecord()
     {
         string json = @"{
             ""data"": [""text"", true, 1]
@@ -180,7 +180,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToPoco_SpecialCharacters_HandlesCorrectlyInRecord()
+    public void ConvertJsonToRecord_SpecialCharacters_HandlesCorrectlyInRecord()
     {
         string json = @"{
             ""@type"": ""person"",
@@ -198,7 +198,7 @@ public class JsonToCSharpRecordTests
         Assert.Contains("int Id", result);
         Assert.Contains("double Price", result);
     }
-    
+
     [Fact]
     public void ConvertJsonToRecord_PropertyAccessMutable_GeneratesGettersAndSetters()
     {
@@ -207,14 +207,14 @@ public class JsonToCSharpRecordTests
             ""name"": ""John"",
             ""age"": 30
         }";
-        
-        var options  = new ConversionOptions
+
+        var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
             GenerateRecords = false,
             PropertyAccess = PropertyAccess.Mutable
         };
-        
+
         // Act
         var result = _converter.ConvertJsonToPoco(json, options);
 
@@ -224,14 +224,14 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToRecord_PropertyAccessImmutable_GeneratesGettersAndInitOnlySetters()
+    public void ConvertJsonToRecord_AddAttribute_GeneratesGettersAndInitOnlySetters()
     {
         // Arrange
         string json = @"{
             ""name"": ""John"",
             ""age"": 30
         }";
-        var options  = new ConversionOptions
+        var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
             GenerateRecords = false,
@@ -244,5 +244,99 @@ public class JsonToCSharpRecordTests
         // Assert
         Assert.Contains("public string Name { get; init; }", result);
         Assert.Contains("public int Age { get; init; }", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_AddAttributeUsingPrimaryConstructor_AttributesShouldBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = true,
+            UsePrimaryConstructor = true,
+            AddAttribute = true
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.Contains("[property:JsonPropertyName(\"123\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"456\")]", result);
+
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_RemoveAttributesUsingPrimaryConstructor_AttributesShouldNotBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = true,
+            UsePrimaryConstructor = true,
+            AddAttribute = false
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.DoesNotContain("[property:JsonPropertyName(\"123\")]", result);
+        Assert.DoesNotContain("[property:JsonPropertyName(\"456\")]", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_AddAttribute_AttributesShouldBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = true,
+            UsePrimaryConstructor = false,
+            AddAttribute = true
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"123\")]", result);
+        Assert.Contains("[JsonPropertyName(\"456\")]", result);
+
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_RemoveAttributes_AttributesShouldNotBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = true,
+            UsePrimaryConstructor = false,
+            AddAttribute = false
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.DoesNotContain("[JsonPropertyName(\"123\")]", result);
+        Assert.DoesNotContain("[JsonPropertyName(\"456\")]", result);
     }
 }

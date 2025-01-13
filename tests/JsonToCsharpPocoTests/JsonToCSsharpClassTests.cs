@@ -200,4 +200,50 @@ public class JsonToCSsharpClassTests
         Assert.Contains("public string Name { get; init; }", result);
         Assert.Contains("public int Age { get; init; }", result);
     }
+
+    [Fact]
+    public void ConvertJsonToClass_AddAttribute_AttributesShouldBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            AddAttribute = true
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"123\")]", result);
+        Assert.Contains("[JsonPropertyName(\"456\")]", result);
+    
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_RemoveAttributes_AttributesShouldNotBeAdded()
+    {
+        string json = @"{
+            ""123"": ""value"",
+            ""456"": 100
+        }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            AddAttribute = false
+
+
+        };
+        var result = _converter.ConvertJsonToPoco(json, options);
+
+        Assert.DoesNotContain("[JsonPropertyName(\"123\")]", result);
+        Assert.DoesNotContain("[JsonPropertyName(\"456\")]", result);
+    
+    }
 }
