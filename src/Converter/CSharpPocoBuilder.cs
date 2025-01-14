@@ -156,6 +156,7 @@ public partial class CSharpPocoBuilder
         {
             "string" => "string.Empty",
             "object" => "new()",
+            "DateTime" => string.Empty,
             "int" or "double" or "bool" => string.Empty,
             var type when type.StartsWith("IReadOnlyList<") => "[]",
             var type when !type.Contains("?") => "new()",
