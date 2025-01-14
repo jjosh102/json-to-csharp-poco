@@ -254,16 +254,6 @@ public partial class CSharpPocoBuilder
                 SyntaxFactory.Identifier(ToPascalCase(propertyName)))
             .WithType(SyntaxFactory.ParseTypeName(propertyType));
 
-        if (options.IsDefaultInitialized)
-        {
-            var defaultValue = GetDefaultValue(propertyType);
-            if (!string.IsNullOrEmpty(defaultValue))
-            {
-                parameterDeclaration = parameterDeclaration.WithDefault(
-                    SyntaxFactory.EqualsValueClause(SyntaxFactory.ParseExpression(defaultValue)));
-            }
-        }
-
         if (options.AddAttribute)
         {
             var attribute = SyntaxFactory.Attribute(
