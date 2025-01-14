@@ -33,7 +33,7 @@ public class JsonToCSharpRecordTests
         }";
 
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("string Name", result);
@@ -55,7 +55,7 @@ public class JsonToCSharpRecordTests
             }
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("public record Person", result);
@@ -75,7 +75,7 @@ public class JsonToCSharpRecordTests
             ]
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("IReadOnlyList<Items> Items", result);
@@ -92,7 +92,7 @@ public class JsonToCSharpRecordTests
             ""updatedAt"": ""2024-01-11""
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("DateTime CreatedAt", result);
@@ -121,7 +121,7 @@ public class JsonToCSharpRecordTests
             }
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("public record Company", result);
@@ -136,7 +136,7 @@ public class JsonToCSharpRecordTests
     {
         string json = "{}";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord()", result);
         Assert.DoesNotContain("{ get; init; }", result);
@@ -158,8 +158,8 @@ public class JsonToCSharpRecordTests
             RootTypeName = "123"
         };
 
-        var result = _converter.ConvertJsonToPoco(json, options);
-        Console.WriteLine(result);
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
         Assert.Contains("public record _123", result);
         Assert.Contains("[property:JsonPropertyName(\"123\")]", result);
         Assert.Contains("[property:JsonPropertyName(\"456\")]", result);
@@ -174,7 +174,7 @@ public class JsonToCSharpRecordTests
             ""data"": [""text"", true, 1]
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("IReadOnlyList<object> Data", result);
@@ -189,7 +189,7 @@ public class JsonToCSharpRecordTests
             ""$price"": 99.99
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("[property:JsonPropertyName(\"type\")]", result);
@@ -203,7 +203,6 @@ public class JsonToCSharpRecordTests
     [Fact]
     public void ConvertJsonToRecord_PropertyAccessMutable_GeneratesGettersAndSetters()
     {
-        // Arrange
         string json = @"{
             ""name"": ""John"",
             ""age"": 30
@@ -216,10 +215,9 @@ public class JsonToCSharpRecordTests
             PropertyAccess = PropertyAccess.Mutable
         };
 
-        // Act
-        var result = _converter.ConvertJsonToPoco(json, options);
 
-        // Assert
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
         Assert.Contains("public string Name { get; set; }", result);
         Assert.Contains("public int Age { get; set; }", result);
     }
@@ -227,7 +225,6 @@ public class JsonToCSharpRecordTests
     [Fact]
     public void ConvertJsonToRecord_AddAttribute_GeneratesGettersAndInitOnlySetters()
     {
-        // Arrange
         string json = @"{
             ""name"": ""John"",
             ""age"": 30
@@ -239,10 +236,8 @@ public class JsonToCSharpRecordTests
             PropertyAccess = PropertyAccess.Immutable
         };
 
-        // Act
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
-        // Assert
         Assert.Contains("public string Name { get; init; }", result);
         Assert.Contains("public int Age { get; init; }", result);
     }
@@ -264,7 +259,7 @@ public class JsonToCSharpRecordTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("[property:JsonPropertyName(\"123\")]", result);
         Assert.Contains("[property:JsonPropertyName(\"456\")]", result);
@@ -288,7 +283,7 @@ public class JsonToCSharpRecordTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.DoesNotContain("[property:JsonPropertyName(\"123\")]", result);
         Assert.DoesNotContain("[property:JsonPropertyName(\"456\")]", result);
@@ -311,7 +306,7 @@ public class JsonToCSharpRecordTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("[JsonPropertyName(\"123\")]", result);
         Assert.Contains("[JsonPropertyName(\"456\")]", result);
@@ -335,9 +330,84 @@ public class JsonToCSharpRecordTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.DoesNotContain("[JsonPropertyName(\"123\")]", result);
         Assert.DoesNotContain("[JsonPropertyName(\"456\")]", result);
     }
+
+    [Fact]
+    public void ConvertJsonToRecord_NullableAndRequiredProperties_GeneratesCorrectSyntax()
+    {
+        string json = @"{
+        ""name"": ""John"",
+        ""age"": 30,
+        ""email"": """"
+    }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsNullable = true,
+            IsRequired = true,
+            PropertyAccess = PropertyAccess.Immutable
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public required string? Name { get; init; }", result);
+        Assert.Contains("public required int? Age { get; init; }", result);
+        Assert.Contains("public required string? Email { get; init; }", result);
+
+
+        options.IsNullable = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+        Assert.Contains("public required string Name { get; init; }", result);
+        Assert.Contains("public required int Age { get; init; }", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_PrimaryConstructor_NullableProperties_GeneratesCorrectSyntax()
+    {
+        string json = @"{
+        ""name"": ""John"",
+        ""age"": 30,
+        ""email"": """"
+    }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            RootTypeName = "RootRecord",
+            GenerateRecords = true,
+            UsePrimaryConstructor = true,
+            AddAttribute = true,
+            IsNullable = true,
+            IsRequired = true,
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[property:JsonPropertyName(\"name\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"age\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"email\")]", result);
+        Assert.Contains("string? Name", result);
+        Assert.Contains("int? Age", result);
+        Assert.Contains("string? Email", result);
+
+
+        options.IsNullable = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+    
+        Assert.Contains("[property:JsonPropertyName(\"name\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"age\")]", result);
+        Assert.Contains("[property:JsonPropertyName(\"email\")]", result);
+        Assert.Contains("string Name", result);
+        Assert.Contains("int Age", result);
+        Assert.Contains("string Email", result);
+    }
+
 }

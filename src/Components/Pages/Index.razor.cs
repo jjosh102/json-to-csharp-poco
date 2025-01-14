@@ -27,6 +27,8 @@ public partial class Index : ComponentBase
   [CascadingParameter]
   public required CascadingAppState AppState { get; set; }
 
+  private bool _isConverting = false;
+
   public Index(JsonToCSharp jsonToCSharp, IJSRuntime jsRuntime)
   {
     _jsonToCSharp = jsonToCSharp;
@@ -74,6 +76,8 @@ public partial class Index : ComponentBase
 
   public async Task Convert()
   {
+    _isConverting = true;
+     await Task.Delay(1000);
     var jsonToConvert = await _jsonEditor.GetValue();
 
     if (string.IsNullOrWhiteSpace(jsonToConvert))
@@ -87,7 +91,7 @@ public partial class Index : ComponentBase
       return;
     }
 
-    if (_jsonToCSharp.TryConvertJsonToPoco(jsonToConvert, _options, out var syntax))
+    if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _options, out var syntax))
     {
       await _csharpEditor.SetValue(syntax);
       await AppState.ToastService!.ShowToastAsync(
@@ -106,5 +110,7 @@ public partial class Index : ComponentBase
         durationMs: 3000
       );
     }
+   
+    _isConverting = false;
   }
 }

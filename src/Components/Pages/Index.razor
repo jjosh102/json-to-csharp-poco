@@ -36,13 +36,28 @@
                 </select>
             </div>
 
-
             <div class="flex items-center">
                 <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
                     for="add-attribute">
                     Add Json Attribute
                 </label>
                 <input type="checkbox" id="add-attribute" @bind="_options.AddAttribute"
+                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+            </div>
+
+            <div class="flex items-center">
+                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="is-nullable">
+                    Nullable?
+                </label>
+                <input type="checkbox" id="is-nullable" @bind="_options.IsNullable"
+                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+            </div>
+
+            <div class="flex items-center">
+                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="is-required">
+                    Required
+                </label>
+                <input type="checkbox" id="is-required" @bind="_options.IsRequired"
                     class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
             </div>
 
@@ -66,10 +81,19 @@
     </div>
 
     <div class="flex justify-end">
-        <button
-            class="px-4 py-2 font-mono font-semibold bg-[#007ACC] rounded-full text-white hover:bg-[#388A34] transition-colors duration-200"
-            @onclick="Convert">
-            Convert
+        <button @onclick="Convert" disabled="@_isConverting"
+            class="@($"px-4 py-2 font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-10" : "bg-[#007ACC] hover:bg-[#388A34]")}")">
+            @if (_isConverting)
+            {
+                <div class="absolute left-4 top-1/2 -translate-y-1/2">
+                    <div class="animate-spin w-4 h-4">
+                        <div
+                            class="h-full w-full rounded-full border-2 border-t-white border-r-white border-b-transparent border-l-transparent">
+                        </div>
+                    </div>
+                </div>
+            }
+            <span>@(_isConverting ? "Converting..." : "Convert")</span>
         </button>
     </div>
 

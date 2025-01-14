@@ -170,25 +170,36 @@ public partial class CSharpPocoBuilder
             PropertyAccess.Mutable =>
             [
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
-                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
-                SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
-                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
+            SyntaxFactory.AccessorDeclaration(SyntaxKind.SetAccessorDeclaration)
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
             ],
             PropertyAccess.Immutable =>
             [
                 SyntaxFactory.AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
-                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
-                SyntaxFactory.AccessorDeclaration(SyntaxKind.InitAccessorDeclaration)
-                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)),
+            SyntaxFactory.AccessorDeclaration(SyntaxKind.InitAccessorDeclaration)
+                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
             ],
             _ => Array.Empty<AccessorDeclarationSyntax>()
         };
 
+        if (options.IsNullable)
+        {
+            propertyType += "?";
+        }
+
         var propertyDeclaration = SyntaxFactory.PropertyDeclaration(
                 SyntaxFactory.ParseTypeName(propertyType),
                 SyntaxFactory.Identifier(ToPascalCase(propertyName)))
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            .AddAccessorListAccessors(accessors);
+            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+        if (options.IsRequired)
+        {
+            propertyDeclaration = propertyDeclaration.AddModifiers(SyntaxFactory.Token(SyntaxKind.RequiredKeyword));
+        }
+
+        propertyDeclaration = propertyDeclaration.AddAccessorListAccessors(accessors);
 
         if (options.AddAttribute)
         {
@@ -209,7 +220,12 @@ public partial class CSharpPocoBuilder
 
     private ParameterSyntax GenerateRecordParameter(string propertyName, string propertyType, ConversionOptions options)
     {
-        var propertyDeclaration = SyntaxFactory.Parameter(
+        if (options.IsNullable)
+        {
+            propertyType += "?";
+        }
+
+        var parameterDeclaration = SyntaxFactory.Parameter(
                 SyntaxFactory.Identifier(ToPascalCase(propertyName)))
             .WithType(SyntaxFactory.ParseTypeName(propertyType));
 
@@ -226,10 +242,10 @@ public partial class CSharpPocoBuilder
             var attributeList = SyntaxFactory.AttributeList(
                 SyntaxFactory.SingletonSeparatedList(attribute));
 
-            return propertyDeclaration.AddAttributeLists(attributeList);
+            return parameterDeclaration.AddAttributeLists(attributeList);
         }
 
-        return propertyDeclaration;
+        return parameterDeclaration;
     }
 
     private List<ParameterSyntax> CreateParametersFromJson(JsonElement jsonObject,
@@ -267,7 +283,7 @@ public partial class CSharpPocoBuilder
     private string ToPascalCase(string input)
     {
         if (string.IsNullOrEmpty(input)) return input;
-        
+
         var sanitizedPropertyName = SanitizePropertyName(input);
 
         if (int.TryParse(input, out _)) return sanitizedPropertyName;

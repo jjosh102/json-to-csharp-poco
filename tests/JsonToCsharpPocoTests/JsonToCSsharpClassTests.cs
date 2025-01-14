@@ -13,7 +13,7 @@ public class JsonToCSsharpClassTests
 
     public JsonToCSsharpClassTests()
     {
-       _converter = new JsonToCSharp(new CSharpPocoBuilder());
+        _converter = new JsonToCSharp(new CSharpPocoBuilder());
         _defaultOptions = new ConversionOptions
         {
             Namespace = "TestNamespace",
@@ -31,7 +31,7 @@ public class JsonToCSsharpClassTests
             ""isEmployee"": true
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public class RootClass", result);
         Assert.Contains("public string Name", result);
@@ -42,20 +42,20 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_InvalidJson_ThrowsError()
     {
-       
+
         string invalidJson = @"{ name: John }";
 
-        var result = _converter.ConvertJsonToPoco(invalidJson, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(invalidJson, _defaultOptions);
 
         Assert.StartsWith("Error converting JSON", result);
     }
 
     [Fact]
     public void ConvertJsonToClass_EmptyObjectJson_ReturnsEmptyClass()
-    {       
+    {
         string emptyJson = "{}";
 
-        var result = _converter.ConvertJsonToPoco(emptyJson, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(emptyJson, _defaultOptions);
 
         Assert.Contains("public class RootClass", result);
         Assert.DoesNotContain("public", result.Replace("public class RootClass", ""));
@@ -64,7 +64,7 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_NestedObject_ReturnsNestedClasses()
     {
-       
+
         string json = @"{
             ""person"": {
                 ""name"": ""John"",
@@ -75,7 +75,7 @@ public class JsonToCSsharpClassTests
             }
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public class RootClass", result);
         Assert.Contains("public Person Person", result);
@@ -87,7 +87,7 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_ArrayProperty_ReturnsListType()
     {
-       
+
         string json = @"{
             ""items"": [
                 { ""id"": 1, ""value"": ""A"" },
@@ -95,7 +95,7 @@ public class JsonToCSsharpClassTests
             ]
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public IReadOnlyList<Items> Items", result);
         Assert.Contains("public class Items", result);
@@ -106,12 +106,12 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_MixedArray_ReturnsObjectType()
     {
-       
+
         string json = @"{
             ""data"": [""text"", true, 1]
         }";
 
-        var result = _converter.ConvertJsonToPoco(json, _defaultOptions);
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
         Assert.Contains("public IReadOnlyList<object> Data", result);
     }
@@ -119,20 +119,20 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_NumericPropertyName_ConvertsToValidStringPropertyName()
     {
-       
+
         string json = @"{
             ""123"": ""value"",
             ""456"": 100
         }";
 
-        var options  = new ConversionOptions
+        var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
             GenerateRecords = false,
             RootTypeName = "123"
         };
 
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("public class _123", result);
         Assert.Contains("public string _123", result);
@@ -141,20 +141,20 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_PropertyAccessMutable_GeneratesGettersAndSetters()
     {
-       
+
         string json = @"{
             ""name"": ""John"",
             ""age"": 30
         }";
-        
-        var options  = new ConversionOptions
+
+        var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
             GenerateRecords = false,
             PropertyAccess = PropertyAccess.Mutable
         };
-        
-        var result = _converter.ConvertJsonToPoco(json, options);
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("public string Name { get; set; }", result);
         Assert.Contains("public int Age { get; set; }", result);
@@ -163,19 +163,19 @@ public class JsonToCSsharpClassTests
     [Fact]
     public void ConvertJsonToClass_PropertyAccessImmutable_GeneratesGettersAndInitOnlySetters()
     {
-       
+
         string json = @"{
             ""name"": ""John"",
             ""age"": 30
         }";
-        var options  = new ConversionOptions
+        var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
             GenerateRecords = false,
             PropertyAccess = PropertyAccess.Immutable
         };
 
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("public string Name { get; init; }", result);
         Assert.Contains("public int Age { get; init; }", result);
@@ -197,11 +197,11 @@ public class JsonToCSsharpClassTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("[JsonPropertyName(\"123\")]", result);
         Assert.Contains("[JsonPropertyName(\"456\")]", result);
-    
+
     }
 
     [Fact]
@@ -220,10 +220,43 @@ public class JsonToCSsharpClassTests
 
 
         };
-        var result = _converter.ConvertJsonToPoco(json, options);
+        var result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.DoesNotContain("[JsonPropertyName(\"123\")]", result);
         Assert.DoesNotContain("[JsonPropertyName(\"456\")]", result);
-    
+
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_NullableAndRequiredProperties_GeneratesCorrectSyntax()
+    {
+        string json = @"{
+        ""name"": ""John"",
+        ""age"": 30,
+        ""email"": """"
+    }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            GenerateRecords = false,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsNullable = true,
+            IsRequired = true,
+            PropertyAccess = PropertyAccess.Immutable
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public required string? Name { get; init; }", result);
+        Assert.Contains("public required int? Age { get; init; }", result);
+        Assert.Contains("public required string? Email { get; init; }", result);
+
+
+        options.IsNullable = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+        Assert.Contains("public required string Name { get; init; }", result);
+        Assert.Contains("public required int Age { get; init; }", result);
     }
 }

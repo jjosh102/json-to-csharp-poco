@@ -10,4 +10,6 @@ public class ConversionOptions
   public string Namespace { get; set; } = "JsonToCsharp";
   public string RootTypeName { get; set; } = "Root";
   public bool AddAttribute { get; set; } = true;
+  public bool IsNullable { get; set; }
+  public bool IsRequired { get; set; }
 }
