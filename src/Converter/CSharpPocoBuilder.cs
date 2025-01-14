@@ -12,7 +12,7 @@ public partial class CSharpPocoBuilder
 {
     public string Build(JsonElement rootElement, ConversionOptions options)
     {
-        return options.GenerateRecords
+        return options.UseRecords
             ? Build(rootElement, options, AddRecordFromJson)
             : Build(rootElement, options, AddClassFromJson);
     }
@@ -150,6 +150,19 @@ public partial class CSharpPocoBuilder
         };
     }
 
+    private string GetDefaultValue(string propertyType)
+    {
+        return propertyType switch
+        {
+            "string" => "string.Empty",
+            "object" => "new()",
+            "int" or "double" or "bool" => string.Empty,
+            var type when type.StartsWith("IReadOnlyList<") => "[]",
+            var type when !type.Contains("?") => "new()",
+            _ => string.Empty
+        };
+    }
+
     private string DetermineArrayType(JsonElement array, string propertyName)
     {
         if (!array.EnumerateArray().Any())
@@ -184,7 +197,7 @@ public partial class CSharpPocoBuilder
             _ => Array.Empty<AccessorDeclarationSyntax>()
         };
 
-        if (options.IsNullable)
+        if (options.IsNullable && !options.IsDefaultInitialized)
         {
             propertyType += "?";
         }
@@ -200,6 +213,17 @@ public partial class CSharpPocoBuilder
         }
 
         propertyDeclaration = propertyDeclaration.AddAccessorListAccessors(accessors);
+
+        if (options.IsDefaultInitialized && !options.IsNullable)
+        {
+            var defaultValue = GetDefaultValue(propertyType);
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                propertyDeclaration = propertyDeclaration.WithInitializer(
+                    SyntaxFactory.EqualsValueClause(SyntaxFactory.ParseExpression(defaultValue)))
+                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+            }
+        }
 
         if (options.AddAttribute)
         {
@@ -228,6 +252,16 @@ public partial class CSharpPocoBuilder
         var parameterDeclaration = SyntaxFactory.Parameter(
                 SyntaxFactory.Identifier(ToPascalCase(propertyName)))
             .WithType(SyntaxFactory.ParseTypeName(propertyType));
+
+        if (options.IsDefaultInitialized)
+        {
+            var defaultValue = GetDefaultValue(propertyType);
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                parameterDeclaration = parameterDeclaration.WithDefault(
+                    SyntaxFactory.EqualsValueClause(SyntaxFactory.ParseExpression(defaultValue)));
+            }
+        }
 
         if (options.AddAttribute)
         {
@@ -271,14 +305,13 @@ public partial class CSharpPocoBuilder
         foreach (var property in jsonObject.EnumerateObject())
         {
             var propertyType = HandlePropertyType(property.Value, property.Name, declarations,
-                    options.GenerateRecords ? AddRecordFromJson : AddClassFromJson, options);
+                    options.UseRecords ? AddRecordFromJson : AddClassFromJson, options);
             var propertyDeclaration = GenerateClassProperty(property.Name, propertyType, options);
             properties.Add(propertyDeclaration);
         }
 
         return properties;
     }
-
 
     private string ToPascalCase(string input)
     {

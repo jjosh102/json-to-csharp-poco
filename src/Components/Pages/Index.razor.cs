@@ -56,28 +56,10 @@ public partial class Index : ComponentBase
     };
   }
 
-  private async Task CsharpEditorOnDidInit()
-  {
-    await _csharpEditor.AddCommand((int)KeyMod.CtrlCmd | (int)KeyCode.KeyC, async (args) =>
-    {
-      var csharp = await _csharpEditor.GetValue();
-      if (string.IsNullOrWhiteSpace(csharp))
-        return;
-
-      await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharp);
-      await AppState.ToastService!.ShowToastAsync(
-            message: "C# code copied to clipboard",
-            type: ToastType.Success,
-            title: "",
-            durationMs: 3000
-        );
-    });
-  }
-
   public async Task Convert()
   {
     _isConverting = true;
-     await Task.Delay(1000);
+    await Task.Delay(1000);
     var jsonToConvert = await _jsonEditor.GetValue();
 
     if (string.IsNullOrWhiteSpace(jsonToConvert))
@@ -110,7 +92,22 @@ public partial class Index : ComponentBase
         durationMs: 3000
       );
     }
-   
+
     _isConverting = false;
+  }
+
+  public async Task CopyToClipboard()
+  {
+    var csharp = await _csharpEditor.GetValue();
+    if (string.IsNullOrWhiteSpace(csharp))
+      return;
+
+    await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharp);
+    await AppState.ToastService!.ShowToastAsync(
+          message: "C# code copied to clipboard",
+          type: ToastType.Success,
+          title: "",
+          durationMs: 2000
+      );
   }
 }

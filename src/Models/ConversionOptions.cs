@@ -4,7 +4,7 @@ namespace JsonToCsharpPoco.Models;
 
 public class ConversionOptions
 {
-  public bool GenerateRecords { get; set; } = false;
+  public bool UseRecords { get; set; } = false;
   public bool UsePrimaryConstructor { get; set; }
   public PropertyAccess PropertyAccess { get; set; }
   public string Namespace { get; set; } = "JsonToCsharp";
@@ -12,4 +12,5 @@ public class ConversionOptions
   public bool AddAttribute { get; set; } = true;
   public bool IsNullable { get; set; }
   public bool IsRequired { get; set; }
+  public bool IsDefaultInitialized { get; set; }
 }

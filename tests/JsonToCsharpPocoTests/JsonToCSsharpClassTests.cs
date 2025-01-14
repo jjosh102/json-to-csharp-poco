@@ -17,7 +17,7 @@ public class JsonToCSsharpClassTests
         _defaultOptions = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             RootTypeName = "RootClass"
         };
     }
@@ -128,7 +128,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             RootTypeName = "123"
         };
 
@@ -150,7 +150,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             PropertyAccess = PropertyAccess.Mutable
         };
 
@@ -171,7 +171,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             PropertyAccess = PropertyAccess.Immutable
         };
 
@@ -192,7 +192,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             AddAttribute = true
 
 
@@ -215,7 +215,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             AddAttribute = false
 
 
@@ -239,7 +239,7 @@ public class JsonToCSsharpClassTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             UsePrimaryConstructor = false,
             AddAttribute = false,
             IsNullable = true,
@@ -258,5 +258,47 @@ public class JsonToCSsharpClassTests
         result = _converter.ConvertJsonToCsharp(json, options);
         Assert.Contains("public required string Name { get; init; }", result);
         Assert.Contains("public required int Age { get; init; }", result);
+    }
+
+     [Fact]
+    public void ConvertJsonToClass_DefaultInitializationWithArraysAndObjects_GeneratesDefaultValues()
+    {
+        string json = @"{
+        ""name"": ""John"",
+        ""age"": 30,
+        ""isActive"": true,
+        ""tags"": [""tag1"", ""tag2""],
+        ""address"": {
+            ""street"": ""Main St"",
+            ""city"": ""New York""
+        }
+    }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace", 
+            RootTypeName ="RootClass",
+            UseRecords = false,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsDefaultInitialized = true 
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+     
+        Assert.Contains("public class RootClass", result);
+        Assert.Contains("public string Name { get; init; } = string.Empty;", result);
+        Assert.Contains("public IReadOnlyList<string> Tags { get; init; } = [];", result);
+        Assert.Contains("public Address Address { get; init; } = new();", result);
+        Assert.Contains("public class Address", result);
+        Assert.Contains("public string Street { get; init; } = string.Empty;", result);
+        Assert.Contains("public string City { get; init; } = string.Empty;", result);
+
+        options.IsDefaultInitialized = false; 
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.DoesNotContain("= string.Empty", result);
+        Assert.DoesNotContain("= [];", result);
+        Assert.DoesNotContain("= new();", result);
     }
 }

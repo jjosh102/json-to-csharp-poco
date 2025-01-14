@@ -1,86 +1,139 @@
 ﻿@page "/"
 
 <div class="flex flex-col space-y-4">
-    <div class="p-2 bg-gray-100 dark:bg-[#1E1E1E] rounded shadow border border-[#E7E7E7] dark:border-[#2D2D2D]">
-        <h2 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-2"> Options</h2>
-        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="generate-records">
-                    Generate Records
-                </label>
-                <input type="checkbox" id="generate-records" @bind="_options.GenerateRecords"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
-            </div>
-            @if (_options.GenerateRecords)
-            {
-                <div class="flex items-center">
-                    <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                        for="use-primary-constructor">
-                        Use Primary Constructor
-                    </label>
-                    <input type="checkbox" id="use-primary-constructor" @bind="_options.UsePrimaryConstructor"
-                        class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+    <div class="p-4 bg-white dark:bg-[#1E1E1E] rounded-lg shadow-md border border-[#E7E7E7] dark:border-[#2D2D2D]">
+        <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-[#E7E7E7] dark:border-[#2D2D2D]">
+            Options
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+                class="space-y-4 p-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg border border-[#E7E7E7] dark:border-[#2D2D2D]">
+                <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-3">Type Settings</h3>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="use-records">
+                            Use Records
+                        </label>
+                        <input type="checkbox" id="use-records" @bind="_options.UseRecords"
+                            class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                    </div>
+
+                    @if (_options.UseRecords)
+                    {
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                                for="use-primary-constructor">
+                                Use Primary Constructor
+                            </label>
+                            <input type="checkbox" id="use-primary-constructor" @bind="_options.UsePrimaryConstructor"
+                                class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        </div>
+                    }
+
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="property-access">
+                            Property Access
+                        </label>
+                        <select id="property-access" @bind="_options.PropertyAccess"
+                            class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                            <option value="@PropertyAccess.Immutable">Immutable</option>
+                            <option value="@PropertyAccess.Mutable">Mutable</option>
+                        </select>
+                    </div>
                 </div>
-            }
-
-            <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="property-access">
-                    Property Access
-                </label>
-                <select id="property-access" @bind="_options.PropertyAccess"
-                    class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
-                    <option value="@PropertyAccess.Immutable">Immutable</option>
-                    <option value="@PropertyAccess.Mutable">Mutable</option>
-                </select>
             </div>
 
-            <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="add-attribute">
-                    Add Json Attribute
-                </label>
-                <input type="checkbox" id="add-attribute" @bind="_options.AddAttribute"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+            <div
+                class="space-y-4 p-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg border border-[#E7E7E7] dark:border-[#2D2D2D]">
+                <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-3">Property Settings</h3>
+
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="add-attribute">
+                            Add Json Attribute
+                        </label>
+                        <input type="checkbox" id="add-attribute" @bind="_options.AddAttribute"
+                            class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                    </div>
+
+                    @if (!_options.IsDefaultInitialized)
+                    {
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                                for="is-nullable">
+                                Nullable?
+                            </label>
+                            <input type="checkbox" id="is-nullable" @bind="_options.IsNullable"
+                                class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        </div>
+                    }
+
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="is-required">
+                            Required
+                        </label>
+                        <input type="checkbox" id="is-required" @bind="_options.IsRequired"
+                            class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                    </div>
+
+                    @if (!_options.IsNullable)
+                    {
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                                for="default-values">
+                                Initialized default values
+                            </label>
+                            <input type="checkbox" id="default-values" @bind="_options.IsDefaultInitialized"
+                                class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        </div>
+                    }
+                </div>
             </div>
 
-            <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="is-nullable">
-                    Nullable?
-                </label>
-                <input type="checkbox" id="is-nullable" @bind="_options.IsNullable"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
-            </div>
+            <div
+                class="space-y-4 p-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg border border-[#E7E7E7] dark:border-[#2D2D2D]">
+                <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100 mb-3">Naming Settings</h3>
 
-            <div class="flex items-center">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="is-required">
-                    Required
-                </label>
-                <input type="checkbox" id="is-required" @bind="_options.IsRequired"
-                    class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
-            </div>
+                <div class="space-y-3">
+                    <div class="flex flex-col space-y-2">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="namespace">
+                            Namespace
+                        </label>
+                        <input type="text" id="namespace" @bind="_options.Namespace"
+                            class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                    </div>
 
-            <div class="flex items-center w-full sm:w-auto">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2" for="namespace">
-                    Namespace
-                </label>
-                <input type="text" id="namespace" @bind="_options.Namespace"
-                    class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
-            </div>
-
-            <div class="flex items-center w-full sm:w-auto">
-                <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200 mr-2"
-                    for="root-type-name">
-                    Root Name
-                </label>
-                <input type="text" id="root-name" @bind="_options.RootTypeName"
-                    class="w-full sm:w-40 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                    <div class="flex flex-col space-y-2">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="root-type-name">
+                            Root Name
+                        </label>
+                        <input type="text" id="root-name" @bind="_options.RootTypeName"
+                            class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="flex justify-end">
+    <div class="flex justify-end space-x-4">
+        <button
+            class="flex items-center space-x-2 px-4 py-2 font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors duration-200"
+            @onclick="CopyToClipboard">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 16h8m-4-4v4m-4-4a4 4 0 108 0M4 16V8a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4z" />
+            </svg>
+            <span>Copy Code</span>
+        </button>
+
+
         <button @onclick="Convert" disabled="@_isConverting"
             class="@($"px-4 py-2 font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-10" : "bg-[#007ACC] hover:bg-[#388A34]")}")">
             @if (_isConverting)
@@ -96,6 +149,7 @@
             <span>@(_isConverting ? "Converting..." : "Convert")</span>
         </button>
     </div>
+
 
 
     <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">

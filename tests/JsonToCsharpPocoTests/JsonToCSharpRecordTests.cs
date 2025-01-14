@@ -17,7 +17,7 @@ public class JsonToCSharpRecordTests
         _defaultOptions = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = true,
             RootTypeName = "RootRecord"
         };
@@ -153,7 +153,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = true,
             RootTypeName = "123"
         };
@@ -211,7 +211,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             PropertyAccess = PropertyAccess.Mutable
         };
 
@@ -232,7 +232,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             PropertyAccess = PropertyAccess.Immutable
         };
 
@@ -253,7 +253,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = true,
             AddAttribute = true
 
@@ -277,7 +277,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = true,
             AddAttribute = false
 
@@ -300,7 +300,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = false,
             AddAttribute = true
 
@@ -324,7 +324,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = false,
             AddAttribute = false
 
@@ -348,7 +348,7 @@ public class JsonToCSharpRecordTests
         var options = new ConversionOptions
         {
             Namespace = "TestNamespace",
-            GenerateRecords = false,
+            UseRecords = false,
             UsePrimaryConstructor = false,
             AddAttribute = false,
             IsNullable = true,
@@ -382,7 +382,7 @@ public class JsonToCSharpRecordTests
         {
             Namespace = "TestNamespace",
             RootTypeName = "RootRecord",
-            GenerateRecords = true,
+            UseRecords = true,
             UsePrimaryConstructor = true,
             AddAttribute = true,
             IsNullable = true,
@@ -401,7 +401,7 @@ public class JsonToCSharpRecordTests
 
         options.IsNullable = false;
         result = _converter.ConvertJsonToCsharp(json, options);
-    
+
         Assert.Contains("[property:JsonPropertyName(\"name\")]", result);
         Assert.Contains("[property:JsonPropertyName(\"age\")]", result);
         Assert.Contains("[property:JsonPropertyName(\"email\")]", result);
@@ -409,5 +409,48 @@ public class JsonToCSharpRecordTests
         Assert.Contains("int Age", result);
         Assert.Contains("string Email", result);
     }
+
+    [Fact]
+    public void ConvertJsonToRecord_DefaultInitializationWithArraysAndObjects_GeneratesDefaultValues()
+    {
+        string json = @"{
+        ""name"": ""John"",
+        ""age"": 30,
+        ""isActive"": true,
+        ""tags"": [""tag1"", ""tag2""],
+        ""address"": {
+            ""street"": ""Main St"",
+            ""city"": ""New York""
+        }
+    }";
+
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace", 
+            RootTypeName ="RootRecord",
+            UseRecords = true,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsDefaultInitialized = true 
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+       
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("public string Name { get; init; } = string.Empty;", result);
+        Assert.Contains("public IReadOnlyList<string> Tags { get; init; } = [];", result);
+        Assert.Contains("public Address Address { get; init; } = new();", result);
+        Assert.Contains("public record Address", result);
+        Assert.Contains("public string Street { get; init; } = string.Empty;", result);
+        Assert.Contains("public string City { get; init; } = string.Empty;", result);
+
+        options.IsDefaultInitialized = false; 
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.DoesNotContain("= string.Empty", result);
+        Assert.DoesNotContain("= [];", result);
+        Assert.DoesNotContain("= new();", result);
+    }
+
 
 }
