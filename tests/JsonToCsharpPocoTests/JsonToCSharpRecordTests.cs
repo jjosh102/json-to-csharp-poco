@@ -426,16 +426,16 @@ public class JsonToCSharpRecordTests
 
         var options = new ConversionOptions
         {
-            Namespace = "TestNamespace", 
-            RootTypeName ="RootRecord",
+            Namespace = "TestNamespace",
+            RootTypeName = "RootRecord",
             UseRecords = true,
             UsePrimaryConstructor = false,
             AddAttribute = false,
-            IsDefaultInitialized = true 
+            IsDefaultInitialized = true
         };
 
         var result = _converter.ConvertJsonToCsharp(json, options);
-       
+
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("public string Name { get; init; } = string.Empty;", result);
         Assert.Contains("public IReadOnlyList<string> Tags { get; init; } = [];", result);
@@ -444,13 +444,47 @@ public class JsonToCSharpRecordTests
         Assert.Contains("public string Street { get; init; } = string.Empty;", result);
         Assert.Contains("public string City { get; init; } = string.Empty;", result);
 
-        options.IsDefaultInitialized = false; 
+        options.IsDefaultInitialized = false;
         result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.DoesNotContain("= string.Empty", result);
         Assert.DoesNotContain("= [];", result);
         Assert.DoesNotContain("= new();", result);
     }
+    [Fact]
+    public void ConvertJsonToRecord_ArrayType_RespectsSelectedArrayType()
+    {
+        string json = @"{
+        ""items"": [
+            { ""id"": 1, ""value"": ""A"" },
+            { ""id"": 2, ""value"": ""B"" }
+        ]
+    }";
 
+        var options = new ConversionOptions
+        {
+            Namespace = "TestNamespace",
+            UseRecords = true,
+            UsePrimaryConstructor = false,
+            ArrayType = ArrayType.List
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public List<Items> Items { get; init; }", result);
+        Assert.Contains("public record Items", result);
+        Assert.Contains("public int Id { get; init; }", result);
+        Assert.Contains("public string Value { get; init; }", result);
+
+        options.ArrayType = ArrayType.IReadOnlyList;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public IReadOnlyList<Items> Items { get; init; }", result);
+
+        options.ArrayType = ArrayType.Array;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public Items[] Items { get; init; }", result);
+    }
 
 }

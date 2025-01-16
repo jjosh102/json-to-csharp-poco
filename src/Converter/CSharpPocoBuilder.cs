@@ -115,7 +115,7 @@ public partial class CSharpPocoBuilder
         Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionOptions> addNestedTypeAction,
         ConversionOptions options)
     {
-        string propertyType = DeterminePropertyType(propertyValue, propertyName);
+        string propertyType = DeterminePropertyType(propertyValue, propertyName, options.ArrayType);
 
         if (propertyValue.ValueKind == JsonValueKind.Object)
         {
@@ -130,13 +130,13 @@ public partial class CSharpPocoBuilder
         {
             var nestedTypeName = ToPascalCase(propertyName);
             addNestedTypeAction(propertyValue[0], nestedTypeName, declarations, options);
-            return $"IReadOnlyList<{nestedTypeName}>";
+            return FormatArrayType(nestedTypeName, options.ArrayType); 
         }
 
         return propertyType;
     }
 
-    private string DeterminePropertyType(JsonElement value, string propertyName)
+    private string DeterminePropertyType(JsonElement value, string propertyName, ArrayType arrayType)
     {
         return value.ValueKind switch
         {
@@ -144,7 +144,7 @@ public partial class CSharpPocoBuilder
             JsonValueKind.String => DateTime.TryParse(value.GetString(), out _) ? "DateTime" : "string",
             JsonValueKind.True => "bool",
             JsonValueKind.False => "bool",
-            JsonValueKind.Array => $"IReadOnlyList<{DetermineArrayType(value, propertyName)}>",
+            JsonValueKind.Array => DetermineArrayType(value, propertyName, arrayType),
             JsonValueKind.Object => ToPascalCase(propertyName),
             _ => "object"
         };
@@ -158,24 +158,45 @@ public partial class CSharpPocoBuilder
             "object" => "new()",
             "DateTime" => string.Empty,
             "int" or "double" or "bool" => string.Empty,
-            var type when type.StartsWith("IReadOnlyList<") => "[]",
+            var type when type.StartsWith("IReadOnlyList") || type.StartsWith("List") || type.EndsWith("[]") => "[]",
             var type when !type.Contains("?") => "new()",
             _ => string.Empty
         };
     }
 
-    private string DetermineArrayType(JsonElement array, string propertyName)
+    private string DetermineArrayType(JsonElement array, string propertyName, ArrayType arrayType)
     {
+        string elementType;
+
         if (!array.EnumerateArray().Any())
-            return "object";
+        {
 
-        var elementTypes = array.EnumerateArray()
-            .Select(element => DeterminePropertyType(element, propertyName))
-            .Distinct()
-            .ToList();
+            elementType = "object";
+        }
+        else
+        {
+            var elementTypes = array.EnumerateArray()
+                .Select(element => DeterminePropertyType(element, propertyName, arrayType))
+                .Distinct()
+                .ToList();
 
-        return elementTypes.Count == 1 ? elementTypes.First() : "object";
+            elementType = elementTypes.Count == 1 ? elementTypes.First() : "object";
+        }
+
+        return FormatArrayType(elementType, arrayType);
     }
+
+    private string FormatArrayType(string elementType, ArrayType arrayType)
+    {
+        return arrayType switch
+        {
+            ArrayType.IReadOnlyList => $"IReadOnlyList<{elementType}>",
+            ArrayType.List => $"List<{elementType}>",
+            ArrayType.Array => $"{elementType}[]",
+            _ => throw new ArgumentOutOfRangeException(nameof(arrayType), arrayType, null)
+        };
+    }
+
 
     private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType, ConversionOptions options)
     {

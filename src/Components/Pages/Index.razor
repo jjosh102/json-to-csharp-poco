@@ -1,8 +1,10 @@
 ﻿@page "/"
 
 <div class="flex flex-col space-y-4">
-    <div  class="lg:fixed lg:top-18 lg:left-0 lg:w-64 lg:h-full p-4 bg-white dark:bg-[#1E1E1E] shadow-md border-r border-[#E7E7E7] dark:border-[#2D2D2D] z-10">
-        <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-[#E7E7E7] dark:border-[#2D2D2D]">
+    <div
+        class="lg:fixed lg:top-18 lg:left-0 lg:w-64 lg:h-full p-4 bg-white dark:bg-[#1E1E1E] shadow-md border-r border-[#E7E7E7] dark:border-[#2D2D2D] z-10">
+        <h2
+            class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-[#E7E7E7] dark:border-[#2D2D2D]">
             Options
         </h2>
         <div class="space-y-6">
@@ -31,8 +33,21 @@
                             for="property-access">Property Access</label>
                         <select id="property-access" @bind="_options.PropertyAccess"
                             class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
-                            <option value="@PropertyAccess.Immutable">Immutable</option>
-                            <option value="@PropertyAccess.Mutable">Mutable</option>
+                            @foreach (PropertyAccess access in Enum.GetValues(typeof(PropertyAccess)))
+                            {
+                                <option value="@access">@access</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="array-type">Array Type</label>
+                        <select id="array-type" @bind="_options.ArrayType"
+                            class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                            @foreach (ArrayType arrayType in Enum.GetValues(typeof(ArrayType)))
+                            {
+                                <option value="@arrayType">@arrayType</option>
+                            }
                         </select>
                     </div>
                 </div>
