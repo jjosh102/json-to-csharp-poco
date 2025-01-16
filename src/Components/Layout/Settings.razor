@@ -1,90 +1,138 @@
 @inject IJSRuntime JSRuntime
 @inject ILocalStorageService LocalStorage
-<div class="right-4 z-40">
-  <button @onclick="TogglePanel"
-    class="p-2 bg-[#007ACC] rounded-full hover:bg-[#388A34]  transition-colors duration-200">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
-      stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  </button>
+
+<div class="fixed right-4 top-4 z-40">
+    <button @onclick="TogglePanel"
+            class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+    </button>
 </div>
 
-<div class="fixed inset-0 z-50 overflow-hidden @(_isPanelOpen ? "pointer-events-auto" : "pointer-events-none")">
-  <div class="fixed inset-0 bg-black/50 dark:bg-black/70 transition-opacity duration-300 ease-in-out 
-                @(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")" @onclick="TogglePanel">
-  </div>
-
-  <div class="fixed top-0 right-0 h-full w-96 transform transition-transform duration-300 ease-in-out 
-                @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
-    <div class="h-full p-6 bg-[#F3F3F3] dark:bg-[#1E1E1E] text-gray-800 dark:text-gray-100 
-                    shadow-xl overflow-y-auto border-l border-[#E7E7E7] dark:border-[#2D2D2D]">
-      <div class="flex justify-between items-center mb-4">
-        <div class="text-xl font-semibold">Settings</div>
-        <button @onclick="TogglePanel" class="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100 
-                               transition-colors duration-200">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-      <hr class="my-4 border-[#E7E7E7] dark:border-[#2D2D2D]" />
-
-      <div class="space-y-4">
-        <div class="flex items-center justify-between">
-          <span class="text-sm font-medium">Theme</span>
-          <button @onclick="ToggleTheme"
-            class="flex items-center px-4 py-2 rounded-full transition-all duration-300 border 
-             @(AppState.IsDarkTheme ? "bg-[#1e1e1e] text-white border-gray-500 hover:bg-[#2d2d2d]" : "bg-[#d7d7d7] text-black border-gray-300 hover:bg-[#e7e7e7]")">
-            <div class="flex items-center gap-2">
-              @if (!AppState.IsDarkTheme)
-              {
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-5 h-5" stroke="currentColor" stroke-width="2"
-                  viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="5" />
-                  <line x1="12" y1="1" x2="12" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="23" />
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                  <line x1="1" y1="12" x2="3" y2="12" />
-                  <line x1="21" y1="12" x2="23" y2="12" />
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-                <span>Light Mode</span>
-              }
-              else
-              {
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
-                </svg>
-                <span>Dark Mode</span>
-              }
-            </div>
-          </button>
-        </div>
-      </div>
+<div class="@(_isPanelOpen ? "fixed" : "hidden") inset-0 z-50 overflow-hidden">
+    <div class="fixed inset-0 bg-black/50 dark:bg-black/70 transition-opacity duration-300"
+         @onclick="TogglePanel">
     </div>
-  </div>
+
+    <div class="fixed top-0 right-0 h-full w-96 transform transition-all duration-300 ease-in-out
+                @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
+        <div class="h-full bg-[#F3F3F3] dark:bg-[#1E1E1E] text-gray-800 dark:text-white shadow-xl overflow-y-auto">
+     
+            <div class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                        </svg>
+                        <span class="text-xl font-semibold">Settings</span>
+                    </div>
+                    <button @onclick="TogglePanel" 
+                            class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 space-y-6">
+          
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-medium">Theme</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-300">
+                                Choose your preferred appearance
+                            </p>
+                        </div>
+                        <button @onclick="ToggleTheme"
+                                class="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300
+                                       @(AppState.IsDarkTheme ? 
+                                         "bg-[#1e1e1e] text-white border border-gray-600 hover:bg-[#2d2d2d]" : 
+                                         "bg-[#d7d7d7] text-black border border-gray-300 hover:bg-[#e7e7e7]")">
+                            @if (!AppState.IsDarkTheme)
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-5 h-5" stroke="currentColor" stroke-width="2"
+                                     viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="5" />
+                                    <line x1="12" y1="1" x2="12" y2="3" />
+                                    <line x1="12" y1="21" x2="12" y2="23" />
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                    <line x1="1" y1="12" x2="3" y2="12" />
+                                    <line x1="21" y1="12" x2="23" y2="12" />
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                                </svg>
+                                <span>Light</span>
+                            }
+                            else
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+                                    <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
+                                </svg>
+                                <span>Dark</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+
+                <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="space-y-1">
+                            <h3 class="text-sm font-medium">Save Settings</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-300">
+                                Remember your settings for next time
+                            </p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox"  checked="@AppState.IsOptionsSave" @onchange="SaveOptionsToLocalStorage" 
+                                   class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
+                                        peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer 
+                                        dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white 
+                                        after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
+                                        after:bg-white after:border-gray-300 after:border after:rounded-full 
+                                        after:h-5 after:w-5 after:transition-all dark:border-gray-600 
+                                        peer-checked:bg-green-600 bg-blue-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @code {
-  private bool _isPanelOpen;
+    private bool _isPanelOpen;
 
-  [CascadingParameter]
-  public required CascadingAppState AppState { get; set; }
+    [CascadingParameter]
+    public required CascadingAppState AppState { get; set; }
 
-  private void TogglePanel()
-  {
-    _isPanelOpen = !_isPanelOpen;
-  }
+    private void TogglePanel()
+    {
+        _isPanelOpen = !_isPanelOpen;
+    }
 
-  private async Task ToggleTheme()
-  {
-    AppState.ToggleTheme();
-    await BlazorMonaco.Editor.Global.SetTheme(JSRuntime, AppState.IsDarkTheme ? "vs-dark" : "vs-light");
-    await LocalStorage.SetItemAsync(Constants.ThemeKey, AppState.IsDarkTheme ? "dark" : "light");
-  }
+    private async Task ToggleTheme()
+    {
+        AppState.ToggleTheme();
+        await BlazorMonaco.Editor.Global.SetTheme(JSRuntime, 
+            AppState.IsDarkTheme ? "vs-dark" : "vs-light");
+        await LocalStorage.SetItemAsync(Constants.ThemeKey, 
+            AppState.IsDarkTheme ? "dark" : "light");
+    }
+
+    private async Task SaveOptionsToLocalStorage(ChangeEventArgs e)
+    {
+        bool isChecked = (bool)e.Value!;
+        AppState.IsOptionsSave = isChecked;
+        await LocalStorage.SetItemAsync(Constants.SaveOptions, isChecked);
+    }
 }

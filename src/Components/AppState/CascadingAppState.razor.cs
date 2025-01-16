@@ -4,6 +4,7 @@ using Microsoft.JSInterop;
 using JsonToCsharpPoco.Components.Toast;
 using JsonToCsharpPoco.Shared;
 using Blazored.LocalStorage;
+using JsonToCsharpPoco.Models;
 
 namespace JsonToCsharpPoco.Components.AppState;
 public partial class CascadingAppState : ComponentBase
@@ -20,10 +21,16 @@ public partial class CascadingAppState : ComponentBase
 
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
-  public ToastComponent? ToastService;
+  public ToastComponent? ToastService { get; set; }
+  public bool IsOptionsSave { get; set; }
   private string _currentTheme = "light";
+
   protected override async Task OnInitializedAsync()
   {
+    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveOptions) is { } options)
+    {
+      IsOptionsSave = options;
+    }
 
     if (await _localStorageService.GetItemAsync<string>(Constants.ThemeKey) is { } theme)
     {
@@ -34,7 +41,7 @@ public partial class CascadingAppState : ComponentBase
       _currentTheme = await _jsRuntime.InvokeAsync<string>("getSystemTheme");
       await _localStorageService.SetItemAsync(Constants.ThemeKey, _currentTheme);
     }
-    
+
     await BlazorMonaco.Editor.Global.SetTheme(_jsRuntime, IsDarkTheme ? "vs-dark" : "vs-light");
   }
 
