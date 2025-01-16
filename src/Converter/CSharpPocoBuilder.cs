@@ -278,7 +278,7 @@ public partial class CSharpPocoBuilder
         if (options.AddAttribute)
         {
             var attribute = SyntaxFactory.Attribute(
-                    SyntaxFactory.IdentifierName("property:JsonPropertyName"))
+                    SyntaxFactory.IdentifierName("property: JsonPropertyName"))
                 .AddArgumentListArguments(
                     SyntaxFactory.AttributeArgument(
                         SyntaxFactory.LiteralExpression(
