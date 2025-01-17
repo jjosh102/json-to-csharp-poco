@@ -9,7 +9,7 @@ public class JsonToCSharp
 
   public JsonToCSharp(CSharpPocoBuilder cSharpPocoBuilder) => _cSharpPocoBuilder = cSharpPocoBuilder;
 
-  public bool TryConvertJsonToCsharp(string json, ConversionOptions options, out string syntax)
+  public bool TryConvertJsonToCsharp(string json, ConversionSettings options, out string syntax)
   {
     try
     {
@@ -29,7 +29,7 @@ public class JsonToCSharp
     }
   }
 
-  public string ConvertJsonToCsharp(string json, ConversionOptions options)
+  public string ConvertJsonToCsharp(string json, ConversionSettings options)
   {
     TryConvertJsonToCsharp(json, options, out var syntax);
     return syntax;

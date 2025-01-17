@@ -9,12 +9,12 @@ using Xunit;
 public class JsonToCSsharpClassTests
 {
     private readonly JsonToCSharp _converter;
-    private readonly ConversionOptions _defaultOptions;
+    private readonly ConversionSettings _defaultOptions;
 
     public JsonToCSsharpClassTests()
     {
         _converter = new JsonToCSharp(new CSharpPocoBuilder());
-        _defaultOptions = new ConversionOptions
+        _defaultOptions = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -125,7 +125,7 @@ public class JsonToCSsharpClassTests
             ""456"": 100
         }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -147,7 +147,7 @@ public class JsonToCSsharpClassTests
             ""age"": 30
         }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -168,7 +168,7 @@ public class JsonToCSsharpClassTests
             ""name"": ""John"",
             ""age"": 30
         }";
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -189,7 +189,7 @@ public class JsonToCSsharpClassTests
             ""456"": 100
         }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -212,7 +212,7 @@ public class JsonToCSsharpClassTests
             ""456"": 100
         }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -236,7 +236,7 @@ public class JsonToCSsharpClassTests
         ""email"": """"
     }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,
@@ -274,7 +274,7 @@ public class JsonToCSsharpClassTests
         }
     }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             RootTypeName = "RootClass",
@@ -312,7 +312,7 @@ public class JsonToCSsharpClassTests
         ]
     }";
 
-        var options = new ConversionOptions
+        var options = new ConversionSettings
         {
             Namespace = "TestNamespace",
             UseRecords = false,

@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using JsonToCsharpPoco.Models.Enums;
 
-public class ConversionOptions : INotifyPropertyChanged
+public class ConversionSettings : INotifyPropertyChanged
 {
   private bool _useRecords;
   private bool _usePrimaryConstructor;

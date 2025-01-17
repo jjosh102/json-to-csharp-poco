@@ -11,6 +11,7 @@ using JsonToCsharpPoco.Models;
 using System.ComponentModel;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Shared;
+using System.Reflection.Metadata;
 
 namespace JsonToCsharpPoco.Components.Pages;
 
@@ -19,7 +20,7 @@ public partial class Index : ComponentBase, IDisposable
   private readonly JsonToCSharp _jsonToCSharp;
   private readonly ISyncLocalStorageService _localStorageService;
   private readonly ILocalStorageService _localStorageServiceAsync;
-  private ConversionOptions _conversionOptions = new();
+  private ConversionSettings _conversionSettings = new();
 
   private readonly IJSRuntime _jsRuntime;
 
@@ -44,20 +45,33 @@ public partial class Index : ComponentBase, IDisposable
 
   protected override async Task OnInitializedAsync()
   {
-    if (await _localStorageServiceAsync.GetItemAsync<ConversionOptions>(Constants.OptionsValue) is { } savedOptions
-        && AppState.IsOptionsSave)
+    if (await _localStorageServiceAsync.GetItemAsync<ConversionSettings>(Constants.SettingsContents) is { } savedOptions
+        && AppState.IsSettingsSaved)
     {
-      _conversionOptions = savedOptions;
+      _conversionSettings = savedOptions;
     }
-    _conversionOptions.PropertyChanged += OnConversionOptionsChanged;
+
+    if (await _localStorageServiceAsync.GetItemAsync<string>(Constants.JsonEditorContents) is { } jsonEditorContents
+       && AppState.IsEditorContentSaved)
+    {
+      await _jsonEditor.SetValue(jsonEditorContents);
+    }
+
+    if (await _localStorageServiceAsync.GetItemAsync<string>(Constants.CsharpEditorContents) is { } csharpEditorContents
+      && AppState.IsEditorContentSaved)
+    {
+      await _csharpEditor.SetValue(csharpEditorContents);
+    }
+
+    _conversionSettings.PropertyChanged += OnConversionSettingsChanged;
 
   }
 
-  private void OnConversionOptionsChanged(object? sender, PropertyChangedEventArgs e)
+  private void OnConversionSettingsChanged(object? sender, PropertyChangedEventArgs e)
   {
-    if (AppState.IsOptionsSave)
+    if (AppState.IsSettingsSaved)
     {
-      _localStorageService.SetItem(Constants.OptionsValue, _conversionOptions);
+      _localStorageService.SetItem(Constants.SettingsContents, _conversionSettings);
     }
   }
   private static StandaloneEditorConstructionOptions JsonEditorConstructionOptions(StandaloneCodeEditor editor)
@@ -98,7 +112,7 @@ public partial class Index : ComponentBase, IDisposable
       return;
     }
 
-    if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionOptions, out var syntax))
+    if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionSettings, out var syntax))
     {
       await _csharpEditor.SetValue(syntax);
       await AppState.ToastService!.ShowToastAsync(
@@ -136,8 +150,26 @@ public partial class Index : ComponentBase, IDisposable
       );
   }
 
+  private async Task OnJsonDidChangeModelContent(ModelContentChangedEvent eventArgs)
+  {
+    if (AppState.IsEditorContentSaved)
+    {
+      var jsonEditorContent = await _jsonEditor.GetValue();
+      await _localStorageServiceAsync.SetItemAsStringAsync(Constants.JsonEditorContents, jsonEditorContent);
+    }
+  }
+
+  private async Task OnCsharpDidChangeModelContent(ModelContentChangedEvent eventArgs)
+  {
+    if (AppState.IsEditorContentSaved)
+    {
+      var csharpEditorContent = await _csharpEditor.GetValue();
+      await _localStorageServiceAsync.SetItemAsStringAsync(Constants.CsharpEditorContents, csharpEditorContent);
+    }
+  }
+
   public void Dispose()
   {
-    _conversionOptions.PropertyChanged -= OnConversionOptionsChanged;
+    _conversionSettings.PropertyChanged -= OnConversionSettingsChanged;
   }
 }

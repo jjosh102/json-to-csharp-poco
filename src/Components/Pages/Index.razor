@@ -16,22 +16,22 @@
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="use-records">Use Records</label>
-                        <input type="checkbox" id="use-records" @bind="_conversionOptions.UseRecords"
+                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseRecords"
                             class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
-                    @if (_conversionOptions.UseRecords)
+                    @if (_conversionSettings.UseRecords)
                     {
                         <div class="flex items-center justify-between">
                             <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                                 for="use-primary-constructor">Use Primary Constructor</label>
-                            <input type="checkbox" id="use-primary-constructor" @bind="_conversionOptions.UsePrimaryConstructor"
+                            <input type="checkbox" id="use-primary-constructor" @bind="_conversionSettings.UsePrimaryConstructor"
                                 class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="property-access">Property Access</label>
-                        <select id="property-access" @bind="_conversionOptions.PropertyAccess"
+                        <select id="property-access" @bind="_conversionSettings.PropertyAccess"
                             class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @foreach (PropertyAccess access in Enum.GetValues(typeof(PropertyAccess)))
                             {
@@ -42,7 +42,7 @@
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="array-type">Array Type</label>
-                        <select id="array-type" @bind="_conversionOptions.ArrayType"
+                        <select id="array-type" @bind="_conversionSettings.ArrayType"
                             class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @foreach (ArrayType arrayType in Enum.GetValues(typeof(ArrayType)))
                             {
@@ -60,30 +60,30 @@
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="add-attribute">Add Json Attribute</label>
-                        <input type="checkbox" id="add-attribute" @bind="_conversionOptions.AddAttribute"
+                        <input type="checkbox" id="add-attribute" @bind="_conversionSettings.AddAttribute"
                             class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
-                    @if (!_conversionOptions.IsDefaultInitialized)
+                    @if (!_conversionSettings.IsDefaultInitialized)
                     {
                         <div class="flex items-center justify-between">
                             <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                                 for="is-nullable">Nullable?</label>
-                            <input type="checkbox" id="is-nullable" @bind="_conversionOptions.IsNullable"
+                            <input type="checkbox" id="is-nullable" @bind="_conversionSettings.IsNullable"
                                 class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="is-required">Required</label>
-                        <input type="checkbox" id="is-required" @bind="_conversionOptions.IsRequired"
+                        <input type="checkbox" id="is-required" @bind="_conversionSettings.IsRequired"
                             class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
-                    @if (!_conversionOptions.IsNullable)
+                    @if (!_conversionSettings.IsNullable)
                     {
                         <div class="flex items-center justify-between">
                             <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                                 for="default-values">Initialized Default Values</label>
-                            <input type="checkbox" id="default-values" @bind="_conversionOptions.IsDefaultInitialized"
+                            <input type="checkbox" id="default-values" @bind="_conversionSettings.IsDefaultInitialized"
                                 class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
@@ -97,13 +97,13 @@
                     <div class="flex flex-col space-y-2">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="namespace">Namespace</label>
-                        <input type="text" id="namespace" @bind="_conversionOptions.Namespace"
+                        <input type="text" id="namespace" @bind="_conversionSettings.Namespace"
                             class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
                     </div>
                     <div class="flex flex-col space-y-2">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="root-name">Root Name</label>
-                        <input type="text" id="root-name" @bind="_conversionOptions.RootTypeName"
+                        <input type="text" id="root-name" @bind="_conversionSettings.RootTypeName"
                             class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                     class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
                     JSON Editor
                 </label>
-                <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor"
+                <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor"  OnDidChangeModelContent="OnJsonDidChangeModelContent"
                     ConstructionOptions="JsonEditorConstructionOptions"
                     CssClass="h-[calc(100vh-13rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
             </div>
@@ -156,7 +156,7 @@
                     class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
                     C# Editor
                 </label>
-                <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"
+                <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"  OnDidChangeModelContent="OnCsharpDidChangeModelContent"
                     ConstructionOptions="CsharpEditorConstructionOptions"
                     CssClass="h-[calc(100vh-13rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
             </div>

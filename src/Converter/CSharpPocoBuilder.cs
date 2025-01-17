@@ -10,15 +10,15 @@ namespace JsonToCsharpPoco.Converter;
 
 public partial class CSharpPocoBuilder
 {
-    public string Build(JsonElement rootElement, ConversionOptions options)
+    public string Build(JsonElement rootElement, ConversionSettings options)
     {
         return options.UseRecords
             ? Build(rootElement, options, AddRecordFromJson)
             : Build(rootElement, options, AddClassFromJson);
     }
 
-    private string Build(JsonElement rootElement, ConversionOptions options,
-        Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionOptions> buildSyntax)
+    private string Build(JsonElement rootElement, ConversionSettings options,
+        Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionSettings> buildSyntax)
     {
         var declarations = new List<MemberDeclarationSyntax>();
         buildSyntax(rootElement, options.RootTypeName, declarations, options);
@@ -42,7 +42,7 @@ public partial class CSharpPocoBuilder
     private void AddClassFromJson(JsonElement jsonObject,
         string className,
         List<MemberDeclarationSyntax> declarations,
-        ConversionOptions options)
+        ConversionSettings options)
     {
         className = SanitizePropertyName(className);
         var classDeclaration = SyntaxFactory.ClassDeclaration(className)
@@ -58,7 +58,7 @@ public partial class CSharpPocoBuilder
     private void AddRecordFromJson(JsonElement jsonObject,
         string recordName,
         List<MemberDeclarationSyntax> declarations,
-        ConversionOptions options)
+        ConversionSettings options)
     {
         if (options.UsePrimaryConstructor)
         {
@@ -74,7 +74,7 @@ public partial class CSharpPocoBuilder
     private void GeneratePrimaryConstructorRecordFromJson(JsonElement jsonObject,
         string recordName,
         List<MemberDeclarationSyntax> declarations,
-        ConversionOptions options)
+        ConversionSettings options)
     {
         recordName = SanitizePropertyName(recordName);
         var recordDeclaration = SyntaxFactory
@@ -94,7 +94,7 @@ public partial class CSharpPocoBuilder
     private void GenerateStandardRecordFromJson(JsonElement jsonObject,
         string recordName,
         List<MemberDeclarationSyntax> declarations,
-        ConversionOptions options)
+        ConversionSettings options)
     {
         recordName = SanitizePropertyName(recordName);
         var recordDeclaration = SyntaxFactory
@@ -112,8 +112,8 @@ public partial class CSharpPocoBuilder
     private string HandlePropertyType(JsonElement propertyValue,
         string propertyName,
         List<MemberDeclarationSyntax> declarations,
-        Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionOptions> addNestedTypeAction,
-        ConversionOptions options)
+        Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionSettings> addNestedTypeAction,
+        ConversionSettings options)
     {
         string propertyType = DeterminePropertyType(propertyValue, propertyName, options.ArrayType);
 
@@ -198,7 +198,7 @@ public partial class CSharpPocoBuilder
     }
 
 
-    private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType, ConversionOptions options)
+    private PropertyDeclarationSyntax GenerateClassProperty(string propertyName, string propertyType, ConversionSettings options)
     {
         var accessors = options.PropertyAccess switch
         {
@@ -264,7 +264,7 @@ public partial class CSharpPocoBuilder
         return propertyDeclaration;
     }
 
-    private ParameterSyntax GenerateRecordParameter(string propertyName, string propertyType, ConversionOptions options)
+    private ParameterSyntax GenerateRecordParameter(string propertyName, string propertyType, ConversionSettings options)
     {
         if (options.IsNullable)
         {
@@ -295,7 +295,7 @@ public partial class CSharpPocoBuilder
     }
 
     private List<ParameterSyntax> CreateParametersFromJson(JsonElement jsonObject,
-        List<MemberDeclarationSyntax> declarations, ConversionOptions options)
+        List<MemberDeclarationSyntax> declarations, ConversionSettings options)
     {
         var parameters = new List<ParameterSyntax>();
 
@@ -310,7 +310,7 @@ public partial class CSharpPocoBuilder
     }
 
     private List<MemberDeclarationSyntax> CreatePropertiesFromJson(JsonElement jsonObject,
-        List<MemberDeclarationSyntax> declarations, ConversionOptions options)
+        List<MemberDeclarationSyntax> declarations, ConversionSettings options)
     {
         var properties = new List<MemberDeclarationSyntax>();
 

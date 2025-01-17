@@ -22,14 +22,20 @@ public partial class CascadingAppState : ComponentBase
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
   public ToastComponent? ToastService { get; set; }
-  public bool IsOptionsSave { get; set; }
+  public bool IsSettingsSaved { get; set; }
+  public bool IsEditorContentSaved { get; set; }
   private string _currentTheme = "light";
 
   protected override async Task OnInitializedAsync()
   {
-    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveOptions) is { } options)
+    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveSettings) is { } isSettingsSaved)
     {
-      IsOptionsSave = options;
+      IsSettingsSaved = isSettingsSaved;
+    }
+
+    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveEditorContents) is { } isEditorContentSaved)
+    {
+      IsEditorContentSaved = isEditorContentSaved;
     }
 
     if (await _localStorageService.GetItemAsync<string>(Constants.ThemeKey) is { } theme)
