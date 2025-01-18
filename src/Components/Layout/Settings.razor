@@ -1,7 +1,7 @@
 @inject IJSRuntime JSRuntime
 @inject ILocalStorageService LocalStorage
 
-<div class="fixed right-4 top-4 z-40">
+<div class="right-4 top-4 z-40">
     <button @onclick="TogglePanel"
         class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
@@ -14,16 +14,14 @@
     </button>
 </div>
 
-<div class="@(_isPanelOpen ? "fixed" : "hidden") inset-0 z-50 overflow-hidden">
-    <div class="fixed inset-0 bg-black/50 dark:bg-black/70 transition-opacity duration-300" @onclick="TogglePanel">
-    </div>
+<div class="@($"fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 {(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")}")">
+    <div class="fixed inset-0 bg-black/50 dark:bg-black/70" @onclick="TogglePanel"></div>
 
-    <div class="fixed top-0 right-0 h-full w-96 transform transition-all duration-300 ease-in-out
+    <div class="fixed top-0 right-0 h-full w-96 bg-[#F3F3F3] dark:bg-[#1E1E1E] shadow-xl overflow-y-auto
+                transform transition-transform duration-300 ease-in-out
                 @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
-        <div class="h-full bg-[#F3F3F3] dark:bg-[#1E1E1E] text-gray-800 dark:text-white shadow-xl overflow-y-auto">
-
-            <div
-                class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
+        <div class="h-full text-gray-800 dark:text-white">
+            <div class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -33,8 +31,7 @@
                         </svg>
                         <span class="text-xl font-semibold">Settings</span>
                     </div>
-                    <button @onclick="TogglePanel"
-                        class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+                    <button @onclick="TogglePanel" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -45,8 +42,7 @@
             </div>
 
             <div class="p-4 space-y-6">
-
-                <div class="space-y-4">
+               <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="space-y-1">
                             <h3 class="text-sm font-medium">Theme</h3>
@@ -87,7 +83,7 @@
                 </div>
 
                 <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
-
+                
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="space-y-1">
