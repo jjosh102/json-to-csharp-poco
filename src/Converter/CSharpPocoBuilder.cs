@@ -12,16 +12,8 @@ public partial class CSharpPocoBuilder
 {
     public string Build(JsonElement rootElement, ConversionSettings options)
     {
-        return options.UseRecords
-            ? Build(rootElement, options, AddRecordFromJson)
-            : Build(rootElement, options, AddClassFromJson);
-    }
-
-    private string Build(JsonElement rootElement, ConversionSettings options,
-        Action<JsonElement, string, List<MemberDeclarationSyntax>, ConversionSettings> buildSyntax)
-    {
         var declarations = new List<MemberDeclarationSyntax>();
-        buildSyntax(rootElement, options.RootTypeName, declarations, options);
+        AddTypeFromJson(rootElement, options.RootTypeName, declarations, options);
 
         var namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(options.Namespace))
             .AddMembers(declarations.ToArray());
@@ -39,76 +31,51 @@ public partial class CSharpPocoBuilder
 
     }
 
-    private void AddClassFromJson(JsonElement jsonObject,
-        string className,
-        List<MemberDeclarationSyntax> declarations,
-        ConversionSettings options)
+    private void AddTypeFromJson(JsonElement jsonObject,
+       string typeName,
+       List<MemberDeclarationSyntax> declarations,
+       ConversionSettings options)
     {
-        className = SanitizePropertyName(className);
-        var classDeclaration = SyntaxFactory.ClassDeclaration(className)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+        typeName = SanitizePropertyName(typeName);
 
-        var properties = CreatePropertiesFromJson(jsonObject, declarations, options);
+        MemberDeclarationSyntax typeDeclaration;
 
-        classDeclaration = classDeclaration.AddMembers(properties.ToArray());
-        declarations.Add(classDeclaration);
-    }
-
-    //todo:refactor
-    private void AddRecordFromJson(JsonElement jsonObject,
-        string recordName,
-        List<MemberDeclarationSyntax> declarations,
-        ConversionSettings options)
-    {
-        if (options.UsePrimaryConstructor)
+        if (!options.UseRecords)
         {
-            GeneratePrimaryConstructorRecordFromJson(jsonObject, recordName, declarations, options);
+            var classDeclaration = SyntaxFactory.ClassDeclaration(typeName)
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+            var members = CreatePropertiesFromJson(jsonObject, declarations, options);
+            classDeclaration = classDeclaration.AddMembers(members.ToArray());
+
+            typeDeclaration = classDeclaration;
         }
         else
         {
-            GenerateStandardRecordFromJson(jsonObject, recordName, declarations, options);
+            var recordDeclaration = SyntaxFactory.RecordDeclaration(SyntaxFactory.Token(SyntaxKind.RecordKeyword), typeName)
+                .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+            if (options.UsePrimaryConstructor)
+            {
+                var parameters = CreateParametersFromJson(jsonObject, declarations, options);
+                recordDeclaration = recordDeclaration
+                    .AddParameterListParameters(parameters.ToArray())
+                    .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+            }
+            else
+            {
+                var members = CreatePropertiesFromJson(jsonObject, declarations, options);
+                recordDeclaration = recordDeclaration
+                    .WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
+                    .AddMembers(members.ToArray())
+                    .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
+            }
+
+            typeDeclaration = recordDeclaration;
         }
+
+        declarations.Add(typeDeclaration);
     }
-
-
-    private void GeneratePrimaryConstructorRecordFromJson(JsonElement jsonObject,
-        string recordName,
-        List<MemberDeclarationSyntax> declarations,
-        ConversionSettings options)
-    {
-        recordName = SanitizePropertyName(recordName);
-        var recordDeclaration = SyntaxFactory
-            .RecordDeclaration(SyntaxFactory.Token(SyntaxKind.RecordKeyword), recordName)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
-
-        var parameters = CreateParametersFromJson(jsonObject, declarations, options);
-
-        recordDeclaration = recordDeclaration
-            .AddParameterListParameters(parameters.ToArray())
-            .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-
-        declarations.Add(recordDeclaration);
-    }
-
-
-    private void GenerateStandardRecordFromJson(JsonElement jsonObject,
-        string recordName,
-        List<MemberDeclarationSyntax> declarations,
-        ConversionSettings options)
-    {
-        recordName = SanitizePropertyName(recordName);
-        var recordDeclaration = SyntaxFactory
-            .RecordDeclaration(SyntaxFactory.Token(SyntaxKind.RecordKeyword), recordName)
-            .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-            .WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
-            .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
-
-        var properties = CreatePropertiesFromJson(jsonObject, declarations, options);
-
-        recordDeclaration = recordDeclaration.AddMembers(properties.ToArray());
-        declarations.Add(recordDeclaration);
-    }
-
     private string HandlePropertyType(JsonElement propertyValue,
         string propertyName,
         List<MemberDeclarationSyntax> declarations,
@@ -130,7 +97,7 @@ public partial class CSharpPocoBuilder
         {
             var nestedTypeName = ToPascalCase(propertyName);
             addNestedTypeAction(propertyValue[0], nestedTypeName, declarations, options);
-            return FormatArrayType(nestedTypeName, options.ArrayType); 
+            return FormatArrayType(nestedTypeName, options.ArrayType);
         }
 
         return propertyType;
@@ -301,7 +268,7 @@ public partial class CSharpPocoBuilder
 
         foreach (var property in jsonObject.EnumerateObject())
         {
-            var propertyType = HandlePropertyType(property.Value, property.Name, declarations, AddRecordFromJson, options);
+            var propertyType = HandlePropertyType(property.Value, property.Name, declarations, AddTypeFromJson, options);
             var parameter = GenerateRecordParameter(property.Name, propertyType, options);
             parameters.Add(parameter);
         }
@@ -316,8 +283,7 @@ public partial class CSharpPocoBuilder
 
         foreach (var property in jsonObject.EnumerateObject())
         {
-            var propertyType = HandlePropertyType(property.Value, property.Name, declarations,
-                    options.UseRecords ? AddRecordFromJson : AddClassFromJson, options);
+            var propertyType = HandlePropertyType(property.Value, property.Name, declarations,AddTypeFromJson, options);
             var propertyDeclaration = GenerateClassProperty(property.Name, propertyType, options);
             properties.Add(propertyDeclaration);
         }
