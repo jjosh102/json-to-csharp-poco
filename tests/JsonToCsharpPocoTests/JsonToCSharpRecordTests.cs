@@ -190,7 +190,7 @@ public class JsonToCSharpRecordTests
         }";
 
         var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
-        
+
         Assert.Contains("public record RootRecord", result);
         Assert.Contains("[property: JsonPropertyName(\"type\")]", result);
         Assert.Contains("[property: JsonPropertyName(\"id\")]", result);
@@ -486,5 +486,32 @@ public class JsonToCSharpRecordTests
 
         Assert.Contains("public Items[] Items { get; init; }", result);
     }
+
+    // [Fact]
+    // public void ConvertJsonToRecord_MultiLineConstructor_GeneratesConstructorWithLineBreaks()
+    // {
+    //     string json = @"{
+    //     ""id"": 1,
+    //     ""name"": ""Test Company"",
+    //     ""location"": ""New York""
+    // }";
+
+    //     var options = new ConversionSettings
+    //     {
+    //         Namespace = "TestNamespace",
+    //         RootTypeName = "CompanyRecord",
+    //         UseRecords = true,
+    //         UsePrimaryConstructor = true,
+    //         MultiLineConstructor = true
+    //     };
+
+    //     var result = _converter.ConvertJsonToCsharp(json, options);
+    //     Console.WriteLine(result);
+    //     Assert.Contains("public record CompanyRecord(", result);
+    //     Assert.Contains("int Id,", result);
+    //     Assert.Contains("string Name,", result);
+    //     Assert.Contains("string Location", result);
+    //     Assert.Contains(");", result);
+    // }
 
 }

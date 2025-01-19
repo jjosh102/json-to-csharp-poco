@@ -283,7 +283,7 @@ public partial class CSharpPocoBuilder
 
         foreach (var property in jsonObject.EnumerateObject())
         {
-            var propertyType = HandlePropertyType(property.Value, property.Name, declarations,AddTypeFromJson, options);
+            var propertyType = HandlePropertyType(property.Value, property.Name, declarations, AddTypeFromJson, options);
             var propertyDeclaration = GenerateClassProperty(property.Name, propertyType, options);
             properties.Add(propertyDeclaration);
         }
@@ -291,28 +291,15 @@ public partial class CSharpPocoBuilder
         return properties;
     }
 
-    private string ToPascalCase(string input)
+    [GeneratedRegex(@"(^|_)([a-z])", RegexOptions.Compiled)]
+    private static partial Regex PascalCaseRegex();
+
+    //todo: Make sure all the unit tests pass
+    public string ToPascalCase(string input)
     {
-        if (string.IsNullOrEmpty(input)) return input;
-
-        var sanitizedPropertyName = SanitizePropertyName(input);
-
-        if (int.TryParse(input, out _)) return sanitizedPropertyName;
-
-        string[] parts = sanitizedPropertyName.Split('_', StringSplitOptions.RemoveEmptyEntries);
-        int maxLength = parts.Max(p => p.Length);
-        Span<char> buffer = stackalloc char[maxLength];
-        for (int i = 0; i < parts.Length; i++)
-        {
-            if (parts[i].Length > 0)
-            {
-                parts[i].AsSpan().CopyTo(buffer);
-                buffer[0] = char.ToUpperInvariant(buffer[0]);
-                parts[i] = new string(buffer.Slice(0, parts[i].Length));
-            }
-        }
-
-        return string.Concat(parts);
+        if (string.IsNullOrWhiteSpace(input)) return input;
+        var sanitizedInput = SanitizePropertyName(input);
+        return PascalCaseRegex().Replace(sanitizedInput, match => match.Groups[2].Value.ToUpper());
     }
 
 
