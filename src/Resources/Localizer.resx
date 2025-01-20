@@ -175,9 +175,8 @@
   </data>
   <data name="Language" xml:space="preserve">
   <value>Language</value>
-  </data>
-  <data name="Select your preferred language" xml:space="preserve">
+</data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
   <value>Select your preferred language</value>
-  </data>
-
+</data>
 </root>

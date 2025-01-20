@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
@@ -62,121 +62,122 @@
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings_Title" xml:space="preserve">
-    <value>Settings</value>
-    <comment>Title for settings section</comment>
+    <value>Einstellungen</value>
+    <comment>Titel für den Einstellungsbereich</comment>
   </data>
   <data name="Theme_Title" xml:space="preserve">
-    <value>Theme</value>
-    <comment>Title for theme settings</comment>
+    <value>Thema</value>
+    <comment>Titel für die Themen-Einstellungen</comment>
   </data>
   <data name="Theme_Description" xml:space="preserve">
-    <value>Choose your preferred appearance</value>
-    <comment>Description for theme selection</comment>
+    <value>Wählen Sie Ihr bevorzugtes Erscheinungsbild</value>
+    <comment>Beschreibung für die Themenauswahl</comment>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Light</value>
-    <comment>Light theme option</comment>
+    <value>Hell</value>
+    <comment>Option für helles Thema</comment>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dark</value>
-    <comment>Dark theme option</comment>
+    <value>Dunkel</value>
+    <comment>Option für dunkles Thema</comment>
   </data>
   <data name="SaveSettings_Title" xml:space="preserve">
-    <value>Save Settings</value>
-    <comment>Title for save settings section</comment>
+    <value>Einstellungen speichern</value>
+    <comment>Titel für den Bereich "Einstellungen speichern"</comment>
   </data>
   <data name="SaveSettings_Description" xml:space="preserve">
-    <value>Remember your settings for next time</value>
-    <comment>Description for save settings option</comment>
+    <value>Speichern Sie Ihre Einstellungen für das nächste Mal</value>
+    <comment>Beschreibung für die Option "Einstellungen speichern"</comment>
   </data>
   <data name="SaveEditor_Title" xml:space="preserve">
-    <value>Save Editor Content</value>
-    <comment>Title for save editor content section</comment>
+    <value>Editor-Inhalt speichern</value>
+    <comment>Titel für den Bereich "Editor-Inhalt speichern"</comment>
   </data>
   <data name="SaveEditor_Description" xml:space="preserve">
-    <value>Do you want to save the content of your editor for future sessions?</value>
-    <comment>Description for save editor content option</comment>
+    <value>Möchten Sie den Inhalt Ihres Editors für zukünftige Sitzungen speichern?</value>
+    <comment>Beschreibung für die Option "Editor-Inhalt speichern"</comment>
   </data>
   <data name="SaveEditor_Note" xml:space="preserve">
-    <value>Note: Your data will be stored locally and should not include confidential information. You can disable this feature if needed.</value>
-    <comment>Important note about data storage</comment>
+    <value>Ihre Daten werden lokal gespeichert und sollten keine vertraulichen Informationen enthalten. Sie können diese Funktion bei Bedarf deaktivieren.</value>
+    <comment>Wichtiger Hinweis zur Datenspeicherung</comment>
   </data>
   <data name="TypeSettings_Title" xml:space="preserve">
-    <value>Type Settings</value>
-    <comment>Title for type settings section</comment>
+    <value>Typ-Einstellungen</value>
+    <comment>Titel für die Typ-Einstellungen</comment>
   </data>
   <data name="UseRecords_Label" xml:space="preserve">
-    <value>Use Records</value>
-    <comment>Label for use records option</comment>
+    <value>Datensätze verwenden</value>
+    <comment>Bezeichnung für die Option "Datensätze verwenden"</comment>
   </data>
   <data name="UsePrimaryConstructor_Label" xml:space="preserve">
-    <value>Use Primary Constructor</value>
-    <comment>Label for use primary constructor option</comment>
+    <value>Primärkonstruktor verwenden</value>
+    <comment>Bezeichnung für die Option "Primärkonstruktor verwenden"</comment>
   </data>
   <data name="PropertyAccess_Label" xml:space="preserve">
-    <value>Property Access</value>
-    <comment>Label for property access selection</comment>
+    <value>Eigenschaftszugriff</value>
+    <comment>Bezeichnung für die Auswahl des Eigenschaftszugriffs</comment>
   </data>
   <data name="ArrayType_Label" xml:space="preserve">
-    <value>Array Type</value>
-    <comment>Label for array type selection</comment>
+    <value>Array-Typ</value>
+    <comment>Bezeichnung für die Auswahl des Array-Typs</comment>
   </data>
   <data name="PropertySettings_Title" xml:space="preserve">
-    <value>Property Settings</value>
-    <comment>Title for property settings section</comment>
+    <value>Eigenschaftseinstellungen</value>
+    <comment>Titel für die Eigenschaftseinstellungen</comment>
   </data>
   <data name="AddJsonAttribute_Label" xml:space="preserve">
-    <value>Add Json Attribute</value>
-    <comment>Label for add JSON attribute option</comment>
+    <value>JSON-Attribut hinzufügen</value>
+    <comment>Bezeichnung für die Option "JSON-Attribut hinzufügen"</comment>
   </data>
   <data name="IsNullable_Label" xml:space="preserve">
     <value>Nullable?</value>
-    <comment>Label for nullable option</comment>
+    <comment>Bezeichnung für die Option "Nullable"</comment>
   </data>
   <data name="IsRequired_Label" xml:space="preserve">
-    <value>Required</value>
-    <comment>Label for required option</comment>
+    <value>Erforderlich</value>
+    <comment>Bezeichnung für die Option "Erforderlich"</comment>
   </data>
   <data name="DefaultValues_Label" xml:space="preserve">
-    <value>Initialized Default Values</value>
-    <comment>Label for default values initialization option</comment>
+    <value>Initialisierte Standardwerte</value>
+    <comment>Bezeichnung für die Option "Standardwerte initialisieren"</comment>
   </data>
   <data name="NamingSettings_Title" xml:space="preserve">
-    <value>Naming Settings</value>
-    <comment>Title for naming settings section</comment>
+    <value>Namenseinstellungen</value>
+    <comment>Titel für die Namenseinstellungen</comment>
   </data>
   <data name="Namespace_Label" xml:space="preserve">
-    <value>Namespace</value>
-    <comment>Label for namespace input</comment>
+    <value>Namensraum</value>
+    <comment>Bezeichnung für die Eingabe des Namensraums</comment>
   </data>
   <data name="RootName_Label" xml:space="preserve">
-    <value>Root Name</value>
-    <comment>Label for root name input</comment>
+    <value>Wurzelname</value>
+    <comment>Bezeichnung für die Eingabe des Wurzelnamens</comment>
   </data>
   <data name="CopyCode_Button" xml:space="preserve">
-    <value>Copy Code</value>
-    <comment>Text for copy code button</comment>
+    <value>Code kopieren</value>
+    <comment>Text für die Schaltfläche "Code kopieren"</comment>
   </data>
   <data name="Convert_Button" xml:space="preserve">
-    <value>Convert</value>
-    <comment>Text for convert button</comment>
+    <value>Konvertieren</value>
+    <comment>Text für die Schaltfläche "Konvertieren"</comment>
   </data>
   <data name="Converting_Label" xml:space="preserve">
-    <value>Converting...</value>
-    <comment>Text shown while conversion is in progress</comment>
+    <value>Konvertiere...</value>
+    <comment>Text, der während des Konvertierungsvorgangs angezeigt wird</comment>
   </data>
   <data name="JsonEditor_Label" xml:space="preserve">
-    <value>JSON Editor</value>
-    <comment>Label for JSON editor</comment>
+    <value>JSON-Editor</value>
+    <comment>Bezeichnung für den JSON-Editor</comment>
   </data>
   <data name="CsharpEditor_Label" xml:space="preserve">
-    <value>C# Editor</value>
-    <comment>Label for C# editor</comment>
+    <value>C#-Editor</value>
+    <comment>Bezeichnung für den C#-Editor</comment>
   </data>
   <data name="Language" xml:space="preserve">
-  <value>Language</value>
+  <value>Sprache</value>
 </data>
-  <data name="Select your preferred language" xml:space="preserve">
-  <value>Select your preferred language</value>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+  <value>Wählen Sie Ihre bevorzugte Sprache</value>
 </data>
+
 </root>

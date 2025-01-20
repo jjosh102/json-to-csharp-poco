@@ -682,10 +682,6 @@ video {
   display: inline-flex;
 }
 
-.contents {
-  display: contents;
-}
-
 .h-16 {
   height: 4rem;
 }
@@ -732,6 +728,10 @@ video {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .w-5 {
@@ -1107,6 +1107,11 @@ video {
   padding-right: 0.5rem;
 }
 
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1174,6 +1179,10 @@ video {
 
 .font-medium {
   font-weight: 500;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .font-semibold {
@@ -1834,8 +1843,8 @@ h1:focus {
     width: 50%;
   }
 
-  .lg\:w-64 {
-    width: 16rem;
+  .lg\:w-80 {
+    width: 20rem;
   }
 
   .lg\:flex-row {

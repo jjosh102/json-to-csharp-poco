@@ -1,8 +1,6 @@
-
 @inject IJSRuntime JSRuntime
 @inject ILocalStorageService LocalStorage
-
-    
+@inject NavigationManager NavigationManager
 <div class="right-4 top-4 z-40">
     <button @onclick="TogglePanel"
         class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -33,7 +31,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         </svg>
-                        <span class="text-xl font-semibold">Settings</span>
+                        <span class="text-xl font-semibold">@Localizer.Settings_Title</span>
                     </div>
                     <button @onclick="TogglePanel" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -49,9 +47,9 @@
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="space-y-1">
-                            <h3 class="text-sm font-medium">Theme</h3>
+                            <h3 class="text-sm font-medium">@Localizer.Theme_Title</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-300">
-                                Choose your preferred appearance
+                                @Localizer.Theme_Description
                             </p>
                         </div>
                         <button @onclick="ToggleTheme" class="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300
@@ -72,7 +70,7 @@
                                     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
                                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                                 </svg>
-                                <span>Light</span>
+                                <span>@Localizer.Theme_Light</span>
                             }
                             else
                             {
@@ -80,7 +78,7 @@
                                     viewBox="0 0 24 24">
                                     <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
                                 </svg>
-                                <span>Dark</span>
+                                <span>@Localizer.Theme_Dark</span>
                             }
                         </button>
                     </div>
@@ -91,9 +89,9 @@
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
                         <div class="space-y-1">
-                            <h3 class="text-sm font-medium">Save Settings</h3>
+                            <h3 class="text-sm font-medium">@Localizer.SaveSettings_Title</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-300">
-                                Remember your settings for next time
+                                @Localizer.SaveSettings_Description
                             </p>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
@@ -115,13 +113,12 @@
                 <div class="space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <div class="space-y-1 sm:mr-4">
-                            <h3 class="text-sm font-medium">Save Editor Content</h3>
+                            <h3 class="text-sm font-medium">@Localizer.SaveEditor_Title</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-300">
-                                Do you want to save the content of your editor for future sessions?
+                                @Localizer.SaveEditor_Description
                             </p>
                             <p class="text-sm text-gray-500 dark:text-gray-300 mt-2">
-                                <strong class="text-red-500">Note:</strong> Your data will be stored locally and should
-                                not include confidential information. You can disable this feature if needed.
+                                <strong class="text-red-500">Note:</strong> @Localizer.SaveEditor_Note
                             </p>
                         </div>
                         <label class="relative inline-flex items-center mt-4 sm:mt-0">
@@ -137,33 +134,40 @@
                         </label>
                     </div>
                 </div>
-                @* <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
-                <div class="p-4 space-y-6">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="space-y-1">
-                                <h3 class="text-sm font-medium">@Localizer.Languages</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-300">
-                                    @Localizer.Sele
-                                </p>
-                            </div>
-                            <select class="p-2 border rounded-md" @onchange="ChangeLanguage">
-                                @foreach (var lang in SupportedLanguages)
-                                {
-                                    <option value="@lang.Code" selected="@((lang.Code == CurrentLanguage))">
-                                        @lang.DisplayName
-                                    </option>
-                                }
-                            </select>
-                        </div>
+
+                <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <label class="text-sm font-medium text-gray-800 dark:text-white" for="language-select">
+                            @Localizer.Language
+                            <p class="text-xs font-normal text-gray-500 dark:text-gray-300">
+                                @Localizer.Select_Preferred_Language
+                            </p>
+                        </label>
+                        <select id="language-select" @onchange="ChangeLanguage"
+                            class="w-40 px-3 py-2 text-sm bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                            @foreach (var culture in _supportedCultures)
+                            {
+                                <option value="@culture.Name" selected="@(culture.Name == CurrentCulture.Name)">
+                                    @culture.DisplayName
+                                </option>
+                            }
+                        </select>
                     </div>
-                </div> *@
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @code {
+    private List<CultureInfo> _supportedCultures = new()
+{
+new System.Globalization.CultureInfo("en"), // English
+new System.Globalization.CultureInfo("de"), // German
+};
+
+    private CultureInfo CurrentCulture => CultureInfo.CurrentUICulture;
     private bool _isPanelOpen;
 
     [CascadingParameter]
@@ -176,7 +180,21 @@
     private async Task SaveSettingsToLocalStorage(ChangeEventArgs e) =>
     await AppState.UpdatePreferenceAsync(p => p.IsSettingsSaved = (bool)e.Value!, Constants.SavedPreferences);
 
-    //todo: delete contents if suer opt to disbale it
     private async Task SaveEditorContentToLocalStorage(ChangeEventArgs e) =>
     await AppState.UpdatePreferenceAsync(p => p.IsEditorContentSaved = (bool)e.Value!, Constants.SavedPreferences);
+
+    private async Task ChangeLanguage(ChangeEventArgs e)
+    {
+        var selectedCulture = e.Value?.ToString() ?? "en";
+        if (!string.IsNullOrEmpty(selectedCulture))
+        {
+            var cultureInfo = new CultureInfo(selectedCulture);
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+            await LocalStorage.SetItemAsStringAsync(Constants.PreferredCulture, selectedCulture);
+
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+    }
 }
