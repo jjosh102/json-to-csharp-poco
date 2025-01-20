@@ -147,7 +147,7 @@
                     JSON Editor
                 </label>
                 <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor"  OnDidChangeModelContent="OnJsonDidChangeModelContent"
-                    ConstructionOptions="JsonEditorConstructionOptions"
+                    ConstructionOptions="@((editor) => CreateEditorOptions("json"))"
                     CssClass="h-[calc(100vh-13rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
             </div>
 
@@ -157,7 +157,7 @@
                     C# Editor
                 </label>
                 <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"  OnDidChangeModelContent="OnCsharpDidChangeModelContent"
-                    ConstructionOptions="CsharpEditorConstructionOptions"
+                      ConstructionOptions="@((editor) => CreateEditorOptions("csharp"))"
                     CssClass="h-[calc(100vh-13rem)] rounded border border-[#E7E7E7] dark:border-[#2D2D2D]" />
             </div>
         </div>

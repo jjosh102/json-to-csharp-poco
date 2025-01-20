@@ -22,41 +22,32 @@ public partial class CascadingAppState : ComponentBase
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
   public ToastComponent? ToastService { get; set; }
-  public bool IsSettingsSaved { get; set; }
-  public bool IsEditorContentSaved { get; set; }
-  private string _currentTheme = "light";
+  public Preferences Preferences { get; set; } = new();
 
   protected override async Task OnInitializedAsync()
   {
-    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveSettings) is { } isSettingsSaved)
+    if (await _localStorageService.GetItemAsync<Preferences>(Constants.SavedPreferences) is { } preferences)
     {
-      IsSettingsSaved = isSettingsSaved;
-    }
-
-    if (await _localStorageService.GetItemAsync<bool>(Constants.SaveEditorContents) is { } isEditorContentSaved)
-    {
-      IsEditorContentSaved = isEditorContentSaved;
-    }
-
-    if (await _localStorageService.GetItemAsync<string>(Constants.ThemeKey) is { } theme)
-    {
-      _currentTheme = theme;
-    }
-    else
-    {
-      _currentTheme = await _jsRuntime.InvokeAsync<string>("getSystemTheme");
-      await _localStorageService.SetItemAsync(Constants.ThemeKey, _currentTheme);
+      Preferences = preferences;
     }
 
     await BlazorMonaco.Editor.Global.SetTheme(_jsRuntime, IsDarkTheme ? "vs-dark" : "vs-light");
   }
 
-  public void ToggleTheme()
+  public async Task ToggleTheme()
   {
-    _currentTheme = _currentTheme == "light" ? "dark" : "light";
+    var currentTheme = IsDarkTheme ? "light" : "dark";
+    await UpdatePreferenceAsync(t => t.CurrentTheme = currentTheme, Constants.SavedPreferences);
+    await BlazorMonaco.Editor.Global.SetTheme(_jsRuntime, IsDarkTheme ? "vs-dark" : "vs-light");
     StateHasChanged();
   }
 
-  public bool IsDarkTheme => _currentTheme == "dark";
+  public bool IsDarkTheme => Preferences.CurrentTheme == "dark";
+
+  public async Task UpdatePreferenceAsync(Action<Preferences> updateAction, string storageKey)
+  {
+    updateAction(Preferences);
+    await _localStorageService.SetItemAsync(storageKey, Preferences);
+  }
 
 }

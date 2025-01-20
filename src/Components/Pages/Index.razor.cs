@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Components;
 using BlazorMonaco;
 using BlazorMonaco.Editor;
-using BlazorMonaco.Languages;
 using JsonToCsharpPoco.Converter;
 using Microsoft.JSInterop;
 using JsonToCsharpPoco.Components.AppState;
@@ -11,7 +10,6 @@ using JsonToCsharpPoco.Models;
 using System.ComponentModel;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Shared;
-using System.Reflection.Metadata;
 
 namespace JsonToCsharpPoco.Components.Pages;
 
@@ -20,22 +18,22 @@ public partial class Index : ComponentBase, IDisposable
   private readonly JsonToCSharp _jsonToCSharp;
   private readonly ISyncLocalStorageService _localStorageService;
   private readonly ILocalStorageService _localStorageServiceAsync;
-  private ConversionSettings _conversionSettings = new();
-
   private readonly IJSRuntime _jsRuntime;
 
-  [AllowNull]
-  private StandaloneCodeEditor _jsonEditor;
+  private ConversionSettings _conversionSettings = new();
 
-  [AllowNull]
-  private StandaloneCodeEditor _csharpEditor;
+  [AllowNull] private StandaloneCodeEditor _jsonEditor;
+  [AllowNull] private StandaloneCodeEditor _csharpEditor;
 
-  [CascadingParameter]
-  public required CascadingAppState AppState { get; set; }
+  [CascadingParameter] public required CascadingAppState AppState { get; set; }
 
-  private bool _isConverting = false;
+  private bool _isConverting;
 
-  public Index(JsonToCSharp jsonToCSharp, IJSRuntime jsRuntime, ISyncLocalStorageService localStorageService, ILocalStorageService localStorageServiceAsync)
+  public Index(
+      JsonToCSharp jsonToCSharp,
+      IJSRuntime jsRuntime,
+      ISyncLocalStorageService localStorageService,
+      ILocalStorageService localStorageServiceAsync)
   {
     _jsonToCSharp = jsonToCSharp;
     _jsRuntime = jsRuntime;
@@ -45,91 +43,82 @@ public partial class Index : ComponentBase, IDisposable
 
   protected override async Task OnInitializedAsync()
   {
-    if (await _localStorageServiceAsync.GetItemAsync<ConversionSettings>(Constants.SettingsContents) is { } savedOptions
-        && AppState.IsSettingsSaved)
-    {
-      _conversionSettings = savedOptions;
-    }
-
-    if (await _localStorageServiceAsync.GetItemAsync<string>(Constants.JsonEditorContents) is { } jsonEditorContents
-       && AppState.IsEditorContentSaved)
-    {
-      await _jsonEditor.SetValue(jsonEditorContents);
-    }
-
-    if (await _localStorageServiceAsync.GetItemAsync<string>(Constants.CsharpEditorContents) is { } csharpEditorContents
-      && AppState.IsEditorContentSaved)
-    {
-      await _csharpEditor.SetValue(csharpEditorContents);
-    }
+    await LoadEditorSettings();
+    await LoadEditorContent(Constants.JsonEditorContents, _jsonEditor);
+    await LoadEditorContent(Constants.CsharpEditorContents, _csharpEditor);
 
     _conversionSettings.PropertyChanged += OnConversionSettingsChanged;
+  }
 
+  private async Task LoadEditorSettings()
+  {
+    var savedSettings = await _localStorageServiceAsync.GetItemAsync<ConversionSettings>(Constants.SettingsContents);
+    if (savedSettings != null && AppState.Preferences.IsSettingsSaved)
+    {
+      _conversionSettings = savedSettings;
+    }
+  }
+
+  private async Task LoadEditorContent(string storageKey, StandaloneCodeEditor? editor)
+  {
+    if (editor == null || !AppState.Preferences.IsEditorContentSaved)
+      return;
+
+    var content = await _localStorageServiceAsync.GetItemAsync<string>(storageKey);
+    if (!string.IsNullOrWhiteSpace(content))
+    {
+      await editor!.SetValue(content);
+    }
   }
 
   private void OnConversionSettingsChanged(object? sender, PropertyChangedEventArgs e)
   {
-    if (AppState.IsSettingsSaved)
+    if (AppState.Preferences.IsSettingsSaved)
     {
       _localStorageService.SetItem(Constants.SettingsContents, _conversionSettings);
     }
   }
-  private static StandaloneEditorConstructionOptions JsonEditorConstructionOptions(StandaloneCodeEditor editor)
+
+  private static StandaloneEditorConstructionOptions CreateEditorOptions(string language)
   {
     return new StandaloneEditorConstructionOptions
     {
-      Language = "json",
+      Language = language,
       AutomaticLayout = true,
       FontSize = 12
-
     };
   }
 
-  private static StandaloneEditorConstructionOptions CsharpEditorConstructionOptions(StandaloneCodeEditor editor)
+  private async Task SaveEditorContent(string storageKey, StandaloneCodeEditor editor)
   {
-    return new StandaloneEditorConstructionOptions
-    {
-      Language = "csharp",
-      AutomaticLayout = true,
-      FontSize = 12
-    };
+    if (editor == null || !AppState.Preferences.IsEditorContentSaved)
+      return;
+
+    var content = await editor.GetValue();
+    await _localStorageServiceAsync.SetItemAsStringAsync(storageKey, content);
   }
 
   public async Task Convert()
   {
     _isConverting = true;
     await Task.Delay(1000);
-    var jsonToConvert = await _jsonEditor.GetValue();
 
+    var jsonToConvert = await _jsonEditor.GetValue();
     if (string.IsNullOrWhiteSpace(jsonToConvert))
     {
-      await AppState.ToastService!.ShowToastAsync(
-            message: "Please enter JSON to convert",
-            type: ToastType.Error,
-            title: "Error",
-            durationMs: 3000
-        );
+      await ShowToastAsync("Please enter JSON to convert", ToastType.Error, "Error");
+      _isConverting = false;
       return;
     }
 
     if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionSettings, out var syntax))
     {
       await _csharpEditor.SetValue(syntax);
-      await AppState.ToastService!.ShowToastAsync(
-        message: "JSON converted to C# POCO",
-        type: ToastType.Success,
-        title: "Conversion Successful",
-        durationMs: 3000
-      );
+      await ShowToastAsync("JSON converted to C# POCO", ToastType.Success, "Conversion Successful");
     }
     else
     {
-      await AppState.ToastService!.ShowToastAsync(
-        message: "Error converting JSON to C# POCO",
-        type: ToastType.Error,
-        title: "Conversion Failed",
-        durationMs: 3000
-      );
+      await ShowToastAsync("Error converting JSON to C# POCO", ToastType.Error, "Conversion Failed");
     }
 
     _isConverting = false;
@@ -137,39 +126,33 @@ public partial class Index : ComponentBase, IDisposable
 
   public async Task CopyToClipboard()
   {
-    var csharp = await _csharpEditor.GetValue();
-    if (string.IsNullOrWhiteSpace(csharp))
+    var csharpCode = await _csharpEditor.GetValue();
+    if (string.IsNullOrWhiteSpace(csharpCode))
       return;
 
-    await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharp);
-    await AppState.ToastService!.ShowToastAsync(
-          message: "C# code copied to clipboard",
-          type: ToastType.Success,
-          title: "",
-          durationMs: 2000
-      );
+    await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharpCode);
+    await ShowToastAsync("C# code copied to clipboard", ToastType.Success);
   }
 
-  private async Task OnJsonDidChangeModelContent(ModelContentChangedEvent eventArgs)
+  private async Task ShowToastAsync(string message, ToastType type, string title = "", int durationMs = 3000)
   {
-    if (AppState.IsEditorContentSaved)
+    if (AppState.ToastService != null)
     {
-      var jsonEditorContent = await _jsonEditor.GetValue();
-      await _localStorageServiceAsync.SetItemAsStringAsync(Constants.JsonEditorContents, jsonEditorContent);
+      await AppState.ToastService.ShowToastAsync(message, type, title, durationMs);
     }
   }
 
-  private async Task OnCsharpDidChangeModelContent(ModelContentChangedEvent eventArgs)
-  {
-    if (AppState.IsEditorContentSaved)
-    {
-      var csharpEditorContent = await _csharpEditor.GetValue();
-      await _localStorageServiceAsync.SetItemAsStringAsync(Constants.CsharpEditorContents, csharpEditorContent);
-    }
-  }
+  private async Task OnEditorContentChanged(ModelContentChangedEvent eventArgs, string storageKey, StandaloneCodeEditor editor) =>
+    await SaveEditorContent(storageKey, editor);
 
-  public void Dispose()
-  {
+  private async Task OnJsonDidChangeModelContent(ModelContentChangedEvent eventArgs) =>
+    await OnEditorContentChanged(eventArgs, Constants.JsonEditorContents, _jsonEditor);
+
+
+  private async Task OnCsharpDidChangeModelContent(ModelContentChangedEvent eventArgs) =>
+    await OnEditorContentChanged(eventArgs, Constants.CsharpEditorContents, _csharpEditor);
+
+
+  public void Dispose() =>
     _conversionSettings.PropertyChanged -= OnConversionSettingsChanged;
-  }
 }
