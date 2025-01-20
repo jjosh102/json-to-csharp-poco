@@ -1,6 +1,8 @@
+
 @inject IJSRuntime JSRuntime
 @inject ILocalStorageService LocalStorage
 
+    
 <div class="right-4 top-4 z-40">
     <button @onclick="TogglePanel"
         class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -135,6 +137,27 @@
                         </label>
                     </div>
                 </div>
+                @* <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
+                <div class="p-4 space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="space-y-1">
+                                <h3 class="text-sm font-medium">@Localizer.Languages</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-300">
+                                    @Localizer.Sele
+                                </p>
+                            </div>
+                            <select class="p-2 border rounded-md" @onchange="ChangeLanguage">
+                                @foreach (var lang in SupportedLanguages)
+                                {
+                                    <option value="@lang.Code" selected="@((lang.Code == CurrentLanguage))">
+                                        @lang.DisplayName
+                                    </option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div> *@
             </div>
         </div>
     </div>
@@ -151,9 +174,9 @@
     private async Task ToggleTheme() => await AppState.ToggleTheme();
 
     private async Task SaveSettingsToLocalStorage(ChangeEventArgs e) =>
-        await AppState.UpdatePreferenceAsync(p => p.IsSettingsSaved = (bool)e.Value!, Constants.SavedPreferences);
+    await AppState.UpdatePreferenceAsync(p => p.IsSettingsSaved = (bool)e.Value!, Constants.SavedPreferences);
 
     //todo: delete contents if suer opt to disbale it
     private async Task SaveEditorContentToLocalStorage(ChangeEventArgs e) =>
-        await AppState.UpdatePreferenceAsync(p => p.IsEditorContentSaved = (bool)e.Value!, Constants.SavedPreferences);
+    await AppState.UpdatePreferenceAsync(p => p.IsEditorContentSaved = (bool)e.Value!, Constants.SavedPreferences);
 }

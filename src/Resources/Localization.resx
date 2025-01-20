@@ -173,4 +173,11 @@
     <value>C# Editor</value>
     <comment>Label for C# editor</comment>
   </data>
+  <data name="Language" xml:space="preserve">
+  <value>Language</value>
+  </data>
+  <data name="Select your preferred language" xml:space="preserve">
+  <value>Select your preferred language</value>
+  </data>
+
 </root>

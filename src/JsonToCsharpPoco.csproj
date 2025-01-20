@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Update="Resources\Localization.Designer.cs">
+    <Compile Update="Resources\Localizer.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Localization.resx</DependentUpon>
@@ -30,7 +30,7 @@
   <ItemGroup>
     <EmbeddedResource Update="Resources\Localization.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+      <LastGenOutput>Localizer.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 </Project>
