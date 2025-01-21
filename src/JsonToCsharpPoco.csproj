@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TailwindCssInput>wwwroot\css\app.css</TailwindCssInput>
     <TailwindCssOutput>wwwroot\css\app.out.css</TailwindCssOutput>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +18,20 @@
       Version="9.0.0-*" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.12.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="9.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Resources\Localizer.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Localizer.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Localizer.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localizer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

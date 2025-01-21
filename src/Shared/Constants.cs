@@ -6,5 +6,7 @@ namespace JsonToCsharpPoco.Shared
     public const string JsonEditorContents = "json-editor-contents";
     public const string CsharpEditorContents = "csharp-editor-contents";
     public const string SettingsContents = "settings-contents";
+    public const string PreferredCulture = " preferred-culture";
+
   }
 }

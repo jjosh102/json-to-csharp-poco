@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Impostazioni</value>
+    <comment>Title for settings section</comment>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Tema</value>
+    <comment>Title for theme settings</comment>
+  </data>
+  <data name="Theme_Description" xml:space="preserve">
+    <value>Scegli l'aspetto preferito</value>
+    <comment>Description for theme selection</comment>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Chiaro</value>
+    <comment>Light theme option</comment>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Scuro</value>
+    <comment>Dark theme option</comment>
+  </data>
+  <data name="SaveSettings_Title" xml:space="preserve">
+    <value>Salva Impostazioni</value>
+    <comment>Title for save settings section</comment>
+  </data>
+  <data name="SaveSettings_Description" xml:space="preserve">
+    <value>Ricorda le tue impostazioni per la prossima volta</value>
+    <comment>Description for save settings option</comment>
+  </data>
+  <data name="SaveEditor_Title" xml:space="preserve">
+    <value>Salva Contenuto Editor</value>
+    <comment>Title for save editor content section</comment>
+  </data>
+  <data name="SaveEditor_Description" xml:space="preserve">
+    <value>Vuoi salvare il contenuto del tuo editor per le sessioni future?</value>
+    <comment>Description for save editor content option</comment>
+  </data>
+  <data name="SaveEditor_Note" xml:space="preserve">
+    <value>I tuoi dati saranno memorizzati localmente e non dovrebbero includere informazioni riservate. Puoi disabilitare questa funzione se necessario.</value>
+    <comment>Important note about data storage</comment>
+  </data>
+  <data name="TypeSettings_Title" xml:space="preserve">
+    <value>Impostazioni Tipo</value>
+    <comment>Title for type settings section</comment>
+  </data>
+  <data name="UseRecords_Label" xml:space="preserve">
+    <value>Usa Record</value>
+    <comment>Label for use records option</comment>
+  </data>
+  <data name="UsePrimaryConstructor_Label" xml:space="preserve">
+    <value>Usa Costruttore Primario</value>
+    <comment>Label for use primary constructor option</comment>
+  </data>
+  <data name="PropertyAccess_Label" xml:space="preserve">
+    <value>Accesso Proprietà</value>
+    <comment>Label for property access selection</comment>
+  </data>
+  <data name="ArrayType_Label" xml:space="preserve">
+    <value>Tipo Array</value>
+    <comment>Label for array type selection</comment>
+  </data>
+  <data name="PropertySettings_Title" xml:space="preserve">
+    <value>Impostazioni Proprietà</value>
+    <comment>Title for property settings section</comment>
+  </data>
+  <data name="AddJsonAttribute_Label" xml:space="preserve">
+    <value>Aggiungi Attributo Json</value>
+    <comment>Label for add JSON attribute option</comment>
+  </data>
+  <data name="IsNullable_Label" xml:space="preserve">
+    <value>Nullable?</value>
+    <comment>Label for nullable option</comment>
+  </data>
+  <data name="IsRequired_Label" xml:space="preserve">
+    <value>Obbligatorio</value>
+    <comment>Label for required option</comment>
+  </data>
+  <data name="DefaultValues_Label" xml:space="preserve">
+    <value>Valori Predefiniti Inizializzati</value>
+    <comment>Label for default values initialization option</comment>
+  </data>
+  <data name="NamingSettings_Title" xml:space="preserve">
+    <value>Impostazioni Nome</value>
+    <comment>Title for naming settings section</comment>
+  </data>
+  <data name="Namespace_Label" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>Label for namespace input</comment>
+  </data>
+  <data name="RootName_Label" xml:space="preserve">
+    <value>Nome Root</value>
+    <comment>Label for root name input</comment>
+  </data>
+  <data name="CopyCode_Button" xml:space="preserve">
+    <value>Copia Codice</value>
+    <comment>Text for copy code button</comment>
+  </data>
+  <data name="Convert_Button" xml:space="preserve">
+    <value>Converti</value>
+    <comment>Text for convert button</comment>
+  </data>
+  <data name="Converting_Label" xml:space="preserve">
+    <value>Conversione in corso...</value>
+    <comment>Text shown while conversion is in progress</comment>
+  </data>
+  <data name="JsonEditor_Label" xml:space="preserve">
+    <value>Editor JSON</value>
+    <comment>Label for JSON editor</comment>
+  </data>
+  <data name="CsharpEditor_Label" xml:space="preserve">
+    <value>Editor C#</value>
+    <comment>Label for C# editor</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+    <value>Seleziona la tua lingua preferita</value>
+  </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>Codice C# copiato negli appunti</value>
+</data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>Errore durante la conversione da JSON a C# POCO</value>
+</data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON convertito in C# POCO</value>
+</data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>Conversione riuscita</value>
+</data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>Conversione fallita</value>
+</data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>Inserisci il JSON da convertire</value>
+</data>
+</root>

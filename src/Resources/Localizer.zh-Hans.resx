@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="Theme_Description" xml:space="preserve">
+    <value>选择您喜欢的外观</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="SaveSettings_Title" xml:space="preserve">
+    <value>保存设置</value>
+  </data>
+  <data name="SaveSettings_Description" xml:space="preserve">
+    <value>记住您的设置以供下次使用</value>
+  </data>
+  <data name="SaveEditor_Title" xml:space="preserve">
+    <value>保存编辑器内容</value>
+  </data>
+  <data name="SaveEditor_Description" xml:space="preserve">
+    <value>是否要保存编辑器内容以供将来会话使用？</value>
+  </data>
+  <data name="SaveEditor_Note" xml:space="preserve">
+    <value>您的数据将存储在本地，不应包含机密信息。如有需要，您可以禁用此功能。</value>
+  </data>
+  <data name="TypeSettings_Title" xml:space="preserve">
+    <value>类型设置</value>
+  </data>
+  <data name="UseRecords_Label" xml:space="preserve">
+    <value>使用记录类型</value>
+  </data>
+  <data name="UsePrimaryConstructor_Label" xml:space="preserve">
+    <value>使用主构造函数</value>
+  </data>
+  <data name="PropertyAccess_Label" xml:space="preserve">
+    <value>属性访问</value>
+  </data>
+  <data name="ArrayType_Label" xml:space="preserve">
+    <value>数组类型</value>
+  </data>
+  <data name="PropertySettings_Title" xml:space="preserve">
+    <value>属性设置</value>
+  </data>
+  <data name="AddJsonAttribute_Label" xml:space="preserve">
+    <value>添加Json属性</value>
+  </data>
+  <data name="IsNullable_Label" xml:space="preserve">
+    <value>可空？</value>
+  </data>
+  <data name="IsRequired_Label" xml:space="preserve">
+    <value>必填</value>
+  </data>
+  <data name="DefaultValues_Label" xml:space="preserve">
+    <value>初始化默认值</value>
+  </data>
+  <data name="NamingSettings_Title" xml:space="preserve">
+    <value>命名设置</value>
+  </data>
+  <data name="Namespace_Label" xml:space="preserve">
+    <value>命名空间</value>
+  </data>
+  <data name="RootName_Label" xml:space="preserve">
+    <value>根名称</value>
+  </data>
+  <data name="CopyCode_Button" xml:space="preserve">
+    <value>复制代码</value>
+  </data>
+  <data name="Convert_Button" xml:space="preserve">
+    <value>转换</value>
+  </data>
+  <data name="Converting_Label" xml:space="preserve">
+    <value>转换中...</value>
+  </data>
+  <data name="JsonEditor_Label" xml:space="preserve">
+    <value>JSON编辑器</value>
+  </data>
+  <data name="CsharpEditor_Label" xml:space="preserve">
+    <value>C#编辑器</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+    <value>选择您偏好的语言</value>
+  </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>C# 代码已复制到剪贴板</value>
+</data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>将 JSON 转换为 C# POCO 时出错</value>
+</data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON 已转换为 C# POCO</value>
+</data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>转换成功</value>
+</data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>转换失败</value>
+</data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>请输入要转换的 JSON</value>
+</data>
+</root>
+ 
