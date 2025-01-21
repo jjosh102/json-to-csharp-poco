@@ -79,6 +79,33 @@ namespace JsonToCsharpPoco.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C# code copied to clipboard.
+        /// </summary>
+        internal static string ClipboardCopySuccess {
+            get {
+                return ResourceManager.GetString("ClipboardCopySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion Failed.
+        /// </summary>
+        internal static string ConversionFailed {
+            get {
+                return ResourceManager.GetString("ConversionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Conversion Successful.
+        /// </summary>
+        internal static string ConversionSuccess {
+            get {
+                return ResourceManager.GetString("ConversionSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Convert.
         /// </summary>
         internal static string Convert_Button {
@@ -124,6 +151,15 @@ namespace JsonToCsharpPoco.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter JSON to convert.
+        /// </summary>
+        internal static string EnterJson {
+            get {
+                return ResourceManager.GetString("EnterJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nullable?.
         /// </summary>
         internal static string IsNullable_Label {
@@ -138,6 +174,24 @@ namespace JsonToCsharpPoco.Resources {
         internal static string IsRequired_Label {
             get {
                 return ResourceManager.GetString("IsRequired_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error converting JSON to C# POCO.
+        /// </summary>
+        internal static string JsonConversionError {
+            get {
+                return ResourceManager.GetString("JsonConversionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JSON converted to C# POCO.
+        /// </summary>
+        internal static string JsonConversionSuccess {
+            get {
+                return ResourceManager.GetString("JsonConversionSuccess", resourceCulture);
             }
         }
         

@@ -61,6 +61,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+
+
   <data name="Settings_Title" xml:space="preserve">
     <value>Settings</value>
     <comment>Title for settings section</comment>
@@ -178,5 +180,23 @@
 </data>
   <data name="Select_Preferred_Language" xml:space="preserve">
   <value>Select your preferred language</value>
+</data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>C# code copied to clipboard</value>
+</data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>Error converting JSON to C# POCO</value>
+</data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON converted to C# POCO</value>
+</data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>Conversion Successful</value>
+</data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>Conversion Failed</value>
+</data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>Please enter JSON to convert</value>
 </data>
 </root>

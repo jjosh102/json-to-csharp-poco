@@ -179,4 +179,22 @@
   <data name="Select_Preferred_Language" xml:space="preserve">
   <value>Select your preferred language</value>
 </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>C# code copied to clipboard</value>
+</data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>Error converting JSON to C# POCO</value>
+</data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON converted to C# POCO</value>
+</data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>Conversion Successful</value>
+</data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>Conversion Failed</value>
+</data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>Please enter JSON to convert</value>
+</data>
 </root>

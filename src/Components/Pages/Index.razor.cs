@@ -10,6 +10,7 @@ using JsonToCsharpPoco.Models;
 using System.ComponentModel;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Shared;
+using JsonToCsharpPoco.Resources;
 
 namespace JsonToCsharpPoco.Components.Pages;
 
@@ -106,7 +107,7 @@ public partial class Index : ComponentBase, IDisposable
     var jsonToConvert = await _jsonEditor.GetValue();
     if (string.IsNullOrWhiteSpace(jsonToConvert))
     {
-      await ShowToastAsync("Please enter JSON to convert", ToastType.Error, "Error");
+      await ShowToastAsync(Localizer.EnterJson, ToastType.Error, "Error");
       _isConverting = false;
       return;
     }
@@ -114,11 +115,11 @@ public partial class Index : ComponentBase, IDisposable
     if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionSettings, out var syntax))
     {
       await _csharpEditor.SetValue(syntax);
-      await ShowToastAsync("JSON converted to C# POCO", ToastType.Success, "Conversion Successful");
+      await ShowToastAsync(Localizer.JsonConversionSuccess, ToastType.Success, Localizer.ConversionSuccess);
     }
     else
     {
-      await ShowToastAsync("Error converting JSON to C# POCO", ToastType.Error, "Conversion Failed");
+      await ShowToastAsync(Localizer.JsonConversionError, ToastType.Error, Localizer.ConversionFailed);
     }
 
     _isConverting = false;
@@ -131,7 +132,7 @@ public partial class Index : ComponentBase, IDisposable
       return;
 
     await _jsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", csharpCode);
-    await ShowToastAsync("C# code copied to clipboard", ToastType.Success);
+    await ShowToastAsync(Localizer.ClipboardCopySuccess, ToastType.Success);
   }
 
   private async Task ShowToastAsync(string message, ToastType type, string title = "", int durationMs = 3000)

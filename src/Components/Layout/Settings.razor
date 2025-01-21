@@ -161,11 +161,18 @@
 </div>
 
 @code {
-    private List<CultureInfo> _supportedCultures = new()
-{
-new System.Globalization.CultureInfo("en"), // English
-new System.Globalization.CultureInfo("de"), // German
+    private CultureInfo[] _supportedCultures =
+    {
+new("en"), 
+new("de"), 
+new("ko"), 
+new("ja"),
+new("it"), 
+new("es"), 
+new("fr"),
+new("zh-Hans"), 
 };
+
 
     private CultureInfo CurrentCulture => CultureInfo.CurrentUICulture;
     private bool _isPanelOpen;

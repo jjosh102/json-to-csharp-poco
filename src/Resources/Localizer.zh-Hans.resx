@@ -47,6 +47,7 @@
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
+
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -62,139 +63,112 @@
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings_Title" xml:space="preserve">
-    <value>Einstellungen</value>
-    <comment>Titel für den Einstellungsbereich</comment>
+    <value>设置</value>
   </data>
   <data name="Theme_Title" xml:space="preserve">
-    <value>Thema</value>
-    <comment>Titel für die Themen-Einstellungen</comment>
+    <value>主题</value>
   </data>
   <data name="Theme_Description" xml:space="preserve">
-    <value>Wählen Sie Ihr bevorzugtes Erscheinungsbild</value>
-    <comment>Beschreibung für die Themenauswahl</comment>
+    <value>选择您喜欢的外观</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Hell</value>
-    <comment>Option für helles Thema</comment>
+    <value>浅色</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dunkel</value>
-    <comment>Option für dunkles Thema</comment>
+    <value>深色</value>
   </data>
   <data name="SaveSettings_Title" xml:space="preserve">
-    <value>Einstellungen speichern</value>
-    <comment>Titel für den Bereich "Einstellungen speichern"</comment>
+    <value>保存设置</value>
   </data>
   <data name="SaveSettings_Description" xml:space="preserve">
-    <value>Speichern Sie Ihre Einstellungen für das nächste Mal</value>
-    <comment>Beschreibung für die Option "Einstellungen speichern"</comment>
+    <value>记住您的设置以供下次使用</value>
   </data>
   <data name="SaveEditor_Title" xml:space="preserve">
-    <value>Editor-Inhalt speichern</value>
-    <comment>Titel für den Bereich "Editor-Inhalt speichern"</comment>
+    <value>保存编辑器内容</value>
   </data>
   <data name="SaveEditor_Description" xml:space="preserve">
-    <value>Möchten Sie den Inhalt Ihres Editors für zukünftige Sitzungen speichern?</value>
-    <comment>Beschreibung für die Option "Editor-Inhalt speichern"</comment>
+    <value>是否要保存编辑器内容以供将来会话使用？</value>
   </data>
   <data name="SaveEditor_Note" xml:space="preserve">
-    <value>Ihre Daten werden lokal gespeichert und sollten keine vertraulichen Informationen enthalten. Sie können diese Funktion bei Bedarf deaktivieren.</value>
-    <comment>Wichtiger Hinweis zur Datenspeicherung</comment>
+    <value>您的数据将存储在本地，不应包含机密信息。如有需要，您可以禁用此功能。</value>
   </data>
   <data name="TypeSettings_Title" xml:space="preserve">
-    <value>Typ-Einstellungen</value>
-    <comment>Titel für die Typ-Einstellungen</comment>
+    <value>类型设置</value>
   </data>
   <data name="UseRecords_Label" xml:space="preserve">
-    <value>Datensätze verwenden</value>
-    <comment>Bezeichnung für die Option "Datensätze verwenden"</comment>
+    <value>使用记录类型</value>
   </data>
   <data name="UsePrimaryConstructor_Label" xml:space="preserve">
-    <value>Primärkonstruktor verwenden</value>
-    <comment>Bezeichnung für die Option "Primärkonstruktor verwenden"</comment>
+    <value>使用主构造函数</value>
   </data>
   <data name="PropertyAccess_Label" xml:space="preserve">
-    <value>Eigenschaftszugriff</value>
-    <comment>Bezeichnung für die Auswahl des Eigenschaftszugriffs</comment>
+    <value>属性访问</value>
   </data>
   <data name="ArrayType_Label" xml:space="preserve">
-    <value>Array-Typ</value>
-    <comment>Bezeichnung für die Auswahl des Array-Typs</comment>
+    <value>数组类型</value>
   </data>
   <data name="PropertySettings_Title" xml:space="preserve">
-    <value>Eigenschaftseinstellungen</value>
-    <comment>Titel für die Eigenschaftseinstellungen</comment>
+    <value>属性设置</value>
   </data>
   <data name="AddJsonAttribute_Label" xml:space="preserve">
-    <value>JSON-Attribut hinzufügen</value>
-    <comment>Bezeichnung für die Option "JSON-Attribut hinzufügen"</comment>
+    <value>添加Json属性</value>
   </data>
   <data name="IsNullable_Label" xml:space="preserve">
-    <value>Nullable?</value>
-    <comment>Bezeichnung für die Option "Nullable"</comment>
+    <value>可空？</value>
   </data>
   <data name="IsRequired_Label" xml:space="preserve">
-    <value>Erforderlich</value>
-    <comment>Bezeichnung für die Option "Erforderlich"</comment>
+    <value>必填</value>
   </data>
   <data name="DefaultValues_Label" xml:space="preserve">
-    <value>Initialisierte Standardwerte</value>
-    <comment>Bezeichnung für die Option "Standardwerte initialisieren"</comment>
+    <value>初始化默认值</value>
   </data>
   <data name="NamingSettings_Title" xml:space="preserve">
-    <value>Namenseinstellungen</value>
-    <comment>Titel für die Namenseinstellungen</comment>
+    <value>命名设置</value>
   </data>
   <data name="Namespace_Label" xml:space="preserve">
-    <value>Namensraum</value>
-    <comment>Bezeichnung für die Eingabe des Namensraums</comment>
+    <value>命名空间</value>
   </data>
   <data name="RootName_Label" xml:space="preserve">
-    <value>Wurzelname</value>
-    <comment>Bezeichnung für die Eingabe des Wurzelnamens</comment>
+    <value>根名称</value>
   </data>
   <data name="CopyCode_Button" xml:space="preserve">
-    <value>Code kopieren</value>
-    <comment>Text für die Schaltfläche "Code kopieren"</comment>
+    <value>复制代码</value>
   </data>
   <data name="Convert_Button" xml:space="preserve">
-    <value>Konvertieren</value>
-    <comment>Text für die Schaltfläche "Konvertieren"</comment>
+    <value>转换</value>
   </data>
   <data name="Converting_Label" xml:space="preserve">
-    <value>Konvertiere...</value>
-    <comment>Text, der während des Konvertierungsvorgangs angezeigt wird</comment>
+    <value>转换中...</value>
   </data>
   <data name="JsonEditor_Label" xml:space="preserve">
-    <value>JSON-Editor</value>
-    <comment>Bezeichnung für den JSON-Editor</comment>
+    <value>JSON编辑器</value>
   </data>
   <data name="CsharpEditor_Label" xml:space="preserve">
-    <value>C#-Editor</value>
-    <comment>Bezeichnung für den C#-Editor</comment>
+    <value>C#编辑器</value>
   </data>
   <data name="Language" xml:space="preserve">
-  <value>Sprache</value>
-</data>
+    <value>语言</value>
+  </data>
   <data name="Select_Preferred_Language" xml:space="preserve">
-  <value>Wählen Sie Ihre bevorzugte Sprache</value>
-</data>
+    <value>选择您偏好的语言</value>
+  </data>
   <data name="ClipboardCopySuccess" xml:space="preserve">
-    <value>C#-Code in die Zwischenablage kopiert</value>
+    <value>C# 代码已复制到剪贴板</value>
 </data>
   <data name="JsonConversionError" xml:space="preserve">
-    <value>Fehler beim Konvertieren von JSON zu C# POCO</value>
+    <value>将 JSON 转换为 C# POCO 时出错</value>
 </data>
   <data name="JsonConversionSuccess" xml:space="preserve">
-    <value>JSON wurde zu C# POCO konvertiert</value>
+    <value>JSON 已转换为 C# POCO</value>
 </data>
   <data name="ConversionSuccess" xml:space="preserve">
-    <value>Konvertierung erfolgreich</value>
+    <value>转换成功</value>
 </data>
   <data name="ConversionFailed" xml:space="preserve">
-    <value>Konvertierung fehlgeschlagen</value>
+    <value>转换失败</value>
 </data>
   <data name="EnterJson" xml:space="preserve">
-    <value>Bitte geben Sie JSON zum Konvertieren ein</value>
+    <value>请输入要转换的 JSON</value>
 </data>
 </root>
+ 

@@ -62,139 +62,139 @@
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings_Title" xml:space="preserve">
-    <value>Einstellungen</value>
-    <comment>Titel für den Einstellungsbereich</comment>
+    <value>設定</value>
+    <comment>Title for settings section</comment>
   </data>
   <data name="Theme_Title" xml:space="preserve">
-    <value>Thema</value>
-    <comment>Titel für die Themen-Einstellungen</comment>
+    <value>テーマ</value>
+    <comment>Title for theme settings</comment>
   </data>
   <data name="Theme_Description" xml:space="preserve">
-    <value>Wählen Sie Ihr bevorzugtes Erscheinungsbild</value>
-    <comment>Beschreibung für die Themenauswahl</comment>
+    <value>お好みの外観を選択してください</value>
+    <comment>Description for theme selection</comment>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Hell</value>
-    <comment>Option für helles Thema</comment>
+    <value>ライト</value>
+    <comment>Light theme option</comment>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dunkel</value>
-    <comment>Option für dunkles Thema</comment>
+    <value>ダーク</value>
+    <comment>Dark theme option</comment>
   </data>
   <data name="SaveSettings_Title" xml:space="preserve">
-    <value>Einstellungen speichern</value>
-    <comment>Titel für den Bereich "Einstellungen speichern"</comment>
+    <value>設定を保存</value>
+    <comment>Title for save settings section</comment>
   </data>
   <data name="SaveSettings_Description" xml:space="preserve">
-    <value>Speichern Sie Ihre Einstellungen für das nächste Mal</value>
-    <comment>Beschreibung für die Option "Einstellungen speichern"</comment>
+    <value>次回のために設定を保存する</value>
+    <comment>Description for save settings option</comment>
   </data>
   <data name="SaveEditor_Title" xml:space="preserve">
-    <value>Editor-Inhalt speichern</value>
-    <comment>Titel für den Bereich "Editor-Inhalt speichern"</comment>
+    <value>エディタの内容を保存</value>
+    <comment>Title for save editor content section</comment>
   </data>
   <data name="SaveEditor_Description" xml:space="preserve">
-    <value>Möchten Sie den Inhalt Ihres Editors für zukünftige Sitzungen speichern?</value>
-    <comment>Beschreibung für die Option "Editor-Inhalt speichern"</comment>
+    <value>エディタの内容を今後のセッションのために保存しますか？</value>
+    <comment>Description for save editor content option</comment>
   </data>
   <data name="SaveEditor_Note" xml:space="preserve">
-    <value>Ihre Daten werden lokal gespeichert und sollten keine vertraulichen Informationen enthalten. Sie können diese Funktion bei Bedarf deaktivieren.</value>
-    <comment>Wichtiger Hinweis zur Datenspeicherung</comment>
+    <value>データはローカルに保存され、機密情報を含めないようにしてください。必要に応じてこの機能を無効にできます。</value>
+    <comment>Important note about data storage</comment>
   </data>
   <data name="TypeSettings_Title" xml:space="preserve">
-    <value>Typ-Einstellungen</value>
-    <comment>Titel für die Typ-Einstellungen</comment>
+    <value>型設定</value>
+    <comment>Title for type settings section</comment>
   </data>
   <data name="UseRecords_Label" xml:space="preserve">
-    <value>Datensätze verwenden</value>
-    <comment>Bezeichnung für die Option "Datensätze verwenden"</comment>
+    <value>レコードを使用</value>
+    <comment>Label for use records option</comment>
   </data>
   <data name="UsePrimaryConstructor_Label" xml:space="preserve">
-    <value>Primärkonstruktor verwenden</value>
-    <comment>Bezeichnung für die Option "Primärkonstruktor verwenden"</comment>
+    <value>プライマリコンストラクタを使用</value>
+    <comment>Label for use primary constructor option</comment>
   </data>
   <data name="PropertyAccess_Label" xml:space="preserve">
-    <value>Eigenschaftszugriff</value>
-    <comment>Bezeichnung für die Auswahl des Eigenschaftszugriffs</comment>
+    <value>プロパティアクセス</value>
+    <comment>Label for property access selection</comment>
   </data>
   <data name="ArrayType_Label" xml:space="preserve">
-    <value>Array-Typ</value>
-    <comment>Bezeichnung für die Auswahl des Array-Typs</comment>
+    <value>配列型</value>
+    <comment>Label for array type selection</comment>
   </data>
   <data name="PropertySettings_Title" xml:space="preserve">
-    <value>Eigenschaftseinstellungen</value>
-    <comment>Titel für die Eigenschaftseinstellungen</comment>
+    <value>プロパティ設定</value>
+    <comment>Title for property settings section</comment>
   </data>
   <data name="AddJsonAttribute_Label" xml:space="preserve">
-    <value>JSON-Attribut hinzufügen</value>
-    <comment>Bezeichnung für die Option "JSON-Attribut hinzufügen"</comment>
+    <value>JSON属性を追加</value>
+    <comment>Label for add JSON attribute option</comment>
   </data>
   <data name="IsNullable_Label" xml:space="preserve">
-    <value>Nullable?</value>
-    <comment>Bezeichnung für die Option "Nullable"</comment>
+    <value>Null許容？</value>
+    <comment>Label for nullable option</comment>
   </data>
   <data name="IsRequired_Label" xml:space="preserve">
-    <value>Erforderlich</value>
-    <comment>Bezeichnung für die Option "Erforderlich"</comment>
+    <value>必須</value>
+    <comment>Label for required option</comment>
   </data>
   <data name="DefaultValues_Label" xml:space="preserve">
-    <value>Initialisierte Standardwerte</value>
-    <comment>Bezeichnung für die Option "Standardwerte initialisieren"</comment>
+    <value>初期化されたデフォルト値</value>
+    <comment>Label for default values initialization option</comment>
   </data>
   <data name="NamingSettings_Title" xml:space="preserve">
-    <value>Namenseinstellungen</value>
-    <comment>Titel für die Namenseinstellungen</comment>
+    <value>命名設定</value>
+    <comment>Title for naming settings section</comment>
   </data>
   <data name="Namespace_Label" xml:space="preserve">
-    <value>Namensraum</value>
-    <comment>Bezeichnung für die Eingabe des Namensraums</comment>
+    <value>名前空間</value>
+    <comment>Label for namespace input</comment>
   </data>
   <data name="RootName_Label" xml:space="preserve">
-    <value>Wurzelname</value>
-    <comment>Bezeichnung für die Eingabe des Wurzelnamens</comment>
+    <value>ルート名</value>
+    <comment>Label for root name input</comment>
   </data>
   <data name="CopyCode_Button" xml:space="preserve">
-    <value>Code kopieren</value>
-    <comment>Text für die Schaltfläche "Code kopieren"</comment>
+    <value>コードをコピー</value>
+    <comment>Text for copy code button</comment>
   </data>
   <data name="Convert_Button" xml:space="preserve">
-    <value>Konvertieren</value>
-    <comment>Text für die Schaltfläche "Konvertieren"</comment>
+    <value>変換</value>
+    <comment>Text for convert button</comment>
   </data>
   <data name="Converting_Label" xml:space="preserve">
-    <value>Konvertiere...</value>
-    <comment>Text, der während des Konvertierungsvorgangs angezeigt wird</comment>
+    <value>変換中...</value>
+    <comment>Text shown while conversion is in progress</comment>
   </data>
   <data name="JsonEditor_Label" xml:space="preserve">
-    <value>JSON-Editor</value>
-    <comment>Bezeichnung für den JSON-Editor</comment>
+    <value>JSONエディタ</value>
+    <comment>Label for JSON editor</comment>
   </data>
   <data name="CsharpEditor_Label" xml:space="preserve">
-    <value>C#-Editor</value>
-    <comment>Bezeichnung für den C#-Editor</comment>
+    <value>C#エディタ</value>
+    <comment>Label for C# editor</comment>
   </data>
   <data name="Language" xml:space="preserve">
-  <value>Sprache</value>
-</data>
+    <value>言語</value>
+  </data>
   <data name="Select_Preferred_Language" xml:space="preserve">
-  <value>Wählen Sie Ihre bevorzugte Sprache</value>
-</data>
+    <value>希望する言語を選択してください</value>
+  </data>
   <data name="ClipboardCopySuccess" xml:space="preserve">
-    <value>C#-Code in die Zwischenablage kopiert</value>
+    <value>C#コードがクリップボードにコピーされました</value>
 </data>
   <data name="JsonConversionError" xml:space="preserve">
-    <value>Fehler beim Konvertieren von JSON zu C# POCO</value>
+    <value>JSONからC# POCOへの変換エラー</value>
 </data>
   <data name="JsonConversionSuccess" xml:space="preserve">
-    <value>JSON wurde zu C# POCO konvertiert</value>
+    <value>JSONがC# POCOに変換されました</value>
 </data>
   <data name="ConversionSuccess" xml:space="preserve">
-    <value>Konvertierung erfolgreich</value>
+    <value>変換成功</value>
 </data>
   <data name="ConversionFailed" xml:space="preserve">
-    <value>Konvertierung fehlgeschlagen</value>
+    <value>変換失敗</value>
 </data>
   <data name="EnterJson" xml:space="preserve">
-    <value>Bitte geben Sie JSON zum Konvertieren ein</value>
+    <value>変換するJSONを入力してください</value>
 </data>
 </root>

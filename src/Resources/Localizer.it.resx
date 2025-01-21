@@ -47,6 +47,7 @@
       </xsd:complexType>
     </xsd:element>
   </xsd:schema>
+
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -62,139 +63,139 @@
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings_Title" xml:space="preserve">
-    <value>Einstellungen</value>
-    <comment>Titel für den Einstellungsbereich</comment>
+    <value>Impostazioni</value>
+    <comment>Title for settings section</comment>
   </data>
   <data name="Theme_Title" xml:space="preserve">
-    <value>Thema</value>
-    <comment>Titel für die Themen-Einstellungen</comment>
+    <value>Tema</value>
+    <comment>Title for theme settings</comment>
   </data>
   <data name="Theme_Description" xml:space="preserve">
-    <value>Wählen Sie Ihr bevorzugtes Erscheinungsbild</value>
-    <comment>Beschreibung für die Themenauswahl</comment>
+    <value>Scegli l'aspetto preferito</value>
+    <comment>Description for theme selection</comment>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Hell</value>
-    <comment>Option für helles Thema</comment>
+    <value>Chiaro</value>
+    <comment>Light theme option</comment>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dunkel</value>
-    <comment>Option für dunkles Thema</comment>
+    <value>Scuro</value>
+    <comment>Dark theme option</comment>
   </data>
   <data name="SaveSettings_Title" xml:space="preserve">
-    <value>Einstellungen speichern</value>
-    <comment>Titel für den Bereich "Einstellungen speichern"</comment>
+    <value>Salva Impostazioni</value>
+    <comment>Title for save settings section</comment>
   </data>
   <data name="SaveSettings_Description" xml:space="preserve">
-    <value>Speichern Sie Ihre Einstellungen für das nächste Mal</value>
-    <comment>Beschreibung für die Option "Einstellungen speichern"</comment>
+    <value>Ricorda le tue impostazioni per la prossima volta</value>
+    <comment>Description for save settings option</comment>
   </data>
   <data name="SaveEditor_Title" xml:space="preserve">
-    <value>Editor-Inhalt speichern</value>
-    <comment>Titel für den Bereich "Editor-Inhalt speichern"</comment>
+    <value>Salva Contenuto Editor</value>
+    <comment>Title for save editor content section</comment>
   </data>
   <data name="SaveEditor_Description" xml:space="preserve">
-    <value>Möchten Sie den Inhalt Ihres Editors für zukünftige Sitzungen speichern?</value>
-    <comment>Beschreibung für die Option "Editor-Inhalt speichern"</comment>
+    <value>Vuoi salvare il contenuto del tuo editor per le sessioni future?</value>
+    <comment>Description for save editor content option</comment>
   </data>
   <data name="SaveEditor_Note" xml:space="preserve">
-    <value>Ihre Daten werden lokal gespeichert und sollten keine vertraulichen Informationen enthalten. Sie können diese Funktion bei Bedarf deaktivieren.</value>
-    <comment>Wichtiger Hinweis zur Datenspeicherung</comment>
+    <value>I tuoi dati saranno memorizzati localmente e non dovrebbero includere informazioni riservate. Puoi disabilitare questa funzione se necessario.</value>
+    <comment>Important note about data storage</comment>
   </data>
   <data name="TypeSettings_Title" xml:space="preserve">
-    <value>Typ-Einstellungen</value>
-    <comment>Titel für die Typ-Einstellungen</comment>
+    <value>Impostazioni Tipo</value>
+    <comment>Title for type settings section</comment>
   </data>
   <data name="UseRecords_Label" xml:space="preserve">
-    <value>Datensätze verwenden</value>
-    <comment>Bezeichnung für die Option "Datensätze verwenden"</comment>
+    <value>Usa Record</value>
+    <comment>Label for use records option</comment>
   </data>
   <data name="UsePrimaryConstructor_Label" xml:space="preserve">
-    <value>Primärkonstruktor verwenden</value>
-    <comment>Bezeichnung für die Option "Primärkonstruktor verwenden"</comment>
+    <value>Usa Costruttore Primario</value>
+    <comment>Label for use primary constructor option</comment>
   </data>
   <data name="PropertyAccess_Label" xml:space="preserve">
-    <value>Eigenschaftszugriff</value>
-    <comment>Bezeichnung für die Auswahl des Eigenschaftszugriffs</comment>
+    <value>Accesso Proprietà</value>
+    <comment>Label for property access selection</comment>
   </data>
   <data name="ArrayType_Label" xml:space="preserve">
-    <value>Array-Typ</value>
-    <comment>Bezeichnung für die Auswahl des Array-Typs</comment>
+    <value>Tipo Array</value>
+    <comment>Label for array type selection</comment>
   </data>
   <data name="PropertySettings_Title" xml:space="preserve">
-    <value>Eigenschaftseinstellungen</value>
-    <comment>Titel für die Eigenschaftseinstellungen</comment>
+    <value>Impostazioni Proprietà</value>
+    <comment>Title for property settings section</comment>
   </data>
   <data name="AddJsonAttribute_Label" xml:space="preserve">
-    <value>JSON-Attribut hinzufügen</value>
-    <comment>Bezeichnung für die Option "JSON-Attribut hinzufügen"</comment>
+    <value>Aggiungi Attributo Json</value>
+    <comment>Label for add JSON attribute option</comment>
   </data>
   <data name="IsNullable_Label" xml:space="preserve">
     <value>Nullable?</value>
-    <comment>Bezeichnung für die Option "Nullable"</comment>
+    <comment>Label for nullable option</comment>
   </data>
   <data name="IsRequired_Label" xml:space="preserve">
-    <value>Erforderlich</value>
-    <comment>Bezeichnung für die Option "Erforderlich"</comment>
+    <value>Obbligatorio</value>
+    <comment>Label for required option</comment>
   </data>
   <data name="DefaultValues_Label" xml:space="preserve">
-    <value>Initialisierte Standardwerte</value>
-    <comment>Bezeichnung für die Option "Standardwerte initialisieren"</comment>
+    <value>Valori Predefiniti Inizializzati</value>
+    <comment>Label for default values initialization option</comment>
   </data>
   <data name="NamingSettings_Title" xml:space="preserve">
-    <value>Namenseinstellungen</value>
-    <comment>Titel für die Namenseinstellungen</comment>
+    <value>Impostazioni Nome</value>
+    <comment>Title for naming settings section</comment>
   </data>
   <data name="Namespace_Label" xml:space="preserve">
-    <value>Namensraum</value>
-    <comment>Bezeichnung für die Eingabe des Namensraums</comment>
+    <value>Namespace</value>
+    <comment>Label for namespace input</comment>
   </data>
   <data name="RootName_Label" xml:space="preserve">
-    <value>Wurzelname</value>
-    <comment>Bezeichnung für die Eingabe des Wurzelnamens</comment>
+    <value>Nome Root</value>
+    <comment>Label for root name input</comment>
   </data>
   <data name="CopyCode_Button" xml:space="preserve">
-    <value>Code kopieren</value>
-    <comment>Text für die Schaltfläche "Code kopieren"</comment>
+    <value>Copia Codice</value>
+    <comment>Text for copy code button</comment>
   </data>
   <data name="Convert_Button" xml:space="preserve">
-    <value>Konvertieren</value>
-    <comment>Text für die Schaltfläche "Konvertieren"</comment>
+    <value>Converti</value>
+    <comment>Text for convert button</comment>
   </data>
   <data name="Converting_Label" xml:space="preserve">
-    <value>Konvertiere...</value>
-    <comment>Text, der während des Konvertierungsvorgangs angezeigt wird</comment>
+    <value>Conversione in corso...</value>
+    <comment>Text shown while conversion is in progress</comment>
   </data>
   <data name="JsonEditor_Label" xml:space="preserve">
-    <value>JSON-Editor</value>
-    <comment>Bezeichnung für den JSON-Editor</comment>
+    <value>Editor JSON</value>
+    <comment>Label for JSON editor</comment>
   </data>
   <data name="CsharpEditor_Label" xml:space="preserve">
-    <value>C#-Editor</value>
-    <comment>Bezeichnung für den C#-Editor</comment>
+    <value>Editor C#</value>
+    <comment>Label for C# editor</comment>
   </data>
   <data name="Language" xml:space="preserve">
-  <value>Sprache</value>
-</data>
+    <value>Lingua</value>
+  </data>
   <data name="Select_Preferred_Language" xml:space="preserve">
-  <value>Wählen Sie Ihre bevorzugte Sprache</value>
-</data>
+    <value>Seleziona la tua lingua preferita</value>
+  </data>
   <data name="ClipboardCopySuccess" xml:space="preserve">
-    <value>C#-Code in die Zwischenablage kopiert</value>
+    <value>Codice C# copiato negli appunti</value>
 </data>
   <data name="JsonConversionError" xml:space="preserve">
-    <value>Fehler beim Konvertieren von JSON zu C# POCO</value>
+    <value>Errore durante la conversione da JSON a C# POCO</value>
 </data>
   <data name="JsonConversionSuccess" xml:space="preserve">
-    <value>JSON wurde zu C# POCO konvertiert</value>
+    <value>JSON convertito in C# POCO</value>
 </data>
   <data name="ConversionSuccess" xml:space="preserve">
-    <value>Konvertierung erfolgreich</value>
+    <value>Conversione riuscita</value>
 </data>
   <data name="ConversionFailed" xml:space="preserve">
-    <value>Konvertierung fehlgeschlagen</value>
+    <value>Conversione fallita</value>
 </data>
   <data name="EnterJson" xml:space="preserve">
-    <value>Bitte geben Sie JSON zum Konvertieren ein</value>
+    <value>Inserisci il JSON da convertire</value>
 </data>
 </root>

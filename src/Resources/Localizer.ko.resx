@@ -62,139 +62,139 @@
       Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Settings_Title" xml:space="preserve">
-    <value>Einstellungen</value>
-    <comment>Titel für den Einstellungsbereich</comment>
+    <value>설정</value>
+    <comment>Title for settings section</comment>
   </data>
   <data name="Theme_Title" xml:space="preserve">
-    <value>Thema</value>
-    <comment>Titel für die Themen-Einstellungen</comment>
+    <value>테마</value>
+    <comment>Title for theme settings</comment>
   </data>
   <data name="Theme_Description" xml:space="preserve">
-    <value>Wählen Sie Ihr bevorzugtes Erscheinungsbild</value>
-    <comment>Beschreibung für die Themenauswahl</comment>
+    <value>원하는 외관을 선택하세요</value>
+    <comment>Description for theme selection</comment>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Hell</value>
-    <comment>Option für helles Thema</comment>
+    <value>라이트</value>
+    <comment>Light theme option</comment>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dunkel</value>
-    <comment>Option für dunkles Thema</comment>
+    <value>다크</value>
+    <comment>Dark theme option</comment>
   </data>
   <data name="SaveSettings_Title" xml:space="preserve">
-    <value>Einstellungen speichern</value>
-    <comment>Titel für den Bereich "Einstellungen speichern"</comment>
+    <value>설정 저장</value>
+    <comment>Title for save settings section</comment>
   </data>
   <data name="SaveSettings_Description" xml:space="preserve">
-    <value>Speichern Sie Ihre Einstellungen für das nächste Mal</value>
-    <comment>Beschreibung für die Option "Einstellungen speichern"</comment>
+    <value>다음을 위해 설정을 저장하세요</value>
+    <comment>Description for save settings option</comment>
   </data>
   <data name="SaveEditor_Title" xml:space="preserve">
-    <value>Editor-Inhalt speichern</value>
-    <comment>Titel für den Bereich "Editor-Inhalt speichern"</comment>
+    <value>편집기 내용 저장</value>
+    <comment>Title for save editor content section</comment>
   </data>
   <data name="SaveEditor_Description" xml:space="preserve">
-    <value>Möchten Sie den Inhalt Ihres Editors für zukünftige Sitzungen speichern?</value>
-    <comment>Beschreibung für die Option "Editor-Inhalt speichern"</comment>
+    <value>향후 세션을 위해 편집기 내용을 저장하시겠습니까?</value>
+    <comment>Description for save editor content option</comment>
   </data>
   <data name="SaveEditor_Note" xml:space="preserve">
-    <value>Ihre Daten werden lokal gespeichert und sollten keine vertraulichen Informationen enthalten. Sie können diese Funktion bei Bedarf deaktivieren.</value>
-    <comment>Wichtiger Hinweis zur Datenspeicherung</comment>
+    <value>데이터는 로컬에 저장되며 기밀 정보를 포함해서는 안 됩니다. 필요한 경우 이 기능을 비활성화할 수 있습니다.</value>
+    <comment>Important note about data storage</comment>
   </data>
   <data name="TypeSettings_Title" xml:space="preserve">
-    <value>Typ-Einstellungen</value>
-    <comment>Titel für die Typ-Einstellungen</comment>
+    <value>유형 설정</value>
+    <comment>Title for type settings section</comment>
   </data>
   <data name="UseRecords_Label" xml:space="preserve">
-    <value>Datensätze verwenden</value>
-    <comment>Bezeichnung für die Option "Datensätze verwenden"</comment>
+    <value>레코드 사용</value>
+    <comment>Label for use records option</comment>
   </data>
   <data name="UsePrimaryConstructor_Label" xml:space="preserve">
-    <value>Primärkonstruktor verwenden</value>
-    <comment>Bezeichnung für die Option "Primärkonstruktor verwenden"</comment>
+    <value>기본 생성자 사용</value>
+    <comment>Label for use primary constructor option</comment>
   </data>
   <data name="PropertyAccess_Label" xml:space="preserve">
-    <value>Eigenschaftszugriff</value>
-    <comment>Bezeichnung für die Auswahl des Eigenschaftszugriffs</comment>
+    <value>속성 접근</value>
+    <comment>Label for property access selection</comment>
   </data>
   <data name="ArrayType_Label" xml:space="preserve">
-    <value>Array-Typ</value>
-    <comment>Bezeichnung für die Auswahl des Array-Typs</comment>
+    <value>배열 유형</value>
+    <comment>Label for array type selection</comment>
   </data>
   <data name="PropertySettings_Title" xml:space="preserve">
-    <value>Eigenschaftseinstellungen</value>
-    <comment>Titel für die Eigenschaftseinstellungen</comment>
+    <value>속성 설정</value>
+    <comment>Title for property settings section</comment>
   </data>
   <data name="AddJsonAttribute_Label" xml:space="preserve">
-    <value>JSON-Attribut hinzufügen</value>
-    <comment>Bezeichnung für die Option "JSON-Attribut hinzufügen"</comment>
+    <value>JSON 속성 추가</value>
+    <comment>Label for add JSON attribute option</comment>
   </data>
   <data name="IsNullable_Label" xml:space="preserve">
-    <value>Nullable?</value>
-    <comment>Bezeichnung für die Option "Nullable"</comment>
+    <value>널 허용?</value>
+    <comment>Label for nullable option</comment>
   </data>
   <data name="IsRequired_Label" xml:space="preserve">
-    <value>Erforderlich</value>
-    <comment>Bezeichnung für die Option "Erforderlich"</comment>
+    <value>필수</value>
+    <comment>Label for required option</comment>
   </data>
   <data name="DefaultValues_Label" xml:space="preserve">
-    <value>Initialisierte Standardwerte</value>
-    <comment>Bezeichnung für die Option "Standardwerte initialisieren"</comment>
+    <value>초기화된 기본값</value>
+    <comment>Label for default values initialization option</comment>
   </data>
   <data name="NamingSettings_Title" xml:space="preserve">
-    <value>Namenseinstellungen</value>
-    <comment>Titel für die Namenseinstellungen</comment>
+    <value>이름 설정</value>
+    <comment>Title for naming settings section</comment>
   </data>
   <data name="Namespace_Label" xml:space="preserve">
-    <value>Namensraum</value>
-    <comment>Bezeichnung für die Eingabe des Namensraums</comment>
+    <value>네임스페이스</value>
+    <comment>Label for namespace input</comment>
   </data>
   <data name="RootName_Label" xml:space="preserve">
-    <value>Wurzelname</value>
-    <comment>Bezeichnung für die Eingabe des Wurzelnamens</comment>
+    <value>루트 이름</value>
+    <comment>Label for root name input</comment>
   </data>
   <data name="CopyCode_Button" xml:space="preserve">
-    <value>Code kopieren</value>
-    <comment>Text für die Schaltfläche "Code kopieren"</comment>
+    <value>코드 복사</value>
+    <comment>Text for copy code button</comment>
   </data>
   <data name="Convert_Button" xml:space="preserve">
-    <value>Konvertieren</value>
-    <comment>Text für die Schaltfläche "Konvertieren"</comment>
+    <value>변환</value>
+    <comment>Text for convert button</comment>
   </data>
   <data name="Converting_Label" xml:space="preserve">
-    <value>Konvertiere...</value>
-    <comment>Text, der während des Konvertierungsvorgangs angezeigt wird</comment>
+    <value>변환 중...</value>
+    <comment>Text shown while conversion is in progress</comment>
   </data>
   <data name="JsonEditor_Label" xml:space="preserve">
-    <value>JSON-Editor</value>
-    <comment>Bezeichnung für den JSON-Editor</comment>
+    <value>JSON 편집기</value>
+    <comment>Label for JSON editor</comment>
   </data>
   <data name="CsharpEditor_Label" xml:space="preserve">
-    <value>C#-Editor</value>
-    <comment>Bezeichnung für den C#-Editor</comment>
+    <value>C# 편집기</value>
+    <comment>Label for C# editor</comment>
   </data>
   <data name="Language" xml:space="preserve">
-  <value>Sprache</value>
-</data>
+    <value>언어</value>
+  </data>
   <data name="Select_Preferred_Language" xml:space="preserve">
-  <value>Wählen Sie Ihre bevorzugte Sprache</value>
-</data>
+    <value>선호하는 언어를 선택하세요</value>
+  </data>
   <data name="ClipboardCopySuccess" xml:space="preserve">
-    <value>C#-Code in die Zwischenablage kopiert</value>
+    <value>C# 코드가 클립보드에 복사되었습니다</value>
 </data>
   <data name="JsonConversionError" xml:space="preserve">
-    <value>Fehler beim Konvertieren von JSON zu C# POCO</value>
+    <value>JSON을 C# POCO로 변환하는 중 오류 발생</value>
 </data>
   <data name="JsonConversionSuccess" xml:space="preserve">
-    <value>JSON wurde zu C# POCO konvertiert</value>
+    <value>JSON이 C# POCO로 변환되었습니다</value>
 </data>
   <data name="ConversionSuccess" xml:space="preserve">
-    <value>Konvertierung erfolgreich</value>
+    <value>변환 성공</value>
 </data>
   <data name="ConversionFailed" xml:space="preserve">
-    <value>Konvertierung fehlgeschlagen</value>
+    <value>변환 실패</value>
 </data>
   <data name="EnterJson" xml:space="preserve">
-    <value>Bitte geben Sie JSON zum Konvertieren ein</value>
+    <value>변환할 JSON을 입력하세요</value>
 </data>
 </root>
