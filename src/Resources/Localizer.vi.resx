@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Cài đặt</value>
+    <comment>Vietnamese: Title for settings section</comment>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Giao diện</value>
+    <comment>Vietnamese: Title for theme settings</comment>
+  </data>
+  <data name="Theme_Description" xml:space="preserve">
+    <value>Chọn giao diện bạn thích</value>
+    <comment>Vietnamese: Description for theme selection</comment>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Sáng</value>
+    <comment>Vietnamese: Light theme option</comment>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Tối</value>
+    <comment>Vietnamese: Dark theme option</comment>
+  </data>
+  <data name="SaveSettings_Title" xml:space="preserve">
+    <value>Lưu cài đặt</value>
+    <comment>Vietnamese: Title for save settings section</comment>
+  </data>
+  <data name="SaveSettings_Description" xml:space="preserve">
+    <value>Ghi nhớ cài đặt của bạn cho lần tiếp theo</value>
+    <comment>Vietnamese: Description for save settings option</comment>
+  </data>
+  <data name="SaveEditor_Title" xml:space="preserve">
+    <value>Lưu nội dung chỉnh sửa</value>
+    <comment>Vietnamese: Title for save editor content section</comment>
+  </data>
+  <data name="SaveEditor_Description" xml:space="preserve">
+    <value>Bạn có muốn lưu nội dung chỉnh sửa của mình cho các phiên làm việc sau không?</value>
+    <comment>Vietnamese: Description for save editor content option</comment>
+  </data>
+  <data name="SaveEditor_Note" xml:space="preserve">
+    <value>Dữ liệu của bạn sẽ được lưu trữ cục bộ và không nên bao gồm thông tin bảo mật. Bạn có thể tắt tính năng này nếu cần.</value>
+    <comment>Vietnamese: Important note about data storage</comment>
+  </data>
+  <data name="TypeSettings_Title" xml:space="preserve">
+    <value>Cài đặt kiểu</value>
+    <comment>Vietnamese: Title for type settings section</comment>
+  </data>
+  <data name="UseRecords_Label" xml:space="preserve">
+    <value>Sử dụng Bản ghi</value>
+    <comment>Vietnamese: Label for use records option</comment>
+  </data>
+  <data name="UsePrimaryConstructor_Label" xml:space="preserve">
+    <value>Sử dụng Constructor chính</value>
+    <comment>Vietnamese: Label for use primary constructor option</comment>
+  </data>
+  <data name="PropertyAccess_Label" xml:space="preserve">
+    <value>Truy cập Thuộc tính</value>
+    <comment>Vietnamese: Label for property access selection</comment>
+  </data>
+  <data name="ArrayType_Label" xml:space="preserve">
+    <value>Kiểu Mảng</value>
+    <comment>Vietnamese: Label for array type selection</comment>
+  </data>
+  <data name="PropertySettings_Title" xml:space="preserve">
+    <value>Cài đặt thuộc tính</value>
+    <comment>Vietnamese: Title for property settings section</comment>
+  </data>
+  <data name="AddJsonAttribute_Label" xml:space="preserve">
+    <value>Thêm Thuộc tính JSON</value>
+    <comment>Vietnamese: Label for add JSON attribute option</comment>
+  </data>
+  <data name="IsNullable_Label" xml:space="preserve">
+    <value>Có thể null?</value>
+    <comment>Vietnamese: Label for nullable option</comment>
+  </data>
+  <data name="IsRequired_Label" xml:space="preserve">
+    <value>Bắt buộc</value>
+    <comment>Vietnamese: Label for required option</comment>
+  </data>
+  <data name="DefaultValues_Label" xml:space="preserve">
+    <value>Giá trị mặc định đã khởi tạo</value>
+    <comment>Vietnamese: Label for default values initialization option</comment>
+  </data>
+  <data name="NamingSettings_Title" xml:space="preserve">
+    <value>Cài đặt Tên</value>
+    <comment>Vietnamese: Title for naming settings section</comment>
+  </data>
+  <data name="Namespace_Label" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>Vietnamese: Label for namespace input</comment>
+  </data>
+  <data name="RootName_Label" xml:space="preserve">
+    <value>Tên gốc</value>
+    <comment>Vietnamese: Label for root name input</comment>
+  </data>
+  <data name="CopyCode_Button" xml:space="preserve">
+    <value>Sao chép mã</value>
+    <comment>Vietnamese: Text for copy code button</comment>
+  </data>
+  <data name="Convert_Button" xml:space="preserve">
+    <value>Chuyển đổi</value>
+    <comment>Vietnamese: Text for convert button</comment>
+  </data>
+  <data name="Converting_Label" xml:space="preserve">
+    <value>Đang chuyển đổi...</value>
+    <comment>Vietnamese: Text shown while conversion is in progress</comment>
+  </data>
+  <data name="JsonEditor_Label" xml:space="preserve">
+    <value>Trình chỉnh sửa JSON</value>
+    <comment>Vietnamese: Label for JSON editor</comment>
+  </data>
+  <data name="CsharpEditor_Label" xml:space="preserve">
+    <value>Trình chỉnh sửa C#</value>
+    <comment>Vietnamese: Label for C# editor</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+    <comment>Vietnamese: Label for language selection</comment>
+  </data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+    <value>Chọn ngôn ngữ bạn thích</value>
+    <comment>Vietnamese: Select preferred language</comment>
+  </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>Mã C# đã được sao chép vào clipboard</value>
+    <comment>Vietnamese: C# code copied to clipboard</comment>
+  </data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>Lỗi chuyển đổi JSON sang POCO C#</value>
+    <comment>Vietnamese: Error converting JSON to C# POCO</comment>
+  </data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON đã được chuyển đổi sang POCO C#</value>
+    <comment>Vietnamese: JSON converted to C# POCO</comment>
+  </data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>Chuyển đổi thành công</value>
+    <comment>Vietnamese: Conversion Successful</comment>
+  </data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>Chuyển đổi thất bại</value>
+    <comment>Vietnamese: Conversion Failed</comment>
+  </data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>Vui lòng nhập JSON để chuyển đổi</value>
+    <comment>Vietnamese: Please enter JSON to convert</comment>
+  </data>
+</root>

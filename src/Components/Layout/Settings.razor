@@ -148,7 +148,7 @@
                             class="w-40 px-3 py-2 text-sm bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @foreach (var culture in _supportedCultures)
                             {
-                                <option value="@culture.Name" selected="@(culture.Name == CurrentCulture.Name)">
+                                <option value="@culture.Name" selected="@(culture.Name == _currentCulture.Name)">
                                     @culture.DisplayName
                                 </option>
                             }
@@ -167,14 +167,18 @@ new("en"),
 new("de"), 
 new("ko"), 
 new("ja"),
+new("vi"), 
+new("th"),
+new("id"),
 new("it"), 
 new("es"), 
 new("fr"),
 new("zh-Hans"), 
+
 };
 
 
-    private CultureInfo CurrentCulture => CultureInfo.CurrentUICulture;
+    private CultureInfo _currentCulture => CultureInfo.CurrentUICulture;
     private bool _isPanelOpen;
 
     [CascadingParameter]

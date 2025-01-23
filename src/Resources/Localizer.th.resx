@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Settings_Title" xml:space="preserve">
+    <value>การตั้งค่า</value>
+    <comment>Title for settings section</comment>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>ธีม</value>
+    <comment>Title for theme settings</comment>
+  </data>
+  <data name="Theme_Description" xml:space="preserve">
+    <value>เลือกการแสดงผลที่คุณต้องการ</value>
+    <comment>Description for theme selection</comment>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>สว่าง</value>
+    <comment>Light theme option</comment>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>มืด</value>
+    <comment>Dark theme option</comment>
+  </data>
+  <data name="SaveSettings_Title" xml:space="preserve">
+    <value>บันทึกการตั้งค่า</value>
+    <comment>Title for save settings section</comment>
+  </data>
+  <data name="SaveSettings_Description" xml:space="preserve">
+    <value>จดจำการตั้งค่าของคุณสำหรับครั้งถัดไป</value>
+    <comment>Description for save settings option</comment>
+  </data>
+  <data name="SaveEditor_Title" xml:space="preserve">
+    <value>บันทึกเนื้อหาในโปรแกรมแก้ไข</value>
+    <comment>Title for save editor content section</comment>
+  </data>
+  <data name="SaveEditor_Description" xml:space="preserve">
+    <value>คุณต้องการบันทึกเนื้อหาในโปรแกรมแก้ไขของคุณสำหรับการใช้งานครั้งถัดไปหรือไม่?</value>
+    <comment>Description for save editor content option</comment>
+  </data>
+  <data name="SaveEditor_Note" xml:space="preserve">
+    <value>ข้อมูลของคุณจะถูกจัดเก็บในเครื่องและไม่ควรมีข้อมูลลับ คุณสามารถปิดฟีเจอร์นี้ได้หากต้องการ</value>
+    <comment>Important note about data storage</comment>
+  </data>
+  <data name="TypeSettings_Title" xml:space="preserve">
+    <value>การตั้งค่าประเภท</value>
+    <comment>Title for type settings section</comment>
+  </data>
+  <data name="UseRecords_Label" xml:space="preserve">
+    <value>ใช้เรคคอร์ด</value>
+    <comment>Label for use records option</comment>
+  </data>
+  <data name="UsePrimaryConstructor_Label" xml:space="preserve">
+    <value>ใช้คอนสตรัคเตอร์หลัก</value>
+    <comment>Label for use primary constructor option</comment>
+  </data>
+  <data name="PropertyAccess_Label" xml:space="preserve">
+    <value>การเข้าถึงคุณสมบัติ</value>
+    <comment>Label for property access selection</comment>
+  </data>
+  <data name="ArrayType_Label" xml:space="preserve">
+    <value>ประเภทอาเรย์</value>
+    <comment>Label for array type selection</comment>
+  </data>
+  <data name="PropertySettings_Title" xml:space="preserve">
+    <value>การตั้งค่าคุณสมบัติ</value>
+    <comment>Title for property settings section</comment>
+  </data>
+  <data name="AddJsonAttribute_Label" xml:space="preserve">
+    <value>เพิ่มแอตทริบิวต์ JSON</value>
+    <comment>Label for add JSON attribute option</comment>
+  </data>
+  <data name="IsNullable_Label" xml:space="preserve">
+    <value>เป็นค่าว่าง?</value>
+    <comment>Label for nullable option</comment>
+  </data>
+  <data name="IsRequired_Label" xml:space="preserve">
+    <value>จำเป็น</value>
+    <comment>Label for required option</comment>
+  </data>
+  <data name="DefaultValues_Label" xml:space="preserve">
+    <value>ค่าตั้งต้นที่ถูกกำหนด</value>
+    <comment>Label for default values initialization option</comment>
+  </data>
+  <data name="NamingSettings_Title" xml:space="preserve">
+    <value>การตั้งค่าการตั้งชื่อ</value>
+    <comment>Title for naming settings section</comment>
+  </data>
+  <data name="Namespace_Label" xml:space="preserve">
+    <value>เนมสเปซ</value>
+    <comment>Label for namespace input</comment>
+  </data>
+  <data name="RootName_Label" xml:space="preserve">
+    <value>ชื่อราก</value>
+    <comment>Label for root name input</comment>
+  </data>
+  <data name="CopyCode_Button" xml:space="preserve">
+    <value>คัดลอกโค้ด</value>
+    <comment>Text for copy code button</comment>
+  </data>
+  <data name="Convert_Button" xml:space="preserve">
+    <value>แปลง</value>
+    <comment>Text for convert button</comment>
+  </data>
+  <data name="Converting_Label" xml:space="preserve">
+    <value>กำลังแปลง...</value>
+    <comment>Text shown while conversion is in progress</comment>
+  </data>
+  <data name="JsonEditor_Label" xml:space="preserve">
+    <value>ตัวแก้ไข JSON</value>
+    <comment>Label for JSON editor</comment>
+  </data>
+  <data name="CsharpEditor_Label" xml:space="preserve">
+    <value>ตัวแก้ไข C#</value>
+    <comment>Label for C# editor</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>ภาษา</value>
+  </data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+    <value>เลือกภาษาที่คุณต้องการ</value>
+  </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>โค้ด C# ถูกคัดลอกไปยังคลิปบอร์ดแล้ว</value>
+  </data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>เกิดข้อผิดพลาดในการแปลง JSON เป็น C# POCO</value>
+  </data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>แปลง JSON เป็น C# POCO สำเร็จ</value>
+  </data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>การแปลงสำเร็จ</value>
+  </data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>การแปลงล้มเหลว</value>
+  </data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>โปรดป้อน JSON เพื่อแปลง</value>
+  </data>
+</root>

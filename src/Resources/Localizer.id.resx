@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0,
+      Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="Settings_Title" xml:space="preserve">
+    <value>Pengaturan</value>
+    <comment>Judul untuk bagian pengaturan</comment>
+  </data>
+  <data name="Theme_Title" xml:space="preserve">
+    <value>Tema</value>
+    <comment>Judul untuk pengaturan tema</comment>
+  </data>
+  <data name="Theme_Description" xml:space="preserve">
+    <value>Pilih tampilan yang Anda sukai</value>
+    <comment>Deskripsi untuk pemilihan tema</comment>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Terang</value>
+    <comment>Opsi tema terang</comment>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Gelap</value>
+    <comment>Opsi tema gelap</comment>
+  </data>
+  <data name="SaveSettings_Title" xml:space="preserve">
+    <value>Simpan Pengaturan</value>
+    <comment>Judul untuk bagian simpan pengaturan</comment>
+  </data>
+  <data name="SaveSettings_Description" xml:space="preserve">
+    <value>Ingat pengaturan Anda untuk penggunaan berikutnya</value>
+    <comment>Deskripsi untuk opsi simpan pengaturan</comment>
+  </data>
+  <data name="SaveEditor_Title" xml:space="preserve">
+    <value>Simpan Konten Editor</value>
+    <comment>Judul untuk bagian simpan konten editor</comment>
+  </data>
+  <data name="SaveEditor_Description" xml:space="preserve">
+    <value>Apakah Anda ingin menyimpan konten editor Anda untuk sesi mendatang?</value>
+    <comment>Deskripsi untuk opsi simpan konten editor</comment>
+  </data>
+  <data name="SaveEditor_Note" xml:space="preserve">
+    <value>Data Anda akan disimpan secara lokal dan seharusnya tidak berisi informasi rahasia. Anda dapat menonaktifkan fitur ini jika diperlukan.</value>
+    <comment>Catatan penting tentang penyimpanan data</comment>
+  </data>
+  <data name="TypeSettings_Title" xml:space="preserve">
+    <value>Pengaturan Tipe</value>
+    <comment>Judul untuk bagian pengaturan tipe</comment>
+  </data>
+  <data name="UseRecords_Label" xml:space="preserve">
+    <value>Gunakan Rekaman</value>
+    <comment>Label untuk opsi gunakan rekaman</comment>
+  </data>
+  <data name="UsePrimaryConstructor_Label" xml:space="preserve">
+    <value>Gunakan Konstruktor Utama</value>
+    <comment>Label untuk opsi gunakan konstruktor utama</comment>
+  </data>
+  <data name="PropertyAccess_Label" xml:space="preserve">
+    <value>Akses Properti</value>
+    <comment>Label untuk pemilihan akses properti</comment>
+  </data>
+  <data name="ArrayType_Label" xml:space="preserve">
+    <value>Tipe Array</value>
+    <comment>Label untuk pemilihan tipe array</comment>
+  </data>
+  <data name="PropertySettings_Title" xml:space="preserve">
+    <value>Pengaturan Properti</value>
+    <comment>Judul untuk bagian pengaturan properti</comment>
+  </data>
+  <data name="AddJsonAttribute_Label" xml:space="preserve">
+    <value>Tambahkan Atribut JSON</value>
+    <comment>Label untuk opsi tambahkan atribut JSON</comment>
+  </data>
+  <data name="IsNullable_Label" xml:space="preserve">
+    <value>Bisa Kosong?</value>
+    <comment>Label untuk opsi bisa kosong</comment>
+  </data>
+  <data name="IsRequired_Label" xml:space="preserve">
+    <value>Dibutuhkan</value>
+    <comment>Label untuk opsi dibutuhkan</comment>
+  </data>
+  <data name="DefaultValues_Label" xml:space="preserve">
+    <value>Nilai Default Diinisialisasi</value>
+    <comment>Label untuk opsi inisialisasi nilai default</comment>
+  </data>
+  <data name="NamingSettings_Title" xml:space="preserve">
+    <value>Pengaturan Penamaan</value>
+    <comment>Judul untuk bagian pengaturan penamaan</comment>
+  </data>
+  <data name="Namespace_Label" xml:space="preserve">
+    <value>Namespace</value>
+    <comment>Label untuk input namespace</comment>
+  </data>
+  <data name="RootName_Label" xml:space="preserve">
+    <value>Nama Root</value>
+    <comment>Label untuk input nama root</comment>
+  </data>
+  <data name="CopyCode_Button" xml:space="preserve">
+    <value>Salin Kode</value>
+    <comment>Teks untuk tombol salin kode</comment>
+  </data>
+  <data name="Convert_Button" xml:space="preserve">
+    <value>Konversi</value>
+    <comment>Teks untuk tombol konversi</comment>
+  </data>
+  <data name="Converting_Label" xml:space="preserve">
+    <value>Mengonversi...</value>
+    <comment>Teks yang ditampilkan saat proses konversi berlangsung</comment>
+  </data>
+  <data name="JsonEditor_Label" xml:space="preserve">
+    <value>Editor JSON</value>
+    <comment>Label untuk editor JSON</comment>
+  </data>
+  <data name="CsharpEditor_Label" xml:space="preserve">
+    <value>Editor C#</value>
+    <comment>Label untuk editor C#</comment>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Bahasa</value>
+  </data>
+  <data name="Select_Preferred_Language" xml:space="preserve">
+    <value>Pilih bahasa pilihan Anda</value>
+  </data>
+  <data name="ClipboardCopySuccess" xml:space="preserve">
+    <value>Kode C# berhasil disalin ke clipboard</value>
+  </data>
+  <data name="JsonConversionError" xml:space="preserve">
+    <value>Kesalahan mengonversi JSON ke C# POCO</value>
+  </data>
+  <data name="JsonConversionSuccess" xml:space="preserve">
+    <value>JSON berhasil dikonversi ke C# POCO</value>
+  </data>
+  <data name="ConversionSuccess" xml:space="preserve">
+    <value>Konversi Berhasil</value>
+  </data>
+  <data name="ConversionFailed" xml:space="preserve">
+    <value>Konversi Gagal</value>
+  </data>
+  <data name="EnterJson" xml:space="preserve">
+    <value>Harap masukkan JSON untuk dikonversi</value>
+  </data>
+</root>
