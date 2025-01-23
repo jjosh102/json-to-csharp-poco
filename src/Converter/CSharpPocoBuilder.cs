@@ -1,11 +1,11 @@
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using JsonToCsharpPoco.Models;
+using JsonToCsharpPoco.Extensions;
 using JsonToCsharpPoco.Models.Enums;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-
+using Humanizer;
 namespace JsonToCsharpPoco.Converter;
 
 public partial class CSharpPocoBuilder
@@ -36,7 +36,7 @@ public partial class CSharpPocoBuilder
        List<MemberDeclarationSyntax> declarations,
        ConversionSettings options)
     {
-        typeName = SanitizePropertyName(typeName);
+        typeName = typeName.SanitizePropertyName();
 
         MemberDeclarationSyntax typeDeclaration;
 
@@ -87,7 +87,7 @@ public partial class CSharpPocoBuilder
 
         if (propertyValue.ValueKind == JsonValueKind.Object)
         {
-            var nestedTypeName = ToPascalCase(propertyName);
+            var nestedTypeName = propertyName.ToPascalCase();
             addNestedTypeAction(propertyValue, nestedTypeName, declarations, options);
             return nestedTypeName;
         }
@@ -96,7 +96,7 @@ public partial class CSharpPocoBuilder
             propertyValue.EnumerateArray().Any() &&
             propertyValue[0].ValueKind == JsonValueKind.Object)
         {
-            var nestedTypeName = ToPascalCase(propertyName);
+            var nestedTypeName = propertyName.ToPascalCase();
             addNestedTypeAction(propertyValue[0], nestedTypeName, declarations, options);
             return FormatArrayType(nestedTypeName, options.ArrayType);
         }
@@ -113,7 +113,7 @@ public partial class CSharpPocoBuilder
             JsonValueKind.True => "bool",
             JsonValueKind.False => "bool",
             JsonValueKind.Array => DetermineArrayType(value, propertyName, arrayType),
-            JsonValueKind.Object => ToPascalCase(propertyName),
+            JsonValueKind.Object => propertyName.ToPascalCase(),
             _ => "object"
         };
     }
@@ -177,7 +177,7 @@ public partial class CSharpPocoBuilder
 
         var propertyDeclaration = SyntaxFactory.PropertyDeclaration(
                 SyntaxFactory.ParseTypeName(propertyType),
-                SyntaxFactory.Identifier(ToPascalCase(propertyName)))
+                SyntaxFactory.Identifier(propertyName.ToPascalCase()))
             .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
         if (options.IsRequired)
@@ -231,7 +231,7 @@ public partial class CSharpPocoBuilder
     private AttributeSyntax CreateJsonPropertyNameAttribute(string propertyName)
     {
         var argument = SyntaxFactory.AttributeArgument(
-            SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(RemoveSpecialCharacters(propertyName))));
+            SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(propertyName.RemoveSpecialCharacters())));
 
         return SyntaxFactory.Attribute(SyntaxFactory.ParseName("JsonPropertyName")).AddArgumentListArguments(argument);
     }
@@ -245,7 +245,7 @@ public partial class CSharpPocoBuilder
         }
 
         var parameterDeclaration = SyntaxFactory.Parameter(
-                SyntaxFactory.Identifier(ToPascalCase(propertyName)))
+                SyntaxFactory.Identifier(propertyName.ToPascalCase()))
             .WithType(SyntaxFactory.ParseTypeName(propertyType));
 
         if (!options.AddAttribute)
@@ -257,7 +257,7 @@ public partial class CSharpPocoBuilder
                    SyntaxFactory.AttributeArgument(
                        SyntaxFactory.LiteralExpression(
                            SyntaxKind.StringLiteralExpression,
-                           SyntaxFactory.Literal(RemoveSpecialCharacters(propertyName)))));
+                           SyntaxFactory.Literal(propertyName.RemoveSpecialCharacters()))));
 
         var attributeList = SyntaxFactory.AttributeList(
             SyntaxFactory.SingletonSeparatedList(attribute));
@@ -295,29 +295,5 @@ public partial class CSharpPocoBuilder
         return properties;
     }
 
-    [GeneratedRegex(@"(^|_)([a-z])", RegexOptions.Compiled)]
-    private static partial Regex PascalCaseRegex();
 
-    private string ToPascalCase(string input)
-    {
-        if (string.IsNullOrWhiteSpace(input)) return input;
-        var sanitizedInput = SanitizePropertyName(input);
-        return PascalCaseRegex().Replace(sanitizedInput, match => match.Groups[2].Value.ToUpper());
-    }
-
-    private string SanitizePropertyName(string propertyName)
-    {
-        if (int.TryParse(propertyName, out _))
-        {
-            propertyName = $"_{propertyName}";
-        }
-
-        return RemoveSpecialCharacters(propertyName);
-    }
-
-    [GeneratedRegex("[^a-zA-Z0-9_]", RegexOptions.Compiled)]
-    private static partial Regex SpecialCharactersRegex();
-
-    private static string RemoveSpecialCharacters(string input) =>
-        SpecialCharactersRegex().Replace(input, string.Empty);
 }
