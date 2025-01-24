@@ -36,7 +36,7 @@ public partial class CSharpPocoBuilder
        List<MemberDeclarationSyntax> declarations,
        ConversionSettings options)
     {
-        typeName = typeName.SanitizePropertyName();
+        typeName = typeName.EnsureValidPropertyName();
 
         MemberDeclarationSyntax typeDeclaration;
 

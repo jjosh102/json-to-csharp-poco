@@ -17,10 +17,10 @@ public static partial class StringHelperExtensions
                     .RemoveSpecialCharacters()
                     // If still not in PascalCase, apply Pascalize again
                     .Pascalize()
-                    .SanitizePropertyName();
+                    .EnsureValidPropertyName();
     }
 
-    public static string SanitizePropertyName(this string propertyName)
+    public static string EnsureValidPropertyName(this string propertyName)
     {
         if (int.TryParse(propertyName, out _))
         {

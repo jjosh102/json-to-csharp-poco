@@ -33,7 +33,7 @@ public class PascalCaseBenchmark
         };
     }
 
-    private string SanitizePropertyName(string input)
+    private string EnsureValidPropertyName(string input)
     {
         return input.Trim();
     }
@@ -86,14 +86,14 @@ public class PascalCaseBenchmark
     private string ToPascalCaseRegex(string input)
     {
         if (string.IsNullOrWhiteSpace(input)) return input;
-        return Regex.Replace(SanitizePropertyName(input), @"(^|_)([a-z])", match => match.Groups[2].Value.ToUpper());
+        return Regex.Replace(EnsureValidPropertyName(input), @"(^|_)([a-z])", match => match.Groups[2].Value.ToUpper());
     }
 
     private string ToPascalCaseSpan(string input)
     {
         if (string.IsNullOrEmpty(input)) return input;
 
-        var sanitizedPropertyName = SanitizePropertyName(input);
+        var sanitizedPropertyName = EnsureValidPropertyName(input);
 
         if (int.TryParse(input, out _)) return sanitizedPropertyName;
 

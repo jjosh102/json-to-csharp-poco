@@ -24,7 +24,7 @@ public class JsonToCSharpRecordTests
     }
 
     [Fact]
-    public void ConvertJsonToSanitizePropertyName_SimpleRecord_ReturnsExpectedRecord()
+    public void ConvertJsonToEnsureValidPropertyName_SimpleRecord_ReturnsExpectedRecord()
     {
         string json = @"{
             ""name"": ""John"",
