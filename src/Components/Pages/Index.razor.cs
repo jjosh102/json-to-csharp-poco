@@ -62,7 +62,7 @@ public partial class Index : ComponentBase, IDisposable
 
   private async Task LoadEditorContent(string storageKey, StandaloneCodeEditor? editor)
   {
-    if (editor == null || !AppState.Preferences.IsEditorContentSaved)
+    if (editor is null || !AppState.Preferences.IsEditorContentSaved)
       return;
 
     var content = await _localStorageServiceAsync.GetItemAsync<string>(storageKey);
@@ -92,7 +92,7 @@ public partial class Index : ComponentBase, IDisposable
 
   private async Task SaveEditorContent(string storageKey, StandaloneCodeEditor editor)
   {
-    if (editor == null || !AppState.Preferences.IsEditorContentSaved)
+    if (editor is null || !AppState.Preferences.IsEditorContentSaved)
       return;
 
     var content = await editor.GetValue();
@@ -112,14 +112,14 @@ public partial class Index : ComponentBase, IDisposable
       return;
     }
 
-    if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionSettings, out var syntax))
+    if (_jsonToCSharp.TryConvertJsonToCsharp(jsonToConvert, _conversionSettings, out var result))
     {
-      await _csharpEditor.SetValue(syntax);
+      await _csharpEditor.SetValue(result);
       await ShowToastAsync(Localizer.JsonConversionSuccess, ToastType.Success, Localizer.ConversionSuccess);
     }
     else
     {
-      await ShowToastAsync(Localizer.JsonConversionError, ToastType.Error, Localizer.ConversionFailed);
+      await ShowToastAsync(Localizer.JsonConversionError, ToastType.Error, $"{Localizer.ConversionFailed} - {result}");
     }
 
     _isConverting = false;

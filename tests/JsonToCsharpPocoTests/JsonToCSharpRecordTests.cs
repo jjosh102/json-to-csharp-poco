@@ -487,31 +487,316 @@ public class JsonToCSharpRecordTests
         Assert.Contains("public Items[] Items { get; init; }", result);
     }
 
-    // [Fact]
-    // public void ConvertJsonToRecord_MultiLineConstructor_GeneratesConstructorWithLineBreaks()
-    // {
-    //     string json = @"{
-    //     ""id"": 1,
-    //     ""name"": ""Test Company"",
-    //     ""location"": ""New York""
-    // }";
+    [Fact]
+    public void ConvertJsonToRecord_CollectionRoot_ReturnsRecordForFirstObject()
+    {
+        string json = @"[
+        { ""name"": ""John"", ""age"": 30 },
+        { ""name"": ""Jane"", ""age"": 25 }
+    ]";
 
-    //     var options = new ConversionSettings
-    //     {
-    //         Namespace = "TestNamespace",
-    //         RootTypeName = "CompanyRecord",
-    //         UseRecords = true,
-    //         UsePrimaryConstructor = true,
-    //         MultiLineConstructor = true
-    //     };
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
 
-    //     var result = _converter.ConvertJsonToCsharp(json, options);
-    //     Console.WriteLine(result);
-    //     Assert.Contains("public record CompanyRecord(", result);
-    //     Assert.Contains("int Id,", result);
-    //     Assert.Contains("string Name,", result);
-    //     Assert.Contains("string Location", result);
-    //     Assert.Contains(");", result);
-    // }
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("string Name", result);
+        Assert.Contains("int Age", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_EmptyCollection_ThrowsInvalidOperationException()
+    {
+        string json = "[]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Equal("Error converting JSON: JSON array is empty. Cannot convert to C# POCO.", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithNonObjectFirstElement_ThrowsInvalidOperationException()
+    {
+        string json = @"[42, ""invalid""]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Equal("Error converting JSON: First element in JSON array must be an object.", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithNestedObjects_ReturnsNestedRecordStructure()
+    {
+        string json = @"[
+        {
+            ""person"": {
+                ""name"": ""John"",
+                ""address"": {
+                    ""street"": ""Main St"",
+                    ""city"": ""New York""
+                }
+            }
+        }
+    ]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("public record Person", result);
+        Assert.Contains("public record Address", result);
+        Assert.Contains("Person Person", result);
+        Assert.Contains("string Street", result);
+        Assert.Contains("string City", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithArrayProperty_ReturnsListTypeInRecord()
+    {
+        string json = @"[
+        {
+            ""items"": [
+                { ""id"": 1, ""value"": ""A"" },
+                { ""id"": 2, ""value"": ""B"" }
+            ]
+        }
+    ]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("IReadOnlyList<Items> Items", result);
+        Assert.Contains("public record Items", result);
+        Assert.Contains("int Id", result);
+        Assert.Contains("string Value", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithDateTimeProperty_ReturnsDateTimeTypeInRecord()
+    {
+        string json = @"[
+        {
+            ""createdAt"": ""2024-01-11T10:00:00Z"",
+            ""updatedAt"": ""2024-01-11""
+        }
+    ]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("DateTime CreatedAt", result);
+        Assert.Contains("DateTime UpdatedAt", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithComplexNestedStructure_GeneratesCorrectRecordHierarchy()
+    {
+        string json = @"[
+        {
+            ""company"": {
+                ""departments"": [
+                    {
+                        ""name"": ""IT"",
+                        ""employees"": [
+                            {
+                                ""id"": 1,
+                                ""details"": {
+                                    ""position"": ""Developer"",
+                                    ""skills"": [""C#"", ""JavaScript""]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("public record Company", result);
+        Assert.Contains("public record Departments", result);
+        Assert.Contains("public record Employees", result);
+        Assert.Contains("public record Details", result);
+        Assert.Contains("IReadOnlyList<string> Skills", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithSpecialCharacters_HandlesCorrectlyInRecord()
+    {
+        string json = @"[
+        {
+            ""@type"": ""person"",
+            ""#id"": 123,
+            ""$price"": 99.99
+        }
+    ]";
+
+        var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("[property: JsonPropertyName(\"type\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"id\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"price\")]", result);
+        Assert.Contains("string Type", result);
+        Assert.Contains("int Id", result);
+        Assert.Contains("double Price", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithNullableAndRequiredProperties_GeneratesCorrectSyntax()
+    {
+        string json = @"[
+        {
+            ""name"": ""John"",
+            ""age"": 30,
+            ""email"": """"
+        }
+    ]";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsNullable = true,
+            IsRequired = true,
+            PropertyAccess = PropertyAccess.Immutable
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public required string? Name { get; init; }", result);
+        Assert.Contains("public required int? Age { get; init; }", result);
+        Assert.Contains("public required string? Email { get; init; }", result);
+
+        options.IsNullable = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+        Assert.Contains("public required string Name { get; init; }", result);
+        Assert.Contains("public required int Age { get; init; }", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithPrimaryConstructor_NullableProperties_GeneratesCorrectSyntax()
+    {
+        string json = @"[
+        {
+            ""name"": ""John"",
+            ""age"": 30,
+            ""email"": """"
+        }
+    ]";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            RootTypeName = "RootRecord",
+            UseRecords = true,
+            UsePrimaryConstructor = true,
+            AddAttribute = true,
+            IsNullable = true,
+            IsRequired = true,
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[property: JsonPropertyName(\"name\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"age\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"email\")]", result);
+        Assert.Contains("string? Name", result);
+        Assert.Contains("int? Age", result);
+        Assert.Contains("string? Email", result);
+
+        options.IsNullable = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[property: JsonPropertyName(\"name\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"age\")]", result);
+        Assert.Contains("[property: JsonPropertyName(\"email\")]", result);
+        Assert.Contains("string Name", result);
+        Assert.Contains("int Age", result);
+        Assert.Contains("string Email", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithDefaultInitialization_GeneratesDefaultValues()
+    {
+        string json = @"[
+        {
+            ""name"": ""John"",
+            ""age"": 30,
+            ""isActive"": true,
+            ""tags"": [""tag1"", ""tag2""],
+            ""address"": {
+                ""street"": ""Main St"",
+                ""city"": ""New York""
+            }
+        }
+    ]";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            RootTypeName = "RootRecord",
+            UseRecords = true,
+            UsePrimaryConstructor = false,
+            AddAttribute = false,
+            IsDefaultInitialized = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public record RootRecord", result);
+        Assert.Contains("public string Name { get; init; } = string.Empty;", result);
+        Assert.Contains("public IReadOnlyList<string> Tags { get; init; } = [];", result);
+        Assert.Contains("public Address Address { get; init; } = new();", result);
+        Assert.Contains("public record Address", result);
+        Assert.Contains("public string Street { get; init; } = string.Empty;", result);
+        Assert.Contains("public string City { get; init; } = string.Empty;", result);
+
+        options.IsDefaultInitialized = false;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.DoesNotContain("= string.Empty", result);
+        Assert.DoesNotContain("= [];", result);
+        Assert.DoesNotContain("= new();", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_CollectionWithArrayType_RespectsSelectedArrayType()
+    {
+        string json = @"[
+        {
+            ""items"": [
+                { ""id"": 1, ""value"": ""A"" },
+                { ""id"": 2, ""value"": ""B"" }
+            ]
+        }
+    ]";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = true,
+            UsePrimaryConstructor = false,
+            ArrayType = ArrayType.List
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public List<Items> Items { get; init; }", result);
+        Assert.Contains("public record Items", result);
+        Assert.Contains("public int Id { get; init; }", result);
+        Assert.Contains("public string Value { get; init; }", result);
+
+        options.ArrayType = ArrayType.IReadOnlyList;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public IReadOnlyList<Items> Items { get; init; }", result);
+
+        options.ArrayType = ArrayType.Array;
+        result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("public Items[] Items { get; init; }", result);
+    }
 
 }
