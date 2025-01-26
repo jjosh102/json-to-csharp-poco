@@ -369,7 +369,7 @@ public class JsonToCSsharpClassTests
         string json = @"[42, ""invalid""]";
 
         var result = _converter.ConvertJsonToCsharp(json, _defaultOptions);
-        
+
         Assert.Equal("Error converting JSON: First element in JSON array must be an object.", result);
     }
 
@@ -611,5 +611,148 @@ public class JsonToCSsharpClassTests
         result = _converter.ConvertJsonToCsharp(json, options);
 
         Assert.Contains("public Items[] Items { get; init; }", result);
+    }
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_ForSpecialCharacters()
+    {
+        string json = @"{
+        ""@type"": ""user"",
+        ""#id"": 1001,
+        ""$value"": 99.99
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"type\")]", result);
+        Assert.Contains("[JsonPropertyName(\"id\")]", result);
+        Assert.Contains("[JsonPropertyName(\"value\")]", result);
+        Assert.Contains("public string Type", result);
+        Assert.Contains("public int Id", result);
+        Assert.Contains("public double Value", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_ForNumericProperties()
+    {
+        string json = @"{
+        ""123"": ""invalid"",
+        ""456item"": true
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"123\")]", result);
+        Assert.Contains("[JsonPropertyName(\"456item\")]", result);
+        Assert.Contains("public string _123", result);
+        Assert.Contains("public bool 456item", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_InNestedStructures()
+    {
+        string json = @"{
+        ""user"": {
+            ""@email"": ""test@example.com"",
+            ""!roles"": [""admin"", ""user""]
+        }
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"email\")]", result);
+        Assert.Contains("[JsonPropertyName(\"roles\")]", result);
+        Assert.Contains("public string Email", result);
+        Assert.Contains("public IReadOnlyList<string> Roles", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_WithExactCasing()
+    {
+        string json = @"{
+        ""FirstName"": ""John"",
+        ""lastName"": ""Doe""
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"FirstName\")]", result);
+        Assert.Contains("[JsonPropertyName(\"lastName\")]", result);
+        Assert.Contains("public string FirstName", result);
+        Assert.Contains("public string LastName", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_ForArrayElements()
+    {
+        string json = @"{
+        ""items"": [
+            { ""item-id"": 1, ""item.value"": ""A"" }
+        ]
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"item-id\")]", result);
+        Assert.Contains("[JsonPropertyName(\"item.value\")]", result);
+        Assert.Contains("public int ItemId", result);
+        Assert.Contains("public string ItemValue", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_PreservesAttributeNames_ForReservedKeywords()
+    {
+        string json = @"{
+        ""class"": ""advanced"",
+        ""namespace"": ""system""
+    }";
+
+        var options = new ConversionSettings
+        {
+            Namespace = "TestNamespace",
+            UseRecords = false,
+            AddAttribute = true
+        };
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("[JsonPropertyName(\"class\")]", result);
+        Assert.Contains("[JsonPropertyName(\"namespace\")]", result);
+        Assert.Contains("public string Class", result);
+        Assert.Contains("public string Namespace", result);
     }
 }

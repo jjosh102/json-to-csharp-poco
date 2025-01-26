@@ -4,7 +4,7 @@ using Humanizer;
 namespace JsonToCsharpPoco.Extensions;
 public static partial class StringHelperExtensions
 {
-    [GeneratedRegex("[^a-zA-Z0-9_]", RegexOptions.Compiled)]
+    [GeneratedRegex("[^a-zA-Z0-9_.-]", RegexOptions.Compiled)]
     private static partial Regex SpecialCharactersRegex();
 
     public static string ToPascalCase(this string input)
