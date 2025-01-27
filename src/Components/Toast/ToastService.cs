@@ -45,6 +45,7 @@ public class ToastService : IDisposable
             {
                 var expiredToasts = _toasts
                     .Where(t => (DateTime.Now - t.CreatedAt).TotalMilliseconds >= t.DurationMs)
+                    .OrderByDescending(t => t.CreatedAt)
                     .ToList();
 
                 foreach (var toast in expiredToasts)
