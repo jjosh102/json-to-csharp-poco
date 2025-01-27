@@ -1,19 +1,19 @@
-
-using Timer = System.Timers.Timer;
 namespace JsonToCsharpPoco.Components.Toast;
+
 public class ToastService : IDisposable
 {
     private readonly List<ToastMessage> _toasts = [];
     private const int DefaultDurationMs = 5000;
-    private readonly Timer? _timer;
+    private readonly PeriodicTimer? _periodicTimer;
+    private readonly CancellationTokenSource _cts = new();
 
     public event Action? OnToastsChanged;
 
     public ToastService()
     {
-        _timer = new Timer(1000);
-        _timer.Elapsed += async (sender, e) => await CheckToasts();
-        _timer.Start();
+        _periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+        _ = CheckToastsPeriodicallyAsync(_cts.Token);
     }
 
     public async Task ShowToastAsync(string message, ToastType type = ToastType.Info, string title = "", int durationMs = DefaultDurationMs)
@@ -36,16 +36,28 @@ public class ToastService : IDisposable
         OnToastsChanged?.Invoke();
     }
 
-    private async Task CheckToasts()
+    private async Task CheckToastsPeriodicallyAsync(CancellationToken cancellationToken)
     {
-        var expiredToasts = _toasts
-            .Where(t => (DateTime.Now - t.CreatedAt).TotalMilliseconds >= t.DurationMs)
-            .ToList();
-
-        foreach (var toast in expiredToasts)
+        try
         {
-            await RemoveToast(toast);
+            // Remove expired toasts
+            while (await _periodicTimer!.WaitForNextTickAsync(cancellationToken))
+            {
+                var expiredToasts = _toasts
+                    .Where(t => (DateTime.Now - t.CreatedAt).TotalMilliseconds >= t.DurationMs)
+                    .ToList();
+
+                foreach (var toast in expiredToasts)
+                {
+                    await RemoveToast(toast);
+                }
+            }
         }
+        catch (OperationCanceledException)
+        {
+
+        }
+
     }
 
     public async Task RemoveToast(ToastMessage toast)
@@ -66,11 +78,8 @@ public class ToastService : IDisposable
 
     public void Dispose()
     {
-        if (_timer != null)
-        {
-            _timer.Stop();
-            _timer.Dispose();
-        }
+        _cts.Cancel();
+        _periodicTimer?.Dispose();
         _toasts.Clear();
     }
 }
