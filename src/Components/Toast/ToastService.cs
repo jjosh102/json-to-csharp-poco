@@ -41,7 +41,7 @@ public class ToastService : IDisposable
         try
         {
             // Remove expired toasts
-            while (await _periodicTimer!.WaitForNextTickAsync(cancellationToken))
+            while (await _periodicTimer!.WaitForNextTickAsync(cancellationToken) && !cancellationToken.IsCancellationRequested)
             {
                 var expiredToasts = _toasts
                     .Where(t => (DateTime.Now - t.CreatedAt).TotalMilliseconds >= t.DurationMs)
