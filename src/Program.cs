@@ -4,6 +4,7 @@ using JsonToCsharpPoco.Components;
 using JsonToCsharpPoco.Converter;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Shared;
+using JsonToCsharpPoco.Components.Toast;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -12,6 +13,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddLocalization();
 builder.Services.AddSingleton<CSharpPocoBuilder>();
 builder.Services.AddSingleton<JsonToCSharp>();
+builder.Services.AddSingleton<ToastService>();
 builder.Services.AddBlazoredLocalStorageAsSingleton();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

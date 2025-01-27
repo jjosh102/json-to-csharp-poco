@@ -1,7 +1,6 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using JsonToCsharpPoco.Components.Toast;
 using JsonToCsharpPoco.Shared;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Models;
@@ -21,7 +20,6 @@ public partial class CascadingAppState : ComponentBase
 
   [Parameter]
   public RenderFragment? ChildContent { get; set; }
-  public ToastComponent? ToastService { get; set; }
   public Preferences Preferences { get; set; } = new();
 
   protected override async Task OnInitializedAsync()
