@@ -14,7 +14,7 @@ using JsonToCsharpPoco.Resources;
 
 namespace JsonToCsharpPoco.Components.Pages;
 
-public partial class Index : ComponentBase, IDisposable
+public partial class Converter : ComponentBase, IDisposable
 {
     private readonly JsonToCSharp _jsonToCSharp;
     private readonly ISyncLocalStorageService _localStorageService;
@@ -31,7 +31,7 @@ public partial class Index : ComponentBase, IDisposable
 
     private bool _isConverting;
 
-    public Index(
+    public Converter(
         JsonToCSharp jsonToCSharp,
         IJSRuntime jsRuntime,
         ISyncLocalStorageService localStorageService,
@@ -102,7 +102,7 @@ public partial class Index : ComponentBase, IDisposable
         await _localStorageServiceAsync.SetItemAsStringAsync(storageKey, content);
     }
 
-    public async Task Convert()
+    private async Task Convert()
     {
         _isConverting = true;
         await Task.Delay(1000);
