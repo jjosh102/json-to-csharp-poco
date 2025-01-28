@@ -124,7 +124,7 @@
                 <span>@Localizer.CopyCode_Button</span>
             </button>
 
-            <button @onclick="Convert" disabled="@_isConverting"
+            <button id="convert-button" @onclick="Convert" disabled="@_isConverting"
                 class="@($"px-4 py-2 font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-10" : "bg-[#007ACC] hover:bg-[#388A34]")}")">
                 @if (_isConverting)
                 {
