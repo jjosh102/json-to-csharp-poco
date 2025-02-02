@@ -367,6 +367,15 @@ namespace JsonToCsharpPoco.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Namespace file scoped.
+        /// </summary>
+        internal static string UseFileScoped_Label {
+            get {
+                return ResourceManager.GetString("UseFileScoped_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Primary Constructor.
         /// </summary>
         internal static string UsePrimaryConstructor_Label {

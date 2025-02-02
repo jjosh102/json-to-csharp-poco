@@ -197,4 +197,7 @@
   <data name="EnterJson" xml:space="preserve">
     <value>変換するJSONを入力してください</value>
 </data>
+  <data name="UseFileScoped_Label" xml:space="preserve">
+    <value>ファイルスコープを使用</value> 
+</data>
 </root>

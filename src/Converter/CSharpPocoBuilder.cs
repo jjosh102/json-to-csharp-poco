@@ -15,8 +15,12 @@ public partial class CSharpPocoBuilder
         var declarations = new List<MemberDeclarationSyntax>();
         AddTypeFromJson(rootElement, options.RootTypeName, declarations, options);
 
-        var namespaceDeclaration = SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(options.Namespace))
-            .AddMembers([.. declarations]);
+        BaseNamespaceDeclarationSyntax namespaceDeclaration = options.UseFileScoped
+            ? SyntaxFactory.FileScopedNamespaceDeclaration(SyntaxFactory.ParseName(options.Namespace))
+            : SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName(options.Namespace)).WithOpenBraceToken(SyntaxFactory.Token(SyntaxKind.OpenBraceToken))
+              .WithCloseBraceToken(SyntaxFactory.Token(SyntaxKind.CloseBraceToken));
+
+        namespaceDeclaration = namespaceDeclaration.AddMembers([.. declarations]);
 
         var compilationUnit = SyntaxFactory.CompilationUnit()
         .AddMembers(namespaceDeclaration);

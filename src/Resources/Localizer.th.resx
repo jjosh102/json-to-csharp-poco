@@ -198,4 +198,7 @@
   <data name="EnterJson" xml:space="preserve">
     <value>โปรดป้อน JSON เพื่อแปลง</value>
   </data>
+  <data name="UseFileScoped_Label" xml:space="preserve">
+    <value>ใช้ขอบเขตไฟล์</value> 
+</data>
 </root>

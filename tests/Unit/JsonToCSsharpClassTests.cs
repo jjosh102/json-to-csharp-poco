@@ -4,6 +4,7 @@ using JsonToCsharpPoco.Models.Enums;
 namespace JsonToCsharpPocoTests;
 
 using JsonToCsharpPoco.Converter;
+
 using Xunit;
 
 public class JsonToCSsharpClassTests
@@ -754,5 +755,41 @@ public class JsonToCSsharpClassTests
         Assert.Contains("[JsonPropertyName(\"namespace\")]", result);
         Assert.Contains("public string Class", result);
         Assert.Contains("public string Namespace", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_FileScopedNamespace_GeneratesCorrectSyntax()
+    {
+        var options = new ConversionSettings
+        {
+            UseRecords = false,
+            Namespace = "TestNamespace",
+            UseFileScoped = true
+        };
+
+        string json = "{}";
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("namespace TestNamespace;", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToClass_BlockScopedNamespace_GeneratesCorrectSyntax()
+    {
+        var options = new ConversionSettings
+        {
+            UseRecords = false,
+            Namespace = "TestNamespace",
+            UseFileScoped = false
+        };
+
+        string json = "{}";
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("namespace TestNamespace", result);
+        Assert.Contains("{", result);
+        Assert.Contains("}", result);
     }
 }

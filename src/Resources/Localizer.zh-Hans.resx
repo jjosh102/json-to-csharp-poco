@@ -170,5 +170,8 @@
   <data name="EnterJson" xml:space="preserve">
     <value>请输入要转换的 JSON</value>
 </data>
+  <data name="UseFileScoped_Label" xml:space="preserve">
+    <value>使用文件范围</value>
+</data>
 </root>
  

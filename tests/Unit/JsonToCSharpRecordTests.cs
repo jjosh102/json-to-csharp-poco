@@ -4,6 +4,7 @@ using JsonToCsharpPoco.Models.Enums;
 namespace JsonToCsharpPocoTests;
 
 using JsonToCsharpPoco.Converter;
+
 using Xunit;
 
 public class JsonToCSharpRecordTests
@@ -867,7 +868,7 @@ public class JsonToCSharpRecordTests
         };
 
         var result = _converter.ConvertJsonToCsharp(json, options);
-    
+
         Assert.Contains("[property: JsonPropertyName(\"123\")]", result);
         Assert.Contains("[property: JsonPropertyName(\"456-item\")]", result);
         Assert.Contains("string _123", result);
@@ -966,7 +967,7 @@ public class JsonToCSharpRecordTests
         };
 
         var result = _converter.ConvertJsonToCsharp(json, options);
-     
+
         Assert.Contains("[property: JsonPropertyName(\"item-id\")]", result);
         Assert.Contains("[property: JsonPropertyName(\"item.value\")]", result);
         Assert.Contains("public record Items", result);
@@ -996,6 +997,42 @@ public class JsonToCSharpRecordTests
         Assert.Contains("[property: JsonPropertyName(\"namespace\")]", result);
         Assert.Contains("string Class", result);
         Assert.Contains("string Namespace", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecords_FileScopedNamespace_GeneratesCorrectSyntax()
+    {
+        var options = new ConversionSettings
+        {
+            UseRecords = true,
+            Namespace = "TestNamespace",
+            UseFileScoped = true
+        };
+
+        string json = "{}";
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("namespace TestNamespace;", result);
+    }
+
+    [Fact]
+    public void ConvertJsonToRecord_BlockScopedNamespace_GeneratesCorrectSyntax()
+    {
+        var options = new ConversionSettings
+        {
+            UseRecords = true,
+            Namespace = "TestNamespace",
+            UseFileScoped = false
+        };
+
+        string json = "{}";
+
+        var result = _converter.ConvertJsonToCsharp(json, options);
+
+        Assert.Contains("namespace TestNamespace", result);
+        Assert.Contains("{", result);
+        Assert.Contains("}", result);
     }
 
 }

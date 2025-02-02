@@ -94,6 +94,13 @@
                 class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
                 <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100">@Localizer.NamingSettings_Title</h3>
                 <div class="space-y-3">
+                      <div class="flex items-center justify-between">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
+                            for="use-records">@Localizer.UseFileScoped_Label</label>
+                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseFileScoped"
+                            class="rounded text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                    </div>
+
                     <div class="flex flex-col space-y-2">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="namespace">@Localizer.Namespace_Label</label>

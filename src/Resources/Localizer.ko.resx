@@ -197,4 +197,7 @@
   <data name="EnterJson" xml:space="preserve">
     <value>변환할 JSON을 입력하세요</value>
 </data>
+<data name="UseFileScoped_Label" xml:space="preserve">
+    <value>파일 범위 사용</value> 
+</data>
 </root>

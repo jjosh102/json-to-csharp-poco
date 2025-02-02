@@ -199,4 +199,7 @@
   <data name="EnterJson" xml:space="preserve">
     <value>Pakilagay ang JSON para ma-convert</value>
   </data>
+  <data name="UseFileScoped_Label" xml:space="preserve">
+    <value>Gumamit ng File Scoped</value> 
+</data>
 </root>

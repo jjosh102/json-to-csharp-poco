@@ -13,6 +13,8 @@ public class ConversionSettings : INotifyPropertyChanged
   private bool _isNullable;
   private bool _isRequired;
   private bool _isDefaultInitialized;
+
+  private bool _useFileScoped;
   private string _namespace = "JsonToCsharp";
   private string _rootTypeName = "Root";
 
@@ -64,6 +66,12 @@ public class ConversionSettings : INotifyPropertyChanged
   {
     get => _isDefaultInitialized;
     set => SetProperty(ref _isDefaultInitialized, value);
+  }
+
+   public bool UseFileScoped
+  {
+    get => _useFileScoped;
+    set => SetProperty(ref _useFileScoped, value);
   }
 
   public string Namespace

@@ -198,4 +198,7 @@
   <data name="EnterJson" xml:space="preserve">
     <value>Inserisci il JSON da convertire</value>
 </data>
+  <data name="UseFileScoped_Label" xml:space="preserve">
+    <value>Usa Ambito File</value> 
+</data>
 </root>
