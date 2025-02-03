@@ -4,7 +4,7 @@
 <div class="right-4 top-4 z-40">
     <button @onclick="TogglePanel"
         class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -14,27 +14,24 @@
     </button>
 </div>
 
-<div
-    class="@($"fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 {(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")}")">
+<div class="@($"fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 {(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")}")">
     <div class="fixed inset-0 bg-black/50 dark:bg-black/70" @onclick="TogglePanel"></div>
 
-    <div class="fixed top-0 right-0 h-full w-96 bg-[#F3F3F3] dark:bg-[#1E1E1E] shadow-xl overflow-y-auto
-                transform transition-transform duration-300 ease-in-out
-                @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
+    <div class="fixed top-0 right-0 h-full w-80 bg-[#F3F3F3] dark:bg-[#1E1E1E] shadow-xl overflow-y-auto transform transition-transform duration-300 ease-in-out @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
         <div class="h-full text-gray-800 dark:text-white">
-            <div
-                class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
+            <div class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                         </svg>
-                        <span class="text-xl font-semibold">@Localizer.Settings_Title</span>
+                        <span class="text-base font-semibold">@Localizer.Settings_Title</span>
                     </div>
-                    <button @onclick="TogglePanel" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    <button @onclick="TogglePanel"
+                        class="p-2 rounded focus:outline-none hover:bg-gray-200 dark:hover:bg-gray-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12" />
@@ -43,122 +40,97 @@
                 </div>
             </div>
 
-            <div class="p-4 space-y-6">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="space-y-1">
-                            <h3 class="text-sm font-medium">@Localizer.Theme_Title</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-300">
-                                @Localizer.Theme_Description
-                            </p>
-                        </div>
-                        <button @onclick="ToggleTheme" class="flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300
-                                       @(AppState.IsDarkTheme ? 
-                                         "bg-[#1e1e1e] text-white border border-gray-600 hover:bg-[#2d2d2d]" : 
-                                         "bg-[#d7d7d7] text-black border border-gray-300 hover:bg-[#e7e7e7]")">
-                            @if (!AppState.IsDarkTheme)
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-5 h-5" stroke="currentColor"
-                                    stroke-width="2" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="5" />
-                                    <line x1="12" y1="1" x2="12" y2="3" />
-                                    <line x1="12" y1="21" x2="12" y2="23" />
-                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                                    <line x1="1" y1="12" x2="3" y2="12" />
-                                    <line x1="21" y1="12" x2="23" y2="12" />
-                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                                </svg>
-                                <span>@Localizer.Theme_Light</span>
-                            }
-                            else
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5"
-                                    viewBox="0 0 24 24">
-                                    <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
-                                </svg>
-                                <span>@Localizer.Theme_Dark</span>
-                            }
-                        </button>
+            <div class="p-4 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                        <h3 class="text-sm font-medium">@Localizer.Theme_Title</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">@Localizer.Theme_Description</p>
                     </div>
+                    <button @onclick="ToggleTheme"
+                        class="flex items-center gap-1 px-3 py-1 rounded-full transition-all duration-300 @(AppState.IsDarkTheme ? "bg-[#1e1e1e] text-white border border-gray-600 hover:bg-[#2d2d2d]" : "bg-[#d7d7d7] text-black border border-gray-300 hover:bg-[#e7e7e7]")">
+                        @if (!AppState.IsDarkTheme)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-4 h-4" stroke="currentColor"
+                                stroke-width="2" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                            </svg>
+                            <span class="text-xs">@Localizer.Theme_Light</span>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 24 24">
+                                <path d="M21.64 13.13A9 9 0 1111.13 2.36 7 7 0 0021.64 13.13z" />
+                            </svg>
+                            <span class="text-xs">@Localizer.Theme_Dark</span>
+                        }
+                    </button>
                 </div>
 
                 <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
 
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="space-y-1">
-                            <h3 class="text-sm font-medium">@Localizer.SaveSettings_Title</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-300">
-                                @Localizer.SaveSettings_Description
-                            </p>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" checked="@AppState.Preferences.IsSettingsSaved"
-                                @onchange="SaveSettingsToLocalStorage" class="sr-only peer">
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
-                                        peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer 
-                                        dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white 
-                                        after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                                        after:bg-white after:border-gray-300 after:border after:rounded-full 
-                                        after:h-5 after:w-5 after:transition-all dark:border-gray-600 
-                                        peer-checked:bg-green-600 bg-blue-600"></div>
-                        </label>
+                <div class="flex items-center justify-between">
+                    <div class="space-y-0.5">
+                        <h3 class="text-sm font-medium">@Localizer.SaveSettings_Title</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">@Localizer.SaveSettings_Description</p>
                     </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked="@AppState.Preferences.IsSettingsSaved"
+                            @onchange="SaveSettingsToLocalStorage" class="sr-only peer">
+                        <div
+                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
+                        </div>
+                    </label>
                 </div>
 
                 <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
 
-                <div class="space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <div class="space-y-1 sm:mr-4">
-                            <h3 class="text-sm font-medium">@Localizer.SaveEditor_Title</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-300">
-                                @Localizer.SaveEditor_Description
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-300 mt-2">
-                                <strong class="text-red-500">Note:</strong> @Localizer.SaveEditor_Note
-                            </p>
-                        </div>
-                        <label class="relative inline-flex items-center mt-4 sm:mt-0">
-                            <input type="checkbox" checked="@AppState.Preferences.IsEditorContentSaved"
-                                @onchange="SaveEditorContentToLocalStorage" class="sr-only peer">
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 
-                                        peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer 
-                                        dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white 
-                                        after:content-[''] after:absolute after:top-[2px] after:left-[2px] 
-                                        after:bg-white after:border-gray-300 after:border after:rounded-full 
-                                        after:h-5 after:w-5 after:transition-all dark:border-gray-600 
-                                        peer-checked:bg-green-600 bg-blue-600"></div>
-                        </label>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div class="space-y-1 sm:mr-4">
+                        <h3 class="text-sm font-medium">@Localizer.SaveEditor_Title</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">@Localizer.SaveEditor_Description</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-300 mt-1"><strong
+                                class="text-red-500">Note:</strong> @Localizer.SaveEditor_Note</p>
                     </div>
+                    <label class="relative inline-flex items-center mt-2 sm:mt-0">
+                        <input type="checkbox" checked="@AppState.Preferences.IsEditorContentSaved"
+                            @onchange="SaveEditorContentToLocalStorage" class="sr-only peer">
+                        <div
+                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
+                        </div>
+                    </label>
                 </div>
 
                 <div class="h-px bg-[#E7E7E7] dark:bg-[#2D2D2D]"></div>
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-gray-800 dark:text-white" for="language-select">
-                            @Localizer.Language
-                            <p class="text-xs font-normal text-gray-500 dark:text-gray-300">
-                                @Localizer.Select_Preferred_Language
-                            </p>
-                        </label>
-                        <select id="language-select" @onchange="ChangeLanguage"
-                            class="w-40 px-3 py-2 text-sm bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
-                            @foreach (var culture in _supportedCultures)
-                            {
-                                <option value="@culture.Name" selected="@(culture.Name == _currentCulture.Name)">
-                                    @culture.DisplayName
-                                </option>
-                            }
-                        </select>
-                    </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="text-xs font-medium text-gray-800 dark:text-white" for="language-select">
+                        @Localizer.Language
+                        <p class="text-[10px] font-normal text-gray-500 dark:text-gray-300">
+                            @Localizer.Select_Preferred_Language</p>
+                    </label>
+                    <select id="language-select" @onchange="ChangeLanguage"
+                        class="w-36 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                        @foreach (var culture in _supportedCultures)
+                        {
+                            <option value="@culture.Name" selected="@(culture.Name == _currentCulture.Name)">
+                                @culture.DisplayName
+                            </option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @code {
     private CultureInfo[] _supportedCultures =

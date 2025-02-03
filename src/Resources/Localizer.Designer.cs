@@ -160,6 +160,24 @@ namespace JsonToCsharpPoco.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error reading file:.
+        /// </summary>
+        internal static string ErrorReadingFile {
+            get {
+                return ResourceManager.GetString("ErrorReadingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File Upload Error.
+        /// </summary>
+        internal static string FileUploadError {
+            get {
+                return ResourceManager.GetString("FileUploadError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nullable?.
         /// </summary>
         internal static string IsNullable_Label {
@@ -363,6 +381,15 @@ namespace JsonToCsharpPoco.Resources {
         internal static string TypeSettings_Title {
             get {
                 return ResourceManager.GetString("TypeSettings_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload File.
+        /// </summary>
+        internal static string UploadFile_Label {
+            get {
+                return ResourceManager.GetString("UploadFile_Label", resourceCulture);
             }
         }
         

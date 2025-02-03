@@ -170,8 +170,17 @@
   <data name="EnterJson" xml:space="preserve">
     <value>Veuillez saisir le JSON à convertir</value>
 </data>
-<data name="UseFileScoped_Label" xml:space="preserve">
+  <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Utiliser la Portée de Fichier</value> 
+</data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Téléverser un fichier</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Erreur de lecture du fichier :</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>Erreur de téléversement de fichier</value>
 </data>
 </root>
  

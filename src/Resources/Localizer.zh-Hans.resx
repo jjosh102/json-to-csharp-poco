@@ -173,5 +173,14 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>使用文件范围</value>
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>上传文件</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>读取文件错误：</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>文件上传错误</value>
+</data>
 </root>
  

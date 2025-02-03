@@ -162,4 +162,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Sử dụng Phạm vi Tệp</value>
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Tải lên tập tin</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Lỗi đọc tệp tin:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>Lỗi tải lên tập tin</value>
+</data>
 </root>

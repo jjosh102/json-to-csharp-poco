@@ -202,4 +202,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Use File Scoped</value>
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Upload File</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Error reading file:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>File Upload Error</value>
+</data>
 </root>

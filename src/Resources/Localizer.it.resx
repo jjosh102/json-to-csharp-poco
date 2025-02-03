@@ -201,4 +201,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Usa Ambito File</value> 
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Carica file</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Errore nella lettura del file:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>Errore di caricamento file</value>
+</data>
 </root>

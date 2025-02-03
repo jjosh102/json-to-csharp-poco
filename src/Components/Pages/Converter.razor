@@ -94,7 +94,7 @@
                 class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
                 <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100">@Localizer.NamingSettings_Title</h3>
                 <div class="space-y-3">
-                      <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between">
                         <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
                             for="use-records">@Localizer.UseFileScoped_Label</label>
                         <input type="checkbox" id="use-records" @bind="_conversionSettings.UseFileScoped"
@@ -119,33 +119,41 @@
     </div>
 
     <div class="lg:ml-64">
-        <div class="flex justify-end space-x-4 p-2">
-            <button
-                class="flex items-center space-x-2 px-4 py-2 font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors duration-200"
-                @onclick="CopyToClipboard">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                </svg>
-                <span>@Localizer.CopyCode_Button</span>
-            </button>
+        <div class="flex flex-wrap justify-between items-center mb-4">
+            <div class="flex space-x-2 items-center">
+                <FileUpload OnFileUploaded="HandleFileUpload" />
+            </div>
+            <div class="flex space-x-2 items-center">
+                <button type="button" aria-label="Copy Code"
+                    class="flex items-center space-x-1 px-3 py-1.5 text-xs font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#3E8E41]"
+                    @onclick="CopyToClipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                    <span>@Localizer.CopyCode_Button</span>
+                </button>
 
-            <button id="convert-button" @onclick="Convert" disabled="@_isConverting"
-                class="@($"px-4 py-2 font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-10" : "bg-[#007ACC] hover:bg-[#388A34]")}")">
-                @if (_isConverting)
-                {
-                    <div class="absolute left-4 top-1/2 -translate-y-1/2">
-                        <div class="animate-spin w-4 h-4">
-                            <div
-                                class="h-full w-full rounded-full border-2 border-t-white border-r-white border-b-transparent border-l-transparent">
+                <button id="convert-button" type="button" @onclick="Convert" disabled="@_isConverting"
+                    class="@($"px-3 py-1.5 text-xs font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-8" : "bg-[#007ACC] hover:bg-[#388A34]")}")"
+                    aria-label="Convert Code">
+                    @if (_isConverting)
+                    {
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                            <div class="animate-spin w-3 h-3">
+                                <div
+                                    class="h-full w-full rounded-full border-2 border-t-white border-r-white border-b-transparent border-l-transparent">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-                <span>@(_isConverting ? @Localizer.Converting_Label : @Localizer.Convert_Button)</span>
-            </button>
+                    }
+                    <span>@(_isConverting? Localizer.Converting_Label: Localizer.Convert_Button)</span>
+                </button>
+            </div>
         </div>
+
+
 
         <div class="flex flex-col lg:flex-row lg:space-x-4 p-2">
             <div class="w-full lg:w-1/2 mb-4 lg:mb-0">

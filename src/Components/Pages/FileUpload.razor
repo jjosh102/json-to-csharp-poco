@@ -1,0 +1,44 @@
+@inject ToastService ToastService
+<label for="file-upload"
+  class="flex items-center space-x-1 px-3 py-1.5 text-xs font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors duration-200">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+  </svg>
+  <span>@Localizer.UploadFile_Label</span>
+  <InputFile id="file-upload" class="hidden" OnChange="HandleFileUpload" accept="@AllowedExtensions" />
+</label>
+
+@code {
+  private const string AllowedExtensions = ".txt,.json";
+
+  private string _fileContent = string.Empty;
+
+  [Parameter]
+  public EventCallback<string> OnFileUploaded { get; set; }
+
+  private async Task HandleFileUpload(InputFileChangeEventArgs e)
+  {
+    var file = e.File;
+    await ProcessFile(file);
+  }
+
+  private async Task ProcessFile(IBrowserFile file)
+  {
+    var fileExtension = Path.GetExtension(file.Name).ToLower();
+
+    try
+    {
+      using var stream = file.OpenReadStream();
+      using var reader = new StreamReader(stream);
+      _fileContent = await reader.ReadToEndAsync();
+      await OnFileUploaded.InvokeAsync(_fileContent);
+    }
+    catch (Exception ex)
+    {
+      await ToastService.ShowToastAsync($"{Localizer.ErrorReadingFile}{ex.Message}",
+      ToastType.Error, Localizer.FileUploadError, 5000);
+      _fileContent = string.Empty;
+    }
+  }
+}

@@ -198,7 +198,16 @@
   <data name="EnterJson" xml:space="preserve">
     <value>Por favor, introduce el JSON para convertir</value>
 </data>
-<data name="UseFileScoped_Label" xml:space="preserve">
+  <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Usar Alcance de Archivo</value> 
+</data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Subir archivo</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Error al leer el archivo:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>Error de carga de archivo</value>
 </data>
 </root>

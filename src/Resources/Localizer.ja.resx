@@ -200,4 +200,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>ファイルスコープを使用</value> 
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>ファイルをアップロード</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>ファイルの読み取りエラー：</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>ファイルアップロードエラー</value>
+</data>
 </root>

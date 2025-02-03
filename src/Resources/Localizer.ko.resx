@@ -197,7 +197,16 @@
   <data name="EnterJson" xml:space="preserve">
     <value>변환할 JSON을 입력하세요</value>
 </data>
-<data name="UseFileScoped_Label" xml:space="preserve">
+  <data name="UseFileScoped_Label" xml:space="preserve">
     <value>파일 범위 사용</value> 
+</data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>파일 업로드</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>파일 읽기 오류:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>파일 업로드 오류</value>
 </data>
 </root>

@@ -201,4 +201,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>ใช้ขอบเขตไฟล์</value> 
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>อัปโหลดไฟล์</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>ข้อผิดพลาดในการอ่านไฟล์:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>ข้อผิดพลาดในการอัปโหลดไฟล์</value>
+</data>
 </root>

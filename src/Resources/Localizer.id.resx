@@ -201,4 +201,13 @@
   <data name="UseFileScoped_Label" xml:space="preserve">
     <value>Gunakan Lingkup File</value> 
 </data>
+  <data name="UploadFile_Label" xml:space="preserve">
+  <value>Unggah File</value>
+</data>
+  <data name="ErrorReadingFile" xml:space="preserve">
+  <value>Kesalahan membaca file:</value>
+</data>
+  <data name="FileUploadError" xml:space="preserve">
+  <value>Kesalahan unggah file</value>
+</data>
 </root>

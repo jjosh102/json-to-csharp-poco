@@ -11,6 +11,7 @@ using System.ComponentModel;
 using Blazored.LocalStorage;
 using JsonToCsharpPoco.Shared;
 using JsonToCsharpPoco.Resources;
+using Humanizer;
 
 namespace JsonToCsharpPoco.Components.Pages;
 
@@ -142,6 +143,17 @@ public partial class Converter : ComponentBase, IDisposable
     {
         await _toastService.ShowToastAsync(message, type, title, durationMs);
     }
+
+    private async Task HandleFileUpload(string content)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+            return;
+
+        await _jsonEditor.SetValue(content);
+        await InvokeAsync(StateHasChanged);
+    }
+
+
 
     private async Task OnEditorContentChanged(ModelContentChangedEvent eventArgs, string storageKey, StandaloneCodeEditor editor) =>
       await SaveEditorContent(storageKey, editor);
