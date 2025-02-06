@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 <div class="right-4 top-4 z-40">
     <button @onclick="TogglePanel"
-        class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        class="p-2 bg-blue-600 rounded-full hover:bg-green-600 transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,7 +30,7 @@
                         <span class="text-base font-semibold">@Localizer.Settings_Title</span>
                     </div>
                     <button @onclick="TogglePanel"
-                        class="p-2 rounded focus:outline-none hover:bg-gray-200 dark:hover:bg-gray-800">
+                        class="p-2 foccus:outline-hidden rounded-sm hover:bg-[#d7d7d7] dark:hover:bg-[#2d2d2d]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -85,7 +85,7 @@
                         <input type="checkbox" checked="@AppState.Preferences.IsSettingsSaved"
                             @onchange="SaveSettingsToLocalStorage" class="sr-only peer">
                         <div
-                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
+                            class="w-9 h-5 bg-gray-200 peer-focus:outline-hiddenpeer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
                         </div>
                     </label>
                 </div>
@@ -103,7 +103,7 @@
                         <input type="checkbox" checked="@AppState.Preferences.IsEditorContentSaved"
                             @onchange="SaveEditorContentToLocalStorage" class="sr-only peer">
                         <div
-                            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
+                            class="w-9 h-5 bg-gray-200 peer-focus:outline-hiddenpeer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-green-600 bg-blue-600">
                         </div>
                     </label>
                 </div>
@@ -117,7 +117,7 @@
                             @Localizer.Select_Preferred_Language</p>
                     </label>
                     <select id="language-select" @onchange="ChangeLanguage"
-                        class="w-36 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-blue-600">
+                        class="w-36 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-hiddenfocus:ring-1 focus:ring-blue-600">
                         @foreach (var culture in _supportedCultures)
                         {
                             <option value="@culture.Name" selected="@(culture.Name == _currentCulture.Name)">
