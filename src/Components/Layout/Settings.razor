@@ -14,12 +14,15 @@
     </button>
 </div>
 
-<div class="@($"fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 {(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")}")">
+<div
+    class="@($"fixed inset-0 z-50 overflow-hidden transition-opacity duration-300 {(_isPanelOpen ? "opacity-100" : "opacity-0 pointer-events-none")}")">
     <div class="fixed inset-0 bg-black/50 dark:bg-black/70" @onclick="TogglePanel"></div>
 
-    <div class="fixed top-0 right-0 h-full w-80 bg-[#F3F3F3] dark:bg-[#1E1E1E] shadow-xl overflow-y-auto transform transition-transform duration-300 ease-in-out @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
+    <div
+        class="fixed top-0 right-0 h-full w-80 bg-[#F3F3F3] dark:bg-[#1E1E1E] shadow-xl overflow-y-auto transform transition-transform duration-300 ease-in-out @(_isPanelOpen ? "translate-x-0" : "translate-x-full")">
         <div class="h-full text-gray-800 dark:text-white">
-            <div class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
+            <div
+                class="sticky top-0 z-10 bg-[#F3F3F3] dark:bg-[#1E1E1E] border-b border-[#E7E7E7] dark:border-[#2D2D2D] p-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"

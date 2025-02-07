@@ -10,8 +10,8 @@ public static partial class StringHelperExtensions
     public static string ToPascalCase(this string input)
     {
         if (string.IsNullOrWhiteSpace(input)) return input;
-      
-    // This approach is not optimal, but it functions correctly for the time being. Optimization will be addressed later.
+
+        // This approach is not optimal, but it functions correctly for the time being. Optimization will be addressed later.
         return input.Humanize(LetterCasing.LowerCase)
                     .Pascalize()
                     .RemoveSpecialCharacters()
