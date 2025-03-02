@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{JSON} to [C#]</title>
+    <base href="/json-to-csharp-poco/" />
+    <link rel="stylesheet" href="css/app.out.css" />
+    <link rel="icon" type="image/png" href="jjosh-logo.ico" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+            <div class="flex items-center gap-2">
+                <div class="bg-[#007ACC] text-white text-sm font-mono font-semibold py-2 px-4 rounded-sm animate-bounce-fade-in"
+                    style="animation-delay: 0s;">
+                    {JSON}
+                </div>
+
+                <div class="text-gray-800 dark:text-gray-100 text-xl font-bold animate-bounce-fade-in"
+                    style="animation-delay: 0.5s;">
+                    →
+                </div>
+
+                <div class="bg-[#388A34] text-white text-sm font-mono font-semibold py-2 px-4 rounded-sm animate-bounce-fade-in"
+                    style="animation-delay: 1s;">
+                    &lt;C#&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="_content/BlazorMonaco/jsInterop.js"></script>
+    <script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/loader.js"></script>
+    <script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+
+</html>
