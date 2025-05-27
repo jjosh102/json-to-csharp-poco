@@ -22,7 +22,7 @@ public partial class Converter : ComponentBase, IDisposable
     private readonly ILocalStorageService _localStorageServiceAsync;
     private readonly IJSRuntime _jsRuntime;
     private readonly ToastService _toastService;
-
+    private bool _showSidebar = true;
     private ConversionSettings _conversionSettings = new();
 
     [AllowNull] private StandaloneCodeEditor _jsonEditor;

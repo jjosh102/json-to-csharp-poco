@@ -1,38 +1,32 @@
 ﻿@page "/"
 
-<div class="flex flex-col space-y-4">
-    <div
-        class="lg:fixed lg:top-17.6 lg:left-0 lg:w-80 lg:h-full p-4 bg-white dark:bg-[#1E1E1E] shadow-md border-r border-[#E7E7E7] dark:border-[#2D2D2D] z-10">
-        <h2
-            class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4 pb-2 border-b border-[#E7E7E7] dark:border-[#2D2D2D]">
-            @Localizer.Settings_Title
-        </h2>
-        <div class="space-y-6">
-            <div
-                class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
+<div class="flex flex-col lg:flex-row min-h-screen">
+    <div class="@($"fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity lg:hidden {(_showSidebar ? "block" : "hidden")}")" @onclick="() => _showSidebar = false"></div>
+
+    <aside class="@($"fixed lg:relative z-50 lg:z-10 top-0 left-0 w-72 max-w-full h-full bg-white dark:bg-[#1E1E1E] border-r border-gray-200 dark:border-[#2D2D2D] transform transition-transform duration-300 ease-in-out {(_showSidebar ? "translate-x-0" : "-translate-x-full")} lg:translate-x-0")">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-[#2D2D2D] lg:hidden">
+            <h2 class="text-base font-semibold text-gray-800 dark:text-white">@Localizer.Settings_Title</h2>
+            <button class="text-sm text-blue-600" @onclick="() => _showSidebar = false">✕</button>
+        </div>
+
+        <div class="p-4 space-y-6 overflow-y-auto h-[calc(100vh-3rem)] lg:h-auto">
+            <div class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
                 <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100">@Localizer.TypeSettings_Title</h3>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="use-records">@Localizer.UseRecords_Label</label>
-                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseRecords"
-                            class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="use-records">@Localizer.UseRecords_Label</label>
+                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseRecords" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
                     @if (_conversionSettings.UseRecords)
                     {
                         <div class="flex items-center justify-between">
-                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                                for="use-primary-constructor">@Localizer.UsePrimaryConstructor_Label</label>
-                            <input type="checkbox" id="use-primary-constructor"
-                                @bind="_conversionSettings.UsePrimaryConstructor"
-                                class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="use-primary-constructor">@Localizer.UsePrimaryConstructor_Label</label>
+                            <input type="checkbox" id="use-primary-constructor" @bind="_conversionSettings.UsePrimaryConstructor" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="property-access">@Localizer.PropertyAccess_Label</label>
-                        <select id="property-access" @bind="_conversionSettings.PropertyAccess"
-                            class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-hiddenfocus:ring-1 focus:ring-blue-600">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="property-access">@Localizer.PropertyAccess_Label</label>
+                        <select id="property-access" @bind="_conversionSettings.PropertyAccess" class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @foreach (PropertyAccess access in Enum.GetValues(typeof(PropertyAccess)))
                             {
                                 <option value="@access">@access</option>
@@ -40,10 +34,8 @@
                         </select>
                     </div>
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="array-type">@Localizer.ArrayType_Label</label>
-                        <select id="array-type" @bind="_conversionSettings.ArrayType"
-                            class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-hiddenfocus:ring-1 focus:ring-blue-600">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="array-type">@Localizer.ArrayType_Label</label>
+                        <select id="array-type" @bind="_conversionSettings.ArrayType" class="w-32 px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                             @foreach (ArrayType arrayType in Enum.GetValues(typeof(ArrayType)))
                             {
                                 <option value="@arrayType">@arrayType</option>
@@ -53,130 +45,95 @@
                 </div>
             </div>
 
-            <div
-                class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-2 border border-[#E7E7E7] dark:border-[#2D2D2D]">
+            <div class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-2 border border-[#E7E7E7] dark:border-[#2D2D2D]">
                 <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100">@Localizer.PropertySettings_Title</h3>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="add-attribute">@Localizer.AddJsonAttribute_Label</label>
-                        <input type="checkbox" id="add-attribute" @bind="_conversionSettings.AddAttribute"
-                            class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="add-attribute">@Localizer.AddJsonAttribute_Label</label>
+                        <input type="checkbox" id="add-attribute" @bind="_conversionSettings.AddAttribute" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
                     @if (!_conversionSettings.IsDefaultInitialized)
                     {
                         <div class="flex items-center justify-between">
-                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                                for="is-nullable">@Localizer.IsNullable_Label</label>
-                            <input type="checkbox" id="is-nullable" @bind="_conversionSettings.IsNullable"
-                                class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="is-nullable">@Localizer.IsNullable_Label</label>
+                            <input type="checkbox" id="is-nullable" @bind="_conversionSettings.IsNullable" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="is-required">@Localizer.IsRequired_Label</label>
-                        <input type="checkbox" id="is-required" @bind="_conversionSettings.IsRequired"
-                            class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="is-required">@Localizer.IsRequired_Label</label>
+                        <input type="checkbox" id="is-required" @bind="_conversionSettings.IsRequired" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
                     @if (!_conversionSettings.IsNullable)
                     {
                         <div class="flex items-center justify-between">
-                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                                for="default-values">@Localizer.DefaultValues_Label</label>
-                            <input type="checkbox" id="default-values" @bind="_conversionSettings.IsDefaultInitialized"
-                                class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
+                            <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="default-values">@Localizer.DefaultValues_Label</label>
+                            <input type="checkbox" id="default-values" @bind="_conversionSettings.IsDefaultInitialized" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                         </div>
                     }
                 </div>
             </div>
 
-            <div
-                class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
+            <div class="space-y-4 bg-gray-100 dark:bg-[#1E1E1E] rounded-lg p-4 border border-[#E7E7E7] dark:border-[#2D2D2D]">
                 <h3 class="text-sm font-bold text-gray-800 dark:text-gray-100">@Localizer.NamingSettings_Title</h3>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="use-records">@Localizer.UseFileScoped_Label</label>
-                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseFileScoped"
-                            class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
-                    </div>
-
-                    <div class="flex flex-col space-y-2">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="namespace">@Localizer.Namespace_Label</label>
-                        <input type="text" id="namespace" @bind="_conversionSettings.Namespace"
-                            class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-hiddenfocus:ring-1 focus:ring-blue-600">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="use-records">@Localizer.UseFileScoped_Label</label>
+                        <input type="checkbox" id="use-records" @bind="_conversionSettings.UseFileScoped" class="rounded-sm text-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:ring-blue-400">
                     </div>
                     <div class="flex flex-col space-y-2">
-                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200"
-                            for="root-name">@Localizer.RootName_Label</label>
-                        <input type="text" id="root-name" @bind="_conversionSettings.RootTypeName"
-                            class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-hiddenfocus:ring-1 focus:ring-blue-600">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="namespace">@Localizer.Namespace_Label</label>
+                        <input type="text" id="namespace" @bind="_conversionSettings.Namespace" class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label class="text-xs font-mono font-semibold text-gray-800 dark:text-gray-200" for="root-name">@Localizer.RootName_Label</label>
+                        <input type="text" id="root-name" @bind="_conversionSettings.RootTypeName" class="w-full px-2 py-1 text-xs bg-white text-gray-800 dark:text-white dark:bg-[#1E1E1E] border border-gray-300 dark:border-gray-600 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-600">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
 
-    <div class="lg:ml-64">
-        <div class="p-2">
-            <div class="flex justify-between items-center mb-4">
-                <div class="flex space-x-2 items-center">
-                    <FileUpload OnFileUploaded="HandleFileUpload" />
-                </div>
-                <div class="flex space-x-2 items-center">
-                    <button type="button" aria-label="Copy Code"
-                        class="flex items-center space-x-1 px-3 py-1.5 text-xs font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors duration-200 focus:outline-hidden focus:ring-2 focus:ring-[#3E8E41]"
-                        @onclick="CopyToClipboard">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+    <div class="flex-1 lg:pl-72">
+        <header class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-[#2D2D2D] lg:hidden bg-white dark:bg-[#1E1E1E]">
+            <h1 class="text-base font-semibold text-gray-900 dark:text-white">@Localizer.PropertySettings_Title</h1>
+            <button class="text-sm font-semibold text-blue-600" @onclick="() => _showSidebar = true">☰ @Localizer.Settings_Title</button>
+        </header>
+
+        <main class="p-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between items-center mb-4 gap-4">
+                <FileUpload OnFileUploaded="HandleFileUpload" />
+                <div class="flex gap-2">
+                    <button type="button" aria-label="Copy Code" class="flex items-center px-3 py-1.5 text-xs font-mono font-semibold bg-[#4CAF50] rounded-full text-white hover:bg-[#3E8E41] transition-colors" @onclick="CopyToClipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                         </svg>
                         <span>@Localizer.CopyCode_Button</span>
                     </button>
 
-                    <button id="convert-button" type="button" @onclick="Convert" disabled="@_isConverting"
-                        class="@($"px-3 py-1.5 text-xs font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-8" : "bg-[#007ACC] hover:bg-[#388A34]")}")"
-                        aria-label="Convert Code">
+                    <button id="convert-button" type="button" @onclick="Convert" disabled="@_isConverting" class="@($"px-3 py-1.5 text-xs font-mono font-semibold rounded-full text-white relative transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed {(_isConverting ? "bg-[#388A34] pl-8" : "bg-[#007ACC] hover:bg-[#388A34]")}")" aria-label="Convert Code">
                         @if (_isConverting)
                         {
                             <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
                                 <div class="animate-spin w-3 h-3">
-                                    <div
-                                        class="h-full w-full rounded-full border-2 border-t-white border-r-white border-b-transparent border-l-transparent">
-                                    </div>
+                                    <div class="h-full w-full rounded-full border-2 border-t-white border-r-white border-b-transparent border-l-transparent"></div>
                                 </div>
                             </div>
                         }
-                        <span>@(_isConverting? Localizer.Converting_Label: Localizer.Convert_Button)</span>
+                        <span>@(_isConverting ? Localizer.Converting_Label : Localizer.Convert_Button)</span>
                     </button>
                 </div>
             </div>
 
-            <div class="flex flex-col lg:flex-row lg:space-x-4">
-                <div class="w-full lg:w-1/2 mb-4 lg:mb-0">
-                    <label for="json-editor"
-                        class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        @Localizer.JsonEditor_Label
-                    </label>
-                    <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor"
-                        OnDidChangeModelContent="OnJsonDidChangeModelContent"
-                        ConstructionOptions="@((editor) => CreateEditorOptions("json"))"
-                        CssClass="h-[calc(100vh-10rem)] rounded-sm border border-[#E7E7E7] dark:border-[#2D2D2D]" />
-                </div>
-
+            <div class="flex flex-col lg:flex-row gap-4">
                 <div class="w-full lg:w-1/2">
-                    <label for="csharp-editor"
-                        class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                        @Localizer.CsharpEditor_Label
-                    </label>
-                    <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor"
-                        OnDidChangeModelContent="OnCsharpDidChangeModelContent"
-                        ConstructionOptions="@((editor) => CreateEditorOptions("csharp"))"
-                        CssClass="h-[calc(100vh-10rem)] rounded-sm border border-[#E7E7E7] dark:border-[#2D2D2D]" />
+                    <label for="json-editor" class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">@Localizer.JsonEditor_Label</label>
+                    <StandaloneCodeEditor @ref="_jsonEditor" Id="json-editor" OnDidChangeModelContent="OnJsonDidChangeModelContent" ConstructionOptions="@((editor) => CreateEditorOptions("json"))" CssClass="h-[50vh] lg:h-[calc(100vh-10rem)] rounded-sm border border-[#E7E7E7] dark:border-[#2D2D2D]" />
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <label for="csharp-editor" class="block text-sm font-mono font-semibold text-gray-800 dark:text-gray-200 mb-2">@Localizer.CsharpEditor_Label</label>
+                    <StandaloneCodeEditor @ref="_csharpEditor" Id="csharp-editor" OnDidChangeModelContent="OnCsharpDidChangeModelContent" ConstructionOptions="@((editor) => CreateEditorOptions("csharp"))" CssClass="h-[50vh] lg:h-[calc(100vh-10rem)] rounded-sm border border-[#E7E7E7] dark:border-[#2D2D2D]" />
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </div>
