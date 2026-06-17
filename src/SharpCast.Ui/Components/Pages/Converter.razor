@@ -7,7 +7,7 @@
     }
 
     <aside
-        class="@($"fixed lg:static z-50 lg:z-10 top-0 left-0 w-[21rem] h-full border-r border-[#E7E7E7] dark:border-[#30363d] bg-[#F9F9F9] dark:bg-[#161b22] flex flex-col transform transition-transform duration-300 ease-in-out {(_showSidebar ? "translate-x-0" : "-translate-x-full")} lg:translate-x-0")">
+        class="@($"fixed lg:static z-50 lg:z-10 top-0 left-0 w-80 max-w-[85vw] h-full border-r border-[#E7E7E7] dark:border-[#30363d] bg-[#F9F9F9] dark:bg-[#161b22] flex flex-col transform transition-transform duration-300 ease-in-out {(_showSidebar ? "translate-x-0" : "-translate-x-full")} lg:translate-x-0")">
 
         <div
             class="flex items-center justify-between px-4 h-12 border-b border-[#E7E7E7] dark:border-[#30363d] bg-gray-50 dark:bg-[#21262d] shrink-0">
@@ -212,7 +212,7 @@
                 </button>
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2 justify-end mt-2 sm:mt-0">
                 <button @onclick="FormatInputAsync"
                         class="h-8 px-3 text-[11px] font-bold rounded-md border border-gray-300 dark:border-[#30363d] bg-white dark:bg-[#0d1117] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-[#1f2937] transition flex items-center gap-1.5"
                         title="Format Input (Alt+Shift+F)">
@@ -263,8 +263,8 @@
              @onclick="CloseOutputDialog">
             <div class="w-full max-w-5xl h-[85vh] rounded-lg overflow-hidden shadow-2xl border border-gray-200 dark:border-[#30363d] bg-white dark:bg-[#0d1117] flex flex-col"
                  @onclick:stopPropagation="true">
-                <header class="h-11 px-4 flex items-center justify-between border-b border-[#E7E7E7] dark:border-[#30363d] bg-gray-50 dark:bg-[#161b22]">
-                    <div class="flex items-center justify-between w-full gap-3">
+                <header class="min-h-[44px] py-2 px-4 flex items-center justify-between border-b border-[#E7E7E7] dark:border-[#30363d] bg-gray-50 dark:bg-[#161b22]">
+                    <div class="flex flex-wrap items-center justify-between w-full gap-2">
                         <div class="text-xs font-bold uppercase tracking-wide text-gray-600 dark:text-gray-300">
                             @Localizer.ResourceManager.GetString("Output_Label", Localizer.Culture) - @_modalOutputFormat
                             @if (_lastOutputAt is not null)
