@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharp Cast</title>
+    <base href="/sharp-cast/" />
+    <link rel="stylesheet" href="css/app.out.css" />
+    <link rel="icon" type="image/png" href="jjosh-logo.ico" />
+</head>
+
+<body>
+    <div id="app">
+        <div class="flex h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+            <div class="flex flex-col items-center gap-4 select-none">
+
+                <div
+                    class="inline-flex overflow-hidden rounded-md shadow-lg text-sm font-mono font-semibold text-white">
+                    <span class="bg-[#007ACC] px-5 py-3 animate-pulse">
+                        Sharp
+                    </span>
+                    <span class="bg-[#388A34] px-5 py-3 animate-pulse [animation-delay:150ms]">
+                        Cast
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-[#007ACC] animate-bounce"></span>
+                    <span class="h-2 w-2 rounded-full bg-[#388A34] animate-bounce [animation-delay:150ms]"></span>
+                    <span class="h-2 w-2 rounded-full bg-[#007ACC] animate-bounce [animation-delay:300ms]"></span>
+                </div>
+
+                <div class="text-xs font-mono tracking-wide text-gray-600 dark:text-gray-300 animate-pulse">
+                    Loading..
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+    <script src="_content/BlazorMonaco/jsInterop.js"></script>
+    <script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/loader.js"></script>
+    <script src="_content/BlazorMonaco/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+
+</html>
